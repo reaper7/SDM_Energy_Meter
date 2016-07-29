@@ -1,0 +1,4 @@
+SDM220                KEYWORD1
+
+begin                 KEYWORD2
+readVal               KEYWORD2
