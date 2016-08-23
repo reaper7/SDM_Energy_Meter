@@ -2,7 +2,7 @@ Template library for reading SDM220/SDM120 Modbus Energy meter.
 
 Reading via Software Serial library (https://github.com/plerup/espsoftwareserial)<br>
 and rs232<->rs485 converter with automatic flow direction control (look at hardware_sdm220.jpg)<br>
-(Not work with simple max485-only converters because this lib does not control max485 DE/RE lines)
+NOTE: Not work with simple max485-only converters because this lib does not control max485 DE/RE lines (at this moment)
 
 
 Tested on wemos d1 mini->ESP8266 with Arduino 1.6.9 & 2.3.0 esp8266 core
