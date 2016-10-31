@@ -12,4 +12,5 @@ crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Mon
 2016 Reaper7
 
 UPDATE:
-31.10.2016 - new registers for SDM120 and SDM630 by beireken 
+31.10.2016<br>
+- new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)
