@@ -1,7 +1,7 @@
 /* Template library for reading SDM220 Modbus Energy meter.
 *  Reading via Software Serial library & rs232<->rs485 converter
 *  2016 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.6.9 & 2.3.0 esp8266 core)
-*  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
+*  crc calculation by Jaime GarcÃ­a (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 
 #ifndef SDM220_T_h
@@ -22,9 +22,9 @@
 #define SDM_B_01                    		0x01                                        //BYTE 1
 #define SDM_B_02                    		0x04                                        //BYTE 2
 																						//BYTES 3 & 4 (BELOW)
-#define SDM120C_VOLTAGE                   	0x0000										//V
-#define SDM120C_CURRENT                   	0x0006										//A
-#define SDM120C_POWER                     	0x000C										//W
+#define SDM120C_VOLTAGE                   	0x0000                                      //V
+#define SDM120C_CURRENT                   	0x0006                                      //A
+#define SDM120C_POWER                     	0x000C                                      //W
 #define SDM120C_ACTIVE_APPARENT_POWER     	0x0012                                      //VA
 #define SDM120C_REACTIVE_APPARENT_POWER   	0x0018                                      //VAR
 #define SDM120C_POWER_FACTOR              	0x001E                                      //
@@ -33,9 +33,9 @@
 #define SDM120C_EXPORT_ACTIVE_ENERGY      	0x004A                                      //Wh
 #define SDM120C_TOTAL_ACTIVE_ENERGY       	0x0156                                      //Wh
 
-#define SDM220T_VOLTAGE                   	0x0000										//V
-#define SDM220T_CURRENT                   	0x0006										//A
-#define SDM220T_POWER                     	0x000C										//W
+#define SDM220T_VOLTAGE                   	0x0000                                      //V
+#define SDM220T_CURRENT                   	0x0006                                      //A
+#define SDM220T_POWER                     	0x000C                                      //W
 #define SDM220T_ACTIVE_APPARENT_POWER     	0x0012                                      //VA
 #define SDM220T_REACTIVE_APPARENT_POWER   	0x0018                                      //VAR
 #define SDM220T_POWER_FACTOR              	0x001E                                      //
@@ -48,25 +48,25 @@
 #define SDM220T_TOTAL_ACTIVE_ENERGY       	0x0156                                      //Wh
 #define SDM220T_TOTAL_REACTIVE_ENERGY		0x0158                                      //VARh
 
-#define SDM630_VOLTAGE1						0x0000										//V
-#define SDM630_VOLTAGE2						0x0002                                      //V
-#define SDM630_VOLTAGE3					    0x0004										//V
-#define SDM630_CURRENT1					    0x0006									   	//A
-#define SDM630_CURRENT2					    0x0008									   	//A
-#define SDM630_CURRENT3					    0x000A									   	//A
-#define SDM630_CURRENTSUM                 	0x0030                                     	//A
-#define SDM630_POWER1					    0x000C									   	//W
-#define SDM630_POWER2					    0x000E									   	//W
-#define SDM630_POWER3					    0x0010									   	//W
-#define SDM630_POWERTOTAL                 	0x0034									   	//W
-#define SDM630_VOLT_AMPS1                 	0x0012                                     	//VA
-#define SDM630_VOLT_AMPS2                 	0x0014                                     	//VA
-#define SDM630_VOLT_AMPS3                 	0x0016                                     	//VA
-#define SDM630_VOLT_AMPS_TOTAL            	0x0038                                     	//VA
-#define SDM630_VOLT_AMPS_REACTIVE1        	0x0018                                     	//VAr
-#define SDM630_VOLT_AMPS_REACTIVE2        	0x001A                                     	//VAr
-#define SDM630_VOLT_AMPS_REACTIVE3        	0x001C                                     	//VAr
-#define SDM630_VOLT_AMPS_REACTIVE_TOTAL   	0x003C                                     	//VAr
+#define SDM630_VOLTAGE1                   	0x0000                                      //V
+#define SDM630_VOLTAGE2                   	0x0002                                      //V
+#define SDM630_VOLTAGE3                   	0x0004                                      //V
+#define SDM630_CURRENT1                   	0x0006                                      //A
+#define SDM630_CURRENT2                   	0x0008                                      //A
+#define SDM630_CURRENT3                   	0x000A                                      //A
+#define SDM630_CURRENTSUM                 	0x0030                                      //A
+#define SDM630_POWER1                     	0x000C                                      //W
+#define SDM630_POWER2                     	0x000E                                      //W
+#define SDM630_POWER3                     	0x0010                                      //W
+#define SDM630_POWERTOTAL                 	0x0034                                      //W
+#define SDM630_VOLT_AMPS1                 	0x0012                                      //VA
+#define SDM630_VOLT_AMPS2                 	0x0014                                      //VA
+#define SDM630_VOLT_AMPS3                 	0x0016                                      //VA
+#define SDM630_VOLT_AMPS_TOTAL            	0x0038                                      //VA
+#define SDM630_VOLT_AMPS_REACTIVE1        	0x0018                                      //VAr
+#define SDM630_VOLT_AMPS_REACTIVE2        	0x001A                                      //VAr
+#define SDM630_VOLT_AMPS_REACTIVE3        	0x001C                                      //VAr
+#define SDM630_VOLT_AMPS_REACTIVE_TOTAL   	0x003C                                      //VAr
 #define SDM630_POWER_FACTOR1              	0x001E
 #define SDM630_POWER_FACTOR2              	0x0020
 #define SDM630_POWER_FACTOR3              	0x0022
