@@ -19,19 +19,19 @@ void loop() {
   Serial.print(bufout);
 
   Serial.print("Voltage:   ");
-  Serial.print(sdm.readVal(SDM_VOLTAGE), 2);                                    //display voltage
+  Serial.print(sdm.readVal(SDM220T_VOLTAGE), 2);                                //display voltage
   Serial.println("V");
 
   Serial.print("Current:   ");
-  Serial.print(sdm.readVal(SDM_CURRENT), 2);                                    //display current  
+  Serial.print(sdm.readVal(SDM220T_CURRENT), 2);                                //display current  
   Serial.println("A");
 
   Serial.print("Power:     ");
-  Serial.print(sdm.readVal(SDM_POWER), 2);                                      //display power
+  Serial.print(sdm.readVal(SDM220T_POWER), 2);                                  //display power
   Serial.println("W");
 
   Serial.print("Frequency: ");
-  Serial.print(sdm.readVal(SDM_FREQUENCY), 2);                                  //display frequency
+  Serial.print(sdm.readVal(SDM220T_FREQUENCY), 2);                              //display frequency
   Serial.println("Hz");   
 
 
