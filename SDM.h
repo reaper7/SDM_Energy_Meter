@@ -4,8 +4,8 @@
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 
-#ifndef SDM220_T_h
-#define SDM220_T_h
+#ifndef SDM_h
+#define SDM_h
 //------------------------------------------------------------------------------
 #include <Arduino.h>
 #include <SoftwareSerial.h>
@@ -90,7 +90,7 @@
 
 //------------------------------------------------------------------------------
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX, int _tx_pin = SDMSER_TX>
-struct SDM220 {
+struct SDM {
 
   SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);
 
