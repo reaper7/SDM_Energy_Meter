@@ -14,17 +14,17 @@
 #include <SoftwareSerial.h>
 #endif
 //------------------------------------------------------------------------------
-#define SDM_BAUD                    		4800                                    //baudrate
-#define MAX_MILLIS_TO_WAIT          		1000                                    //max time to wait for responce from SDM
-#define SDM_READ_EVERY              		1000                                    //read SDM every ms
+#define SDM_BAUD                    		    4800                                //baudrate
+#define MAX_MILLIS_TO_WAIT          		    1000                                //max time to wait for responce from SDM
+#define SDM_READ_EVERY              		    1000                                //read SDM every ms
 
-#define SDMSER_RX                   		12                                      //RX-D6(wemos)-12
-#define SDMSER_TX                   		13                                      //TX-D7(wemos)-13
+#define SDMSER_RX                   		    12                                  //RX-D6(wemos)-12
+#define SDMSER_TX                   		    13                                  //TX-D7(wemos)-13
 
-#define FRAMESIZE                   		9                                       //size of out/in array
+#define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
-#define SDM_B_01                    		0x01                                    //BYTE 1 -> slave address (default value 1 read from node 1)
-#define SDM_B_02                    		0x04                                    //BYTE 2 -> function code (default value 4 read from 3X registers)
+#define SDM_B_01                    		    0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
+#define SDM_B_02                    		    0x04                                //BYTE 2 -> function code (default value 4 read from 3X registers)
                                                                                 //BYTES 3 & 4 (BELOW)
 //SDM 120 registers
 #define SDM120C_VOLTAGE                   	0x0000                              //V
@@ -51,7 +51,7 @@
 #define SDM220T_IMPORT_REACTIVE_ENERGY    	0x004C                              //VARh
 #define SDM220T_EXPORT_REACTIVE_ENERGY    	0x004E                              //VARh
 #define SDM220T_TOTAL_ACTIVE_ENERGY       	0x0156                              //Wh
-#define SDM220T_TOTAL_REACTIVE_ENERGY		0x0158                              //VARh
+#define SDM220T_TOTAL_REACTIVE_ENERGY       0x0158                              //VARh
 //SDM 630 registers
 #define SDM630_VOLTAGE1                   	0x0000                              //V
 #define SDM630_VOLTAGE2                   	0x0002                              //V
@@ -90,21 +90,23 @@
 #define SDM630_TOTAL_SYSTEM_POWER_DEMAND  	0x0054                              //W
 #define SDM630_MAXIMUM_TOTAL_SYSTEM_POWER 	0x0056                              //W
 
-#define SDM_B_05                    		0x00                                    //BYTE 5
-#define SDM_B_06                    		0x02                                    //BYTE 6
+#define SDM_B_05                            0x00                                //BYTE 5
+#define SDM_B_06                            0x02                                //BYTE 6
 
 //------------------------------------------------------------------------------
 #if !defined ( USE_HARDWARESERIAL )
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX, int _tx_pin = SDMSER_TX>
-struct SDM {
-
-  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);
 #else
 template <long _speed = SDM_BAUD>
+#endif
 struct SDM {
 
+#if !defined ( USE_HARDWARESERIAL )
+  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);
+#else
   HardwareSerial sdmSer = HardwareSerial(0);
 #endif
+
   private:
 
     uint16_t calculateCRC(uint8_t *array, uint8_t num) {
