@@ -1,4 +1,4 @@
-/* Template library for reading SDM220 Modbus Energy meter.
+/* Template library for reading SDM 120/220/630 Modbus Energy meter.
 *  Reading via Software Serial library & rs232<->rs485 converter
 *  2016 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.6.9 & 2.3.0 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
@@ -21,7 +21,7 @@
 //------------------------------------------------------------------------------
 #define SDM_B_01                    		0x01                                        //BYTE 1
 #define SDM_B_02                    		0x04                                        //BYTE 2
-																						//BYTES 3 & 4 (BELOW)
+//SDM 120 registers																						//BYTES 3 & 4 (BELOW)
 #define SDM120C_VOLTAGE                   	0x0000                                      //V
 #define SDM120C_CURRENT                   	0x0006                                      //A
 #define SDM120C_POWER                     	0x000C                                      //W
@@ -32,7 +32,7 @@
 #define SDM120C_IMPORT_ACTIVE_ENERGY      	0x0048                                      //Wh
 #define SDM120C_EXPORT_ACTIVE_ENERGY      	0x004A                                      //Wh
 #define SDM120C_TOTAL_ACTIVE_ENERGY       	0x0156                                      //Wh
-
+//SDM 220 registers
 #define SDM220T_VOLTAGE                   	0x0000                                      //V
 #define SDM220T_CURRENT                   	0x0006                                      //A
 #define SDM220T_POWER                     	0x000C                                      //W
@@ -47,7 +47,7 @@
 #define SDM220T_EXPORT_REACTIVE_ENERGY    	0x004E                                      //VARh
 #define SDM220T_TOTAL_ACTIVE_ENERGY       	0x0156                                      //Wh
 #define SDM220T_TOTAL_REACTIVE_ENERGY		0x0158                                      //VARh
-
+//SDM 630 registers
 #define SDM630_VOLTAGE1                   	0x0000                                      //V
 #define SDM630_VOLTAGE2                   	0x0002                                      //V
 #define SDM630_VOLTAGE3                   	0x0004                                      //V
