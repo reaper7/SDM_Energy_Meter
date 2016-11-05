@@ -4,11 +4,15 @@
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 
+//#define USE_HARDWARESERIAL                                                    //option - use hardware serial
+
 #ifndef SDM_h
 #define SDM_h
 //------------------------------------------------------------------------------
 #include <Arduino.h>
+#if !defined ( USE_HARDWARESERIAL )
 #include <SoftwareSerial.h>
+#endif
 //------------------------------------------------------------------------------
 #define SDM_BAUD                    		4800                                    //baudrate
 #define MAX_MILLIS_TO_WAIT          		1000                                    //max time to wait for responce from SDM
@@ -90,11 +94,17 @@
 #define SDM_B_06                    		0x02                                    //BYTE 6
 
 //------------------------------------------------------------------------------
+#if !defined ( USE_HARDWARESERIAL )
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX, int _tx_pin = SDMSER_TX>
 struct SDM {
 
   SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);
+#else
+template <long _speed = SDM_BAUD>
+struct SDM {
 
+  HardwareSerial sdmSer = HardwareSerial(0);
+#endif
   private:
 
     uint16_t calculateCRC(uint8_t *array, uint8_t num) {
