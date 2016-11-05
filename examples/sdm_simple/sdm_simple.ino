@@ -1,12 +1,12 @@
-#include <SDM.h>                                                           //import SDM220 template library
+#include <SDM.h>                                                                //import SDM template library
 
 #define ASCII_ESC 27
 
 char bufout[10];
 
-//SDM<2400, 12, 13> sdm;                                                     //SDM120T	baud, rx pin, tx pin
-//SDM<4800, 12, 13> sdm;                                                     //SDM220T	baud, rx pin, tx pin
-//SDM<9600, 12, 13> sdm;                                                     //SDM630	baud, rx pin, tx pin
+//SDM<2400, 12, 13> sdm;                                                        //SDM120T	baud, rx pin, tx pin
+//SDM<4800, 12, 13> sdm;                                                        //SDM220T	baud, rx pin, tx pin
+//SDM<9600, 12, 13> sdm;                                                        //SDM630	baud, rx pin, tx pin
 //or without parameters (default from SDM.h will be used): 
 SDM<> sdm;
 
