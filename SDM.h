@@ -18,8 +18,12 @@
 #define MAX_MILLIS_TO_WAIT          		    1000                                //max time to wait for responce from SDM
 #define SDM_READ_EVERY              		    1000                                //read SDM every ms
 
+#if !defined ( USE_HARDWARESERIAL )
 #define SDMSER_RX                   		    12                                  //RX-D6(wemos)-12
 #define SDMSER_TX                   		    13                                  //TX-D7(wemos)-13
+#else
+#define SWAPHWSERIAL                        0                                   //when hwserial used, then swap or not uart pins
+#endif
 
 #define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
@@ -97,7 +101,7 @@
 #if !defined ( USE_HARDWARESERIAL )
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX, int _tx_pin = SDMSER_TX>
 #else
-template <long _speed = SDM_BAUD>
+template <long _speed = SDM_BAUD, bool _swapuart = SWAPHWSERIAL>
 #endif
 struct SDM {
 
@@ -128,6 +132,10 @@ struct SDM {
 
     void begin() {
       sdmSer.begin(_speed);
+#if defined ( USE_HARDWARESERIAL )
+      if (_swapuart)
+        sdmSer.swap();
+#endif      
     };
 
     float readVal(uint16_t reg) {
