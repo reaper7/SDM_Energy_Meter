@@ -19,8 +19,8 @@
 
 #define FRAMESIZE                   		9                                       //size of out/in array
 //------------------------------------------------------------------------------
-#define SDM_B_01                    		0x01                                    //BYTE 1
-#define SDM_B_02                    		0x04                                    //BYTE 2
+#define SDM_B_01                    		0x01                                    //BYTE 1 -> slave address (default value 1 read from node 1)
+#define SDM_B_02                    		0x04                                    //BYTE 2 -> function code (default value 4 read from 3X registers)
                                                                                 //BYTES 3 & 4 (BELOW)
 //SDM 120 registers
 #define SDM120C_VOLTAGE                   	0x0000                              //V
