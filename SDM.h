@@ -25,6 +25,8 @@
 #define SWAPHWSERIAL                        0                                   //when hwserial used, then swap or not uart pins
 #endif
 
+#define DERE                                0                                   //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
+
 #define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
 #define SDM_B_01                    		    0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
@@ -135,7 +137,9 @@ struct SDM {
 #if defined ( USE_HARDWARESERIAL )
       if (_swapuart)
         sdmSer.swap();
-#endif      
+#endif
+      //pinMode(DERE, OUTPUT);
+      //digitalWrite(DERE, HIGH);
     };
 
     float readVal(uint16_t reg) {
@@ -151,8 +155,10 @@ struct SDM {
 
       sdmarr[6] = lowByte(temp);
       sdmarr[7] = highByte(temp);
-      
+
+      //digitalWrite(DERE, HIGH);                                               //transmit to SDM  -> DE Enable, /RE Disable
       sdmSer.write(sdmarr, FRAMESIZE - 1);                                      //send 8 bytes
+      //digitalWrite(DERE, LOW);                                                //receive from SDM -> DE Disable, /RE Enable
 
       resptime = millis();
 
