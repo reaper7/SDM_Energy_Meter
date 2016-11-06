@@ -139,7 +139,6 @@ struct SDM {
         sdmSer.swap();
 #endif
       //pinMode(DERE, OUTPUT);
-      //digitalWrite(DERE, HIGH);
     };
 
     float readVal(uint16_t reg) {
