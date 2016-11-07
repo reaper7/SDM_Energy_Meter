@@ -1,4 +1,4 @@
-Template library for reading SDM120 / SDM220 / SDM630 Modbus Energy meter.
+Template library for reading SDM120 / SDM220 / SDM630 Modbus Energy meters.
 
 Reading via Software Serial library (https://github.com/plerup/espsoftwareserial)<br>
 and rs232<->rs485 converter with automatic flow direction control (look at hardware_sdm220.jpg)<br>
