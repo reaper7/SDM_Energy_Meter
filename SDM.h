@@ -1,4 +1,4 @@
-/* Template library for reading SDM 120/220/630 Modbus Energy meter.
+/* Template library for reading SDM 120/220/630 Modbus Energy meters.
 *  Reading via Software Serial library & rs232<->rs485 converter
 *  2016 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.6.9 & 2.3.0 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
