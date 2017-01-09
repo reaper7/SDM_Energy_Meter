@@ -19,13 +19,13 @@
 #define SDM_READ_EVERY              		    1000                                //read SDM every ms
 
 #if !defined ( USE_HARDWARESERIAL )
-#define SDMSER_RX                   		    12                                  //RX-D6(wemos)-12
-#define SDMSER_TX                   		    13                                  //TX-D7(wemos)-13
+#define SDMSER_RX_PIN                       12                                  //RX-D6(wemos)-12
+#define SDMSER_TX_PIN                       13                                  //TX-D7(wemos)-13
 #else
 #define SWAPHWSERIAL                        0                                   //when hwserial used, then swap or not uart pins
 #endif
 
-#define DERE                                0                                   //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
+#define DERE_PIN                            NOT_A_PIN                           //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 
 #define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
@@ -101,9 +101,9 @@
 
 //------------------------------------------------------------------------------
 #if !defined ( USE_HARDWARESERIAL )
-template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX, int _tx_pin = SDMSER_TX>
+template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX_PIN, int _tx_pin = SDMSER_TX_PIN, int _dere_pin = DERE_PIN>
 #else
-template <long _speed = SDM_BAUD, bool _swapuart = SWAPHWSERIAL>
+template <long _speed = SDM_BAUD, int _dere_pin = DERE_PIN, bool _swapuart = SWAPHWSERIAL>
 #endif
 struct SDM {
 
@@ -138,14 +138,15 @@ struct SDM {
       if (_swapuart)
         sdmSer.swap();
 #endif
-      //pinMode(DERE, OUTPUT);
+      if (_dere_pin != NOT_A_PIN)                                               //set output pin mode for DE/RE pin when used (for control MAX485)
+        pinMode(_dere_pin, OUTPUT);
     };
 
     float readVal(uint16_t reg) {
       uint16_t temp;
       unsigned long resptime;
       uint8_t sdmarr[FRAMESIZE] = {SDM_B_01, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
-      float res = -9999.99;
+      float res = NAN;
 
       sdmarr[2] = highByte(reg);
       sdmarr[3] = lowByte(reg);
@@ -155,9 +156,13 @@ struct SDM {
       sdmarr[6] = lowByte(temp);
       sdmarr[7] = highByte(temp);
 
-      //digitalWrite(DERE, HIGH);                                               //transmit to SDM  -> DE Enable, /RE Disable
+      if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
+        digitalWrite(_dere_pin, HIGH);
+
       sdmSer.write(sdmarr, FRAMESIZE - 1);                                      //send 8 bytes
-      //digitalWrite(DERE, LOW);                                                //receive from SDM -> DE Disable, /RE Enable
+
+      if (_dere_pin != NOT_A_PIN)                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
+        digitalWrite(_dere_pin, LOW);
 
       resptime = millis();
 
