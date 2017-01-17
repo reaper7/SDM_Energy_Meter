@@ -15,7 +15,7 @@
 #endif
 //------------------------------------------------------------------------------
 #define SDM_BAUD                    		    4800                                //baudrate
-#define MAX_MILLIS_TO_WAIT          		    1000                                //max time to wait for responce from SDM
+#define MAX_MILLIS_TO_WAIT          		    500                                 //max time to wait for responce from SDM
 #define SDM_READ_EVERY              		    1000                                //read SDM every ms
 
 #if !defined ( USE_HARDWARESERIAL )
@@ -29,8 +29,8 @@
 
 #define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
-#define SDM_B_01                    		    0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
-#define SDM_B_02                    		    0x04                                //BYTE 2 -> function code (default value 4 read from 3X registers)
+#define SDM_B_01                            0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
+#define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 4 read from 3X registers)
                                                                                 //BYTES 3 & 4 (BELOW)
 //SDM 120 registers
 #define SDM120C_VOLTAGE                   	0x0000                              //V
@@ -98,7 +98,14 @@
 
 #define SDM_B_05                            0x00                                //BYTE 5
 #define SDM_B_06                            0x02                                //BYTE 6
+//------------------------------------------------------------------------------
+#define SDM_ERR_NO_ERROR                    0                                   //no error
+#define SDM_ERR_TIMEOUT                     1                                   //timeout
+#define SDM_ERR_NOT_ENOUGHT_BYTES           2                                   //not enough bytes from sdm
+#define SDM_ERR_WRONG_BYTES                 3                                   //bytes b0,b1 or b2 wrong
+#define SDM_ERR_CRC_ERROR                   4                                   //crc error
 
+#define READING_STEP_CNT                    4
 //------------------------------------------------------------------------------
 #if !defined ( USE_HARDWARESERIAL )
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX_PIN, int _tx_pin = SDMSER_TX_PIN, int _dere_pin = DERE_PIN>
@@ -114,6 +121,9 @@ struct SDM {
 #endif
 
   private:
+
+    uint16_t readingerrcode = SDM_ERR_NO_ERROR;                                 //4 = timeout; 3 = not enough bytes; 2 = number of bytes OK but bytes b0,b1 or b2 wrong, 1 = crc error
+    uint16_t readingerrcount = 0;                                               //total errors couter 
 
     uint16_t calculateCRC(uint8_t *array, uint8_t num) {
       uint16_t temp, flag;
@@ -132,6 +142,14 @@ struct SDM {
 
   public:
 
+    uint16_t getErrCode() {                                                     //return last errorcode 
+      return (readingerrcode);
+    };
+
+    uint16_t getErrCount() {                                                    //return total errors count 
+      return (readingerrcount);
+    };
+
     void begin() {
       sdmSer.begin(_speed);
 #if defined ( USE_HARDWARESERIAL )
@@ -147,6 +165,8 @@ struct SDM {
       unsigned long resptime;
       uint8_t sdmarr[FRAMESIZE] = {SDM_B_01, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
       float res = NAN;
+      bool timeouterr = false;
+      uint16_t stepcnt = READING_STEP_CNT;
 
       sdmarr[2] = highByte(reg);
       sdmarr[3] = lowByte(reg);
@@ -159,32 +179,68 @@ struct SDM {
       if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
         digitalWrite(_dere_pin, HIGH);
 
+#if !defined ( USE_HARDWARESERIAL )
+      sdmSer.listen();                                                          //enable softserial rx interrupt
+#endif
+
+      while (sdmSer.available() > 0)  {                                         //read serial if any old data is available
+        sdmSer.read();
+      }
+
       sdmSer.write(sdmarr, FRAMESIZE - 1);                                      //send 8 bytes
+
+      sdmSer.flush();                                                           //clear out tx buffer
 
       if (_dere_pin != NOT_A_PIN)                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
         digitalWrite(_dere_pin, LOW);
 
-      resptime = millis();
-
-      while ( (sdmSer.available() < FRAMESIZE) && ((millis() - resptime) < MAX_MILLIS_TO_WAIT) ) {      
-        delay(1);
-      }
-
-      if(sdmSer.available() == FRAMESIZE) {
-        for(int n=0; n<FRAMESIZE; n++) {
-          sdmarr[n] = sdmSer.read();
+      resptime = millis() + MAX_MILLIS_TO_WAIT;
+    
+      while (sdmSer.available() < FRAMESIZE)  {
+        if (resptime >= millis()) {
+          delay(1);
+        } else {
+          timeouterr = true;
+          break;
         }
+      }
+      
+      if (!timeouterr) {                                                        //if no timeout...
+      
+        stepcnt--;                                                              //err debug (3)     
 
-        if (sdmarr[0] == SDM_B_01 && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_B_02) {
-          if ((calculateCRC(sdmarr, FRAMESIZE - 2)) == ((sdmarr[8] << 8) | sdmarr[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
-            ((uint8_t*)&res)[3]= sdmarr[3];
-            ((uint8_t*)&res)[2]= sdmarr[4];
-            ((uint8_t*)&res)[1]= sdmarr[5];
-            ((uint8_t*)&res)[0]= sdmarr[6];      
+        if(sdmSer.available() == FRAMESIZE) {
+          for(int n=0; n<FRAMESIZE; n++) {
+            sdmarr[n] = sdmSer.read();
+          }
+
+          stepcnt--;                                                            //err debug (2)
+
+          if (sdmarr[0] == SDM_B_01 && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_B_02) {
+
+            stepcnt--;                                                          //err debug (1)
+          
+            if ((calculateCRC(sdmarr, FRAMESIZE - 2)) == ((sdmarr[8] << 8) | sdmarr[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
+
+              stepcnt--;                                                        //err debug (0)
+
+              ((uint8_t*)&res)[3]= sdmarr[3];
+              ((uint8_t*)&res)[2]= sdmarr[4];
+              ((uint8_t*)&res)[1]= sdmarr[5];
+              ((uint8_t*)&res)[0]= sdmarr[6];      
+            }
           }
         }
       }
-      sdmSer.flush();
+      
+      if (stepcnt > 0) {                                                        //if error then copy temp error value to global val and increment global error counter
+        readingerrcode = stepcnt;
+        readingerrcount++; 
+      }
+        
+#if !defined ( USE_HARDWARESERIAL )
+      sdmSer.end();                                                             //disable softserial rx interrupt
+#endif
       return (res);   
     };
 
