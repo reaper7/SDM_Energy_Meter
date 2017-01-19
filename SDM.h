@@ -100,10 +100,10 @@
 #define SDM_B_06                            0x02                                //BYTE 6
 //------------------------------------------------------------------------------
 #define SDM_ERR_NO_ERROR                    0                                   //no error
-#define SDM_ERR_TIMEOUT                     1                                   //timeout
-#define SDM_ERR_NOT_ENOUGHT_BYTES           2                                   //not enough bytes from sdm
-#define SDM_ERR_WRONG_BYTES                 3                                   //bytes b0,b1 or b2 wrong
-#define SDM_ERR_CRC_ERROR                   4                                   //crc error
+#define SDM_ERR_CRC_ERROR                   1                                   //crc error
+#define SDM_ERR_WRONG_BYTES                 2                                   //bytes b0,b1 or b2 wrong
+#define SDM_ERR_NOT_ENOUGHT_BYTES           3                                   //not enough bytes from sdm
+#define SDM_ERR_TIMEOUT                     4                                   //timeout
 
 #define READING_STEP_CNT                    4
 //------------------------------------------------------------------------------
