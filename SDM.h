@@ -176,6 +176,8 @@ struct SDM {
       sdmarr[6] = lowByte(temp);
       sdmarr[7] = highByte(temp);
 
+      delay(1);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
+
       if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
         digitalWrite(_dere_pin, HIGH);
 
