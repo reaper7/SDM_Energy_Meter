@@ -6,7 +6,7 @@ and rs232<->rs485 converter with automatic flow direction control (look at hardw
 or with converters with additional pins for flow control, like MAX485. 
 DE and RE pin must be connected together to one of esp pin and this pin must be passed when initializing the library:
 ```
-SDM<4800, 12, 13, 14> sdm;                                                        //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
+SDM<4800, 12, 13, 14> sdm;  //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
 ```
 
 
