@@ -160,10 +160,10 @@ struct SDM {
         pinMode(_dere_pin, OUTPUT);
     };
 
-    float readVal(uint16_t reg) {
+    float readVal(uint16_t reg, uint8_t node = SDM_B_01) {
       uint16_t temp;
       unsigned long resptime;
-      uint8_t sdmarr[FRAMESIZE] = {SDM_B_01, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
+      uint8_t sdmarr[FRAMESIZE] = {node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
       float res = NAN;
       bool timeouterr = false;
       uint16_t stepcnt = READING_STEP_CNT;
@@ -218,7 +218,7 @@ struct SDM {
 
           stepcnt--;                                                            //err debug (2)
 
-          if (sdmarr[0] == SDM_B_01 && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_B_02) {
+          if (sdmarr[0] == node && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_B_02) {
 
             stepcnt--;                                                          //err debug (1)
           
