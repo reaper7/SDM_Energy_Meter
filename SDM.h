@@ -176,6 +176,11 @@ struct SDM {
       sdmarr[6] = lowByte(temp);
       sdmarr[7] = highByte(temp);
 
+#if !defined ( USE_HARDWARESERIAL )
+      delay(2);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
+      sdmSer.listen();                                                          //enable softserial rx interrupt
+#endif
+
       while (sdmSer.available() > 0)  {                                         //read serial if any old data is available
         sdmSer.read();
       }
@@ -191,9 +196,6 @@ struct SDM {
       while (sdmSer.availableForWrite() < UART_TX_FIFO_SIZE) {                  //wait until tx buffer is not fully available
         delay(1);
       }
-#else
-      delay(5);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
-      sdmSer.listen();                                                          //enable softserial rx interrupt
 #endif
 
       if (_dere_pin != NOT_A_PIN)                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
