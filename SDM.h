@@ -160,7 +160,7 @@ struct SDM {
         pinMode(_dere_pin, OUTPUT);
     };
 
-    float readVal(uint16_t reg, uint8_t node = SDM_B_01) {
+    float readVal(uint16_t reg, uint8_t node = SDM_B_01) {                      //read value from register = reg and from deviceId = node
       uint16_t temp;
       unsigned long resptime;
       uint8_t sdmarr[FRAMESIZE] = {node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
@@ -176,22 +176,25 @@ struct SDM {
       sdmarr[6] = lowByte(temp);
       sdmarr[7] = highByte(temp);
 
-      delay(1);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
-
-      if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
-        digitalWrite(_dere_pin, HIGH);
-
-#if !defined ( USE_HARDWARESERIAL )
-      sdmSer.listen();                                                          //enable softserial rx interrupt
-#endif
-
       while (sdmSer.available() > 0)  {                                         //read serial if any old data is available
         sdmSer.read();
       }
 
+      if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
+        digitalWrite(_dere_pin, HIGH);
+
       sdmSer.write(sdmarr, FRAMESIZE - 1);                                      //send 8 bytes
 
       sdmSer.flush();                                                           //clear out tx buffer
+
+#if defined ( USE_HARDWARESERIAL )  
+      while (sdmSer.availableForWrite() < UART_TX_FIFO_SIZE) {                  //wait until tx buffer is not fully available
+        delay(1);
+      }
+#else
+      delay(5);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
+      sdmSer.listen();                                                          //enable softserial rx interrupt
+#endif
 
       if (_dere_pin != NOT_A_PIN)                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
         digitalWrite(_dere_pin, LOW);
