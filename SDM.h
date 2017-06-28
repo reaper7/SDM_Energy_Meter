@@ -29,6 +29,8 @@
 
 #define FRAMESIZE                   		    9                                   //size of out/in array
 //------------------------------------------------------------------------------
+#define SDM_REPLY_BYTE_COUNT                0x04                                //number of bytes with data
+
 #define SDM_B_01                            0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
 #define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 4 read from 3X registers)
                                                                                 //BYTES 3 & 4 (BELOW)
@@ -177,7 +179,6 @@ struct SDM {
       sdmarr[7] = highByte(temp);
 
 #if !defined ( USE_HARDWARESERIAL )
-      delay(2);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
       sdmSer.listen();                                                          //enable softserial rx interrupt
 #endif
 
@@ -188,30 +189,25 @@ struct SDM {
       if (_dere_pin != NOT_A_PIN)                                               //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
         digitalWrite(_dere_pin, HIGH);
 
+      delay(2);                                                                 //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
+
       sdmSer.write(sdmarr, FRAMESIZE - 1);                                      //send 8 bytes
 
       sdmSer.flush();                                                           //clear out tx buffer
-
-#if defined ( USE_HARDWARESERIAL )  
-      while (sdmSer.availableForWrite() < UART_TX_FIFO_SIZE) {                  //wait until tx buffer is not fully available
-        delay(1);
-      }
-#endif
 
       if (_dere_pin != NOT_A_PIN)                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
         digitalWrite(_dere_pin, LOW);
 
       resptime = millis() + MAX_MILLIS_TO_WAIT;
-    
+ 
       while (sdmSer.available() < FRAMESIZE)  {
-        if (resptime >= millis()) {
-          delay(1);
-        } else {
+        if (resptime < millis()) {
           timeouterr = true;
           break;
         }
+        yield();
       }
-      
+
       if (!timeouterr) {                                                        //if no timeout...
       
         stepcnt--;                                                              //err debug (3)     
@@ -223,7 +219,7 @@ struct SDM {
 
           stepcnt--;                                                            //err debug (2)
 
-          if (sdmarr[0] == node && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_B_02) {
+          if (sdmarr[0] == node && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_REPLY_BYTE_COUNT) {
 
             stepcnt--;                                                          //err debug (1)
           
