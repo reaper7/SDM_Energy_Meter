@@ -1,12 +1,28 @@
+/*  WEMOS D1 Mini                            
+                     ______________________________                
+                    |   L T L T L T L T L T L T    |
+                    |                              |
+                 RST|                             1|TX
+                  A0|                             3|RX
+                  D0|16                           5|D1
+                  D5|14                           4|D2
+                  D6|12                    10kPUP_0|D3
+RX SSer/HSer swap D7|13                LED_10kPUP_2|D4
+TX_SSer/HSer swap D8|15                            |GND
+                 3V3|__                            |5V
+                       |                           |
+                       |___________________________|
+*/
+
 #include <SDM.h>                                                                //import SDM template library
 
 #define ASCII_ESC 27
 
 char bufout[10];
 
-//SDM<2400, 12, 13> sdm;                                                        //SDM120T	baud, rx pin, tx pin, dere pin(optional for max485)
-//SDM<4800, 12, 13> sdm;                                                        //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
-//SDM<9600, 12, 13> sdm;                                                        //SDM630	baud, rx pin, tx pin, dere pin(optional for max485)
+//SDM<2400, 13, 15> sdm;                                                        //SDM120T	baud, rx pin, tx pin, dere pin(optional for max485)
+//SDM<4800, 13, 15> sdm;                                                        //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
+//SDM<9600, 13, 15> sdm;                                                        //SDM630	baud, rx pin, tx pin, dere pin(optional for max485)
 //or without parameters (default from SDM.h will be used): 
 SDM<> sdm;
 

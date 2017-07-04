@@ -16,13 +16,12 @@
 //------------------------------------------------------------------------------
 #define SDM_BAUD                    		    4800                                //baudrate
 #define MAX_MILLIS_TO_WAIT          		    500                                 //max time to wait for responce from SDM
-#define SDM_READ_EVERY              		    1000                                //read SDM every ms
 
 #if !defined ( USE_HARDWARESERIAL )
-#define SDMSER_RX_PIN                       12                                  //RX-D6(wemos)-12
-#define SDMSER_TX_PIN                       13                                  //TX-D7(wemos)-13
+#define SDMSER_RX_PIN                       13                                  //RX-D7(wemos)-13
+#define SDMSER_TX_PIN                       15                                  //TX-D8(wemos)-15
 #else
-#define SWAPHWSERIAL                        0                                   //when hwserial used, then swap or not uart pins
+#define SWAPHWSERIAL                        0                                   //when hwserial used, then swap uart pins from 3/1 to 13/15
 #endif
 
 #define DERE_PIN                            NOT_A_PIN                           //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
