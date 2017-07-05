@@ -2,8 +2,8 @@ Template library for reading SDM120 / SDM220 / SDM630 Modbus Energy meters.
 
 Reading via Hardware Serial or Software Serial (library https://github.com/plerup/espsoftwareserial)<br>
 and rs232<->rs485 converter with automatic flow direction control (look at hardware_sdm220.jpg)<br>
-or with converters with additional pins for flow control, like MAX485. 
-In this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library
+or with converters with additional pins for flow control, like MAX485.<br>
+(In this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library)
 ```
 //lib init when Software Serial is used:
 SDM<4800, 13, 15, 12> sdm;  //baudrate, rx pin, tx pin, dere pin(optional for max485)
