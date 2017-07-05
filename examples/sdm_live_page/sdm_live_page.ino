@@ -106,7 +106,10 @@ void xmlrequest(AsyncWebServerRequest *request) {
   XML += NTP.getUptimeString();
   XML += F("</upt>");
   XML += F("<currt>");
-  XML += NTP.getTimeDateString();
+  if (timeStatus() == timeSet)
+    XML += NTP.getTimeDateString();
+  else
+    XML += F("Time not set");
   XML += F("</currt>");    
   XML += F("<rst>");
   XML += lastresetreason;
