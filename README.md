@@ -1,20 +1,22 @@
 Template library for reading SDM120 / SDM220 / SDM630 Modbus Energy meters.
 
-Reading via Software Serial library (https://github.com/plerup/espsoftwareserial)<br>
+Reading via Hardware Serial or Software Serial (library https://github.com/plerup/espsoftwareserial)<br>
 and rs232<->rs485 converter with automatic flow direction control (look at hardware_sdm220.jpg)<br>
-~~NOTE: Not work with simple max485-only converters because this lib does not control max485 DE/RE lines (at this moment)~~<br>
 or with converters with additional pins for flow control, like MAX485. 
-DE and RE pin must be connected together to one of esp pin and this pin must be passed when initializing the library:
+In this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library
 ```
-SDM<4800, 13, 15, 12> sdm;  //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
+//lib init when Software Serial is used:
+SDM<4800, 13, 15, 12> sdm;  //baudrate, rx pin, tx pin, dere pin(optional for max485)
+
+//lib init when Hardware Serial is used:
+SDM<4800, 12, false> sdm;  //baudrate, dere pin(optional for max485), swap hwuart pins from 3/1 to 13/15 
 ```
 
-
-Tested on wemos d1 mini->ESP8266 with Arduino 1.6.9 & 2.3.0 esp8266 core
+Tested on wemos d1 mini->ESP8266 with Arduino 1.8.3 & 2.3.0 esp8266 core
 
 crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 
-2016 Reaper7
-
 UPDATE:<br>
 - (31.10.2016) new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)
+
+2016 - 2017 Reaper7
