@@ -37,7 +37,6 @@ TX_SSer/HSer swap D8|15                            |GND
 #include <SDM.h>                                                                // https://github.com/reaper7/SDM_Energy_Meter
 
 #include "index_page.h"
-#include "ota_page.h"
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 WiFiClient  client;
@@ -54,7 +53,7 @@ String devicename = "PWRMETER";
 
 #if defined ( USE_STATIC_IP )
 IPAddress ip(192, 168, 0, 130);
-IPAddress gateway(192, 168, 0, 254);
+IPAddress gateway(192, 168, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
 #endif
 
