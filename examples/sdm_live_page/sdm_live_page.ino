@@ -26,8 +26,6 @@ TX_SSer/HSer swap D8|15                            |GND
 #include <ESP8266mDNS.h>
 #include <ArduinoOTA.h>
 
-#include <Ticker.h>
-
 #include <ESPAsyncTCP.h>                                                        // https://github.com/me-no-dev/ESPAsyncTCP
 #include <ESPAsyncWebServer.h>                                                  // https://github.com/me-no-dev/ESPAsyncWebServer
 
@@ -45,8 +43,6 @@ SDM<4800, 13, 15, NOT_A_PIN> sdm;                                               
 #else                                                                           // HARDWARE SERIAL
 SDM<4800, NOT_A_PIN, true> sdm;                                                 // baud, de/re_pin(not used in this example), swap uart0 from pins 3/1 to 13/15
 #endif
-
-Ticker sdmtick;
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";
 
@@ -61,7 +57,7 @@ const char* wifi_password = "YOUR_PASSWORD";
 
 String lastresetreason = "";
 
-volatile bool readsdmflag = true;
+unsigned long readtime;
 volatile bool otalock = false;
 //------------------------------------------------------------------------------
 typedef volatile struct {
@@ -171,10 +167,6 @@ static void wifiInit() {
   }
 }
 //------------------------------------------------------------------------------
-void setsdmreadflag() {
-  readsdmflag = true;
-}
-//------------------------------------------------------------------------------
 void sdmRead() {
   float tmpval = NAN;
 
@@ -202,17 +194,18 @@ void setup() {
   serverInit();
   sdm.begin();
 
+  readtime = millis();
+
   ledOff();
 }
 //------------------------------------------------------------------------------
 void loop() {
+  ArduinoOTA.handle();
 
-  if ((!otalock) && (readsdmflag)) {
+  if ((!otalock) && (millis() - readtime >= READSDMEVERY)) {
     sdmRead();
-    readsdmflag = false;
-    sdmtick.once_ms((READSDMEVERY), setsdmreadflag);
+    readtime = millis();
   }
 
-  ArduinoOTA.handle();
   yield();
 }
