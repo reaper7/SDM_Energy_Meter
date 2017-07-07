@@ -6,7 +6,6 @@ const char index_page[] PROGMEM = R"=====(
     <TITLE>SDM live POWER table</TITLE>
     <SCRIPT>
     var xmlHttp=createXmlHttpObject();
-    var refreshtime = 1000;
     function createXmlHttpObject(){
      if(window.XMLHttpRequest){
         xmlHttp=new XMLHttpRequest();
@@ -21,11 +20,15 @@ const char index_page[] PROGMEM = R"=====(
         xmlHttp.onreadystatechange=handleServerResponse;
         xmlHttp.send(null);
       }
-      setTimeout('process()',refreshtime);
+      setTimeout('process()',2000);
     }
     function handleServerResponse(){
      if(xmlHttp.readyState==4 && xmlHttp.status==200){
        xmlResponse=xmlHttp.responseXML;
+       for(i=0;i<6;i++){
+        xmldoc=xmlResponse.getElementsByTagName('response'+i)[0].firstChild.nodeValue;
+        document.getElementById('resp'+i).innerHTML=xmldoc;
+       }        
        xmldoc=xmlResponse.getElementsByTagName('upt')[0].firstChild.nodeValue;
        document.getElementById('uptime').innerHTML=xmldoc;
        xmldoc=xmlResponse.getElementsByTagName('currt')[0].firstChild.nodeValue;
@@ -34,17 +37,6 @@ const char index_page[] PROGMEM = R"=====(
        document.getElementById('freeheap').innerHTML=xmldoc;
        xmldoc=xmlResponse.getElementsByTagName('rst')[0].firstChild.nodeValue;
        document.getElementById('rstreason').innerHTML=xmldoc;
-       xmldoc=xmlResponse.getElementsByTagName('ota')[0].firstChild.nodeValue;
-       document.getElementById('otaprogress').value=xmldoc;
-       if(document.getElementById('otaprogress').value == 0){
-        refreshtime = 1000;
-        for(i=0;i<6;i++){
-          xmldoc=xmlResponse.getElementsByTagName('response'+i)[0].firstChild.nodeValue;
-          document.getElementById('resp'+i).innerHTML=xmldoc;
-        } 
-       }else{
-        refreshtime = 400;        
-       }
      }
     }
     </SCRIPT>
@@ -78,7 +70,6 @@ const char index_page[] PROGMEM = R"=====(
         <TR><TH title="CURRENT TIME">CURRENT TIME</TH><TD><A id='ctime'></A></TD><TD>time</TD></TR>
         <TR><TH title="FREE HEAP">FREE HEAP</TH><TD><A id='freeheap'></A></TD><TD>bytes</TD></TR>
         <TR><TH title="LAST RESET REASON">LAST RESET REASON</TH><TD colspan="2"><A id='rstreason'></A></TD></TR>
-        <TR><TH title="OTA PROGRESS">OTA PROGRESS</TH><TD><progress id="otaprogress" value="0" max="100"></progress></TD><TD>%</TD></TR>
       </TABLE>
     </CENTER>
   </BODY>

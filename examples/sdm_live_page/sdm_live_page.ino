@@ -1,7 +1,7 @@
 //sdm live page example by reaper7
 
 //#define USE_HARDWARESERIAL
-#define READSDMEVERY  1000                                                      //read sdm every 1000ms
+#define READSDMEVERY  2000                                                      //read sdm every 2000ms
 #define NBREG   6                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
 
@@ -64,8 +64,6 @@ String lastresetreason = "";
 
 volatile bool readsdmflag = true;
 volatile bool otalock = false;
-
-unsigned int otaprogress = 0;
 //------------------------------------------------------------------------------
 enum reglist {
   VOLTAGE = 0,                                                                  //V 
@@ -114,9 +112,6 @@ void xmlrequest(AsyncWebServerRequest *request) {
   XML += F("<rst>");
   XML += lastresetreason;
   XML += F("</rst>");
-  XML += F("<ota>");
-  XML += String(otaprogress);
-  XML += F("</ota>");
   XML += F("</xml>");
   request->send(200, "text/xml", XML);
 }
@@ -142,20 +137,16 @@ void otaInit() {
 
   ArduinoOTA.onStart([]() {
     otalock = true;
-    otaprogress = 0;
     ledOn();
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    otaprogress = (unsigned int)(progress / (total / 100));
     ledSwap();
   });
   ArduinoOTA.onEnd([]() {
-    otaprogress = 100;
     ledOff();
     otalock = false;
   });
   ArduinoOTA.onError([](ota_error_t error) {
-    otaprogress = 0;
     ledOff();
     otalock = false;
   });
