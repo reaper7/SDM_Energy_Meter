@@ -1,4 +1,6 @@
-SDM                   KEYWORD1
+SDM KEYWORD1
 
-begin                 KEYWORD2
-readVal               KEYWORD2
+begin KEYWORD2
+readVal KEYWORD2
+getErrCode KEYWORD2
+getErrCount KEYWORD2
