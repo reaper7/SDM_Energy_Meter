@@ -64,15 +64,6 @@ String lastresetreason = "";
 volatile bool readsdmflag = true;
 volatile bool otalock = false;
 //------------------------------------------------------------------------------
-enum reglist {
-  VOLTAGE = 0,                                                                  //V 
-  CURRENT,                                                                      //A 
-  POWER,                                                                        //W
-  POWER_FACTOR,                                                                 //
-  PHASE_ANGLE,                                                                  //DEGREE
-  FREQUENCY,                                                                    //Hz
-};
-
 typedef volatile struct {
   volatile float regvalarr;
   const uint16_t regarr;
