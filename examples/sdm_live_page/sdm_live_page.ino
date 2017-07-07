@@ -39,7 +39,6 @@ TX_SSer/HSer swap D8|15                            |GND
 #include "index_page.h"
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
-WiFiClient  client;
 
 #if !defined ( USE_HARDWARESERIAL )                                             // SOFTWARE SERIAL
 SDM<4800, 13, 15, NOT_A_PIN> sdm;                                               // baud, rx_pin, tx_pin, de/re_pin(not used in this example)
