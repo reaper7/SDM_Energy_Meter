@@ -41,7 +41,7 @@ AsyncWebServer server(80);
 #if !defined ( USE_HARDWARESERIAL )                                             // SOFTWARE SERIAL
 SDM<4800, 13, 15, NOT_A_PIN> sdm;                                               // baud, rx_pin, tx_pin, de/re_pin(not used in this example)
 #else                                                                           // HARDWARE SERIAL
-SDM<4800, NOT_A_PIN, true> sdm;                                                 // baud, de/re_pin(not used in this example), swap uart0 from pins 3/1 to 13/15
+SDM<4800, NOT_A_PIN, false> sdm;                                                // baud, de/re_pin(not used in this example), swap uart0 from pins 3/1(false) to 13/15(true)
 #endif
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";
