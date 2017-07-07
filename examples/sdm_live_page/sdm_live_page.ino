@@ -169,12 +169,11 @@ void ntpInit() {
 //------------------------------------------------------------------------------
 static void wifiInit() {
   WiFi.persistent(false);                                                       // Do not write new connections to FLASH
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(wifi_ssid, wifi_password);
-
 #if defined ( USE_STATIC_IP )
   WiFi.config(ip, gateway, subnet);                                             // Set fixed IP Address
 #endif
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(wifi_ssid, wifi_password);
 
   while( WiFi.status() != WL_CONNECTED ) {                                      //  Wait for WiFi connection
     ledSwap();
