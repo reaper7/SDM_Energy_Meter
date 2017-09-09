@@ -23,3 +23,5 @@ UPDATE:<br>
 - (31.10.2016) new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)
 
 2016 - 2017 Reaper7
+
+[paypal.me/reaper7md](https://www.paypal.me/reaper7md)
