@@ -31,7 +31,7 @@
 #define SDM_REPLY_BYTE_COUNT                0x04                                //number of bytes with data
 
 #define SDM_B_01                            0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
-#define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 4 read from 3X registers)
+#define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 0x04 read from 3X input registers)
                                                                                 //BYTES 3 & 4 (BELOW)
 //SDM 120 registers
 #define SDM120C_VOLTAGE                     0x0000                              //V
@@ -198,7 +198,7 @@ struct SDM {
         digitalWrite(_dere_pin, LOW);
 
       resptime = millis() + MAX_MILLIS_TO_WAIT;
- 
+
       while (sdmSer.available() < FRAMESIZE)  {
         if (resptime < millis()) {
           timeouterr = true;
@@ -208,8 +208,8 @@ struct SDM {
       }
 
       if (!timeouterr) {                                                        //if no timeout...
-      
-        stepcnt--;                                                              //err debug (3)     
+
+        stepcnt--;                                                              //err debug (3)
 
         if(sdmSer.available() == FRAMESIZE) {
           for(int n=0; n<FRAMESIZE; n++) {
@@ -234,12 +234,12 @@ struct SDM {
           }
         }
       }
-      
+
       if (stepcnt > 0) {                                                        //if error then copy temp error value to global val and increment global error counter
         readingerrcode = stepcnt;
         readingerrcount++; 
       }
-        
+
 #if !defined ( USE_HARDWARESERIAL )
       sdmSer.end();                                                             //disable softserial rx interrupt
 #endif
