@@ -15,7 +15,7 @@
 #endif
 //------------------------------------------------------------------------------
 #define SDM_BAUD                            4800                                //baudrate
-#define MAX_MILLIS_TO_WAIT                  500                                 //max time to wait for responce from SDM
+#define MAX_MILLIS_TO_WAIT                  500                                 //max time to wait for response from SDM
 
 #if !defined ( USE_HARDWARESERIAL )
 #define SDMSER_RX_PIN                       13                                  //RX-D7(wemos)-13
