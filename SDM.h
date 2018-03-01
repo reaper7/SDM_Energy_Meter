@@ -162,7 +162,7 @@ struct SDM {
       uint16_t _tmp = readingerrcount;
       if (_clear == true)
         clearErrCount();
-      return (readingerrcount);
+      return (_tmp);
     };
 
     void begin() {
