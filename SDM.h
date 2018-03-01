@@ -143,11 +143,25 @@ struct SDM {
 
   public:
 
-    uint16_t getErrCode() {                                                     //return last errorcode 
-      return (readingerrcode);
+    void clearErrCode() {                                                       //clear last errorcode 
+      readingerrcode = SDM_ERR_NO_ERROR;
     };
 
-    uint16_t getErrCount() {                                                    //return total errors count 
+    void clearErrCount() {                                                      //clear total errors count 
+      readingerrcount = 0;
+    };
+
+    uint16_t getErrCode(bool _clear = false) {                                  //return last errorcode (optional clear this value, default flase)
+      uint16_t _tmp = readingerrcode;
+      if (_clear == true)
+        clearErrCode();
+      return (_tmp);
+    };
+
+    uint16_t getErrCount(bool _clear = false) {                                 //return total errors count (optional clear this value, default flase)
+      uint16_t _tmp = readingerrcount;
+      if (_clear == true)
+        clearErrCount();
       return (readingerrcount);
     };
 

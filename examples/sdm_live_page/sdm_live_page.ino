@@ -107,15 +107,15 @@ void indexrequest(AsyncWebServerRequest *request) {
 }
 //------------------------------------------------------------------------------
 void ledOn() {
-  digitalWrite(BUILTIN_LED, LOW);  
+  digitalWrite(LED_BUILTIN, LOW);  
 }
 //------------------------------------------------------------------------------
 void ledOff() {
-  digitalWrite(BUILTIN_LED, HIGH);   
+  digitalWrite(LED_BUILTIN, HIGH);   
 }
 //------------------------------------------------------------------------------
 void ledSwap() {
-  digitalWrite(BUILTIN_LED, !digitalRead(BUILTIN_LED));   
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));   
 }
 //------------------------------------------------------------------------------
 void otaInit() {
@@ -183,7 +183,7 @@ void sdmRead() {
 }
 //------------------------------------------------------------------------------
 void setup() {
-  pinMode(BUILTIN_LED, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   ledOn();
 
   lastresetreason = ESP.getResetReason();
