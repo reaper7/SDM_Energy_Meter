@@ -105,8 +105,6 @@
 #define SDM_ERR_WRONG_BYTES                 2                                   //bytes b0,b1 or b2 wrong
 #define SDM_ERR_NOT_ENOUGHT_BYTES           3                                   //not enough bytes from sdm
 #define SDM_ERR_TIMEOUT                     4                                   //timeout
-
-#define READING_STEP_CNT                    4
 //------------------------------------------------------------------------------
 #if !defined ( USE_HARDWARESERIAL )
 template <long _speed = SDM_BAUD, int _rx_pin = SDMSER_RX_PIN, int _tx_pin = SDMSER_TX_PIN, int _dere_pin = DERE_PIN>
@@ -180,8 +178,7 @@ struct SDM {
       unsigned long resptime;
       uint8_t sdmarr[FRAMESIZE] = {node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
       float res = NAN;
-      bool timeouterr = false;
-      uint16_t stepcnt = READING_STEP_CNT;
+      uint16_t readErr = SDM_ERR_NO_ERROR;
 
       sdmarr[2] = highByte(reg);
       sdmarr[3] = lowByte(reg);
@@ -213,51 +210,49 @@ struct SDM {
 
       resptime = millis() + MAX_MILLIS_TO_WAIT;
 
-      while (sdmSer.available() < FRAMESIZE)  {
+      while (sdmSer.available() < FRAMESIZE) {
         if (resptime < millis()) {
-          timeouterr = true;
+          readErr = SDM_ERR_TIMEOUT;                                            //err debug (4)
           break;
         }
         yield();
       }
 
-      if (!timeouterr) {                                                        //if no timeout...
-
-        stepcnt--;                                                              //err debug (3)
+      if (readErr == SDM_ERR_NO_ERROR) {                                        //if no timeout...
 
         if(sdmSer.available() == FRAMESIZE) {
           for(int n=0; n<FRAMESIZE; n++) {
             sdmarr[n] = sdmSer.read();
           }
 
-          stepcnt--;                                                            //err debug (2)
-
           if (sdmarr[0] == node && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_REPLY_BYTE_COUNT) {
 
-            stepcnt--;                                                          //err debug (1)
-          
             if ((calculateCRC(sdmarr, FRAMESIZE - 2)) == ((sdmarr[8] << 8) | sdmarr[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
-
-              stepcnt--;                                                        //err debug (0)
-
               ((uint8_t*)&res)[3]= sdmarr[3];
               ((uint8_t*)&res)[2]= sdmarr[4];
               ((uint8_t*)&res)[1]= sdmarr[5];
-              ((uint8_t*)&res)[0]= sdmarr[6];      
+              ((uint8_t*)&res)[0]= sdmarr[6];
+            } else {
+              readErr = SDM_ERR_CRC_ERROR;                                      //err debug (1)
             }
+          } else {
+            readErr = SDM_ERR_WRONG_BYTES;                                      //err debug (2)
           }
+        } else {
+          readErr = SDM_ERR_NOT_ENOUGHT_BYTES;                                  //err debug (3)
         }
       }
 
-      if (stepcnt > 0) {                                                        //if error then copy temp error value to global val and increment global error counter
-        readingerrcode = stepcnt;
+      if (readErr != SDM_ERR_NO_ERROR) {                                        //if error then copy temp error value to global val and increment global error counter
+        readingerrcode = readErr;
         readingerrcount++; 
       }
 
 #if !defined ( USE_HARDWARESERIAL )
       sdmSer.end();                                                             //disable softserial rx interrupt
 #endif
-      return (res);   
+
+      return (res);
     };
 
 };
