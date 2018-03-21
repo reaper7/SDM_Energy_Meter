@@ -28,11 +28,7 @@ const char index_page[] PROGMEM = R"=====(
        for(i=0;i<6;i++){
         xmldoc=xmlResponse.getElementsByTagName('response'+i)[0].firstChild.nodeValue;
         document.getElementById('resp'+i).innerHTML=xmldoc;
-       }        
-       xmldoc=xmlResponse.getElementsByTagName('upt')[0].firstChild.nodeValue;
-       document.getElementById('uptime').innerHTML=xmldoc;
-       xmldoc=xmlResponse.getElementsByTagName('currt')[0].firstChild.nodeValue;
-       document.getElementById('ctime').innerHTML=xmldoc;   
+       }
        xmldoc=xmlResponse.getElementsByTagName('freeh')[0].firstChild.nodeValue;
        document.getElementById('freeheap').innerHTML=xmldoc;
        xmldoc=xmlResponse.getElementsByTagName('rst')[0].firstChild.nodeValue;
@@ -66,8 +62,6 @@ const char index_page[] PROGMEM = R"=====(
         <TR><TH title="POWER FACTOR">POWER FACTOR</TH><TD><A id='resp3'></A></TD><TD>PF</TD></TR>
         <TR><TH title="PHASE ANGLE">PHASE ANGLE</TH><TD><A id='resp4'></A></TD><TD>&deg;</TD></TR>
         <TR><TH title="FREQUENCY">FREQUENCY</TH><TD><A id='resp5'></A></TD><TD>Hz</TD></TR>
-        <TR><TH title="UPTIME">UPTIME</TH><TD><A id='uptime'></A></TD><TD>d h:m:s</TD></TR>
-        <TR><TH title="CURRENT TIME">CURRENT TIME</TH><TD><A id='ctime'></A></TD><TD>time</TD></TR>
         <TR><TH title="FREE HEAP">FREE HEAP</TH><TD><A id='freeheap'></A></TD><TD>bytes</TD></TR>
         <TR><TH title="LAST RESET REASON">LAST RESET REASON</TH><TD colspan="2"><A id='rstreason'></A></TD></TR>
       </TABLE>

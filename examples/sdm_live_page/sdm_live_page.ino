@@ -29,9 +29,6 @@ TX_SSer/HSer swap D8|15                            |GND
 #include <ESPAsyncTCP.h>                                                        // https://github.com/me-no-dev/ESPAsyncTCP
 #include <ESPAsyncWebServer.h>                                                  // https://github.com/me-no-dev/ESPAsyncWebServer
 
-#include <TimeLib.h>                                                            // https://github.com/PaulStoffregen/Time
-#include <NtpClientLib.h>                                                       // https://github.com/gmag11/NtpClient
-
 #include <SDM.h>                                                                // https://github.com/reaper7/SDM_Energy_Meter
 
 #include "index_page.h"
@@ -78,23 +75,14 @@ void xmlrequest(AsyncWebServerRequest *request) {
   String XML = F("<?xml version='1.0'?><xml>");
   if(!otalock) {
     for (int i = 0; i < NBREG; i++) { 
-      XML += "<response" + (String)i + ">";  
+      XML += "<response" + (String)i + ">";
       XML += String(sdmarr[i].regvalarr,2);
       XML += "</response" + (String)i + ">";
     }
   }
   XML += F("<freeh>");
   XML += String(ESP.getFreeHeap());
-  XML += F("</freeh>"); 
-  XML += F("<upt>");
-  XML += NTP.getUptimeString();
-  XML += F("</upt>");
-  XML += F("<currt>");
-  if (timeStatus() == timeSet)
-    XML += NTP.getTimeDateString();
-  else
-    XML += F("Time not set");
-  XML += F("</currt>");    
+  XML += F("</freeh>");
   XML += F("<rst>");
   XML += lastresetreason;
   XML += F("</rst>");
@@ -107,15 +95,15 @@ void indexrequest(AsyncWebServerRequest *request) {
 }
 //------------------------------------------------------------------------------
 void ledOn() {
-  digitalWrite(LED_BUILTIN, LOW);  
+  digitalWrite(LED_BUILTIN, LOW);
 }
 //------------------------------------------------------------------------------
 void ledOff() {
-  digitalWrite(LED_BUILTIN, HIGH);   
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 //------------------------------------------------------------------------------
 void ledSwap() {
-  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));   
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }
 //------------------------------------------------------------------------------
 void otaInit() {
@@ -141,16 +129,11 @@ void otaInit() {
 //------------------------------------------------------------------------------
 void serverInit() {
   server.on("/", HTTP_GET, indexrequest);
-  server.on("/xml", HTTP_PUT, xmlrequest); 
+  server.on("/xml", HTTP_PUT, xmlrequest);
   server.onNotFound([](AsyncWebServerRequest *request){
     request->send(404);
   });
   server.begin();
-}
-//------------------------------------------------------------------------------
-void ntpInit() {
-  NTP.begin("pool.ntp.org", 1, true);
-  NTP.setInterval(30, 3600);
 }
 //------------------------------------------------------------------------------
 static void wifiInit() {
@@ -190,7 +173,6 @@ void setup() {
 
   wifiInit();
   otaInit();
-  ntpInit();
   serverInit();
   sdm.begin();
 
