@@ -9,6 +9,8 @@ and rs232<->rs485 converters:
 * with converters with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
+---
+
 ### Initializing: ###
 ```cpp
 //lib init when Software Serial is used:
@@ -33,6 +35,8 @@ connection this type of converters to ESP8266 pin GPIO15 block booting process.<
 In this case you can replace the pull-up resistor on converter with higher value (100k),</br>
 to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resistor.</br></i>
 
+---
+
 ### Reading: ###
 List of available registers for SDM120/220/630:
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
@@ -52,6 +56,8 @@ float power2 = sdm.readVal(SDM220T_POWER, 0x02);
 NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
 only ID must be different for each SDM device.</i>
+
+---
 
 ### Debuging: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
@@ -85,9 +91,11 @@ sdm.clearErrCount();
 
 ---
 
-Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0
+_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0_
 
 ---
+
+__Credits:__
 
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)</br>
 :+1: new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)</br>
