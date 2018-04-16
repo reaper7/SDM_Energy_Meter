@@ -5,11 +5,11 @@ Allows you reading SDM module(s) via:
 * Software Serial (library https://github.com/plerup/espsoftwareserial)
 
 and rs232<->rs485 converters:
-* with automatic flow direction control (<i>look at img directory</i>)
+* with automatic flow direction control (<i>look at img directory or below</i>)
 * with converters with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
-![](https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220.jpg | height=480)                                                                                       ![](https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg | height=480)
+<img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330">
 
 ---
 
