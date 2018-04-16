@@ -68,7 +68,7 @@ You can get this error code using function:
 uint16_t lasterror = sdm.getErrCode(true);
 //                                     |__________optional parameter, where true mean read error code and clear stored code
 //                                                without parameter or when set to false 
-//                                                error is returning and stored for future checking
+//                                                error is returning but is not reset (for future checking)
 //                                                and will be overwriten when next error occurs
 
 //clear error code also available with:
@@ -83,7 +83,7 @@ You can also check total number of errors using function:
 uint16_t cnterrors = sdm.getErrCount(true);
 //                                     |__________optional parameter, where true mean read errors count and clear stored count
 //                                                without parameter or when set to false 
-//                                                errors count is returning and stored for future checking
+//                                                errors count is returning but is not reset (for future checking)
 
 //clear errors count also available with:
 sdm.clearErrCount();
