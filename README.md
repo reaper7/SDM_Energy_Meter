@@ -10,7 +10,7 @@ and rs232<->rs485 converters:
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
 **Initializing:**
-```
+```cpp
 //lib init when Software Serial is used:
 #include <SDM.h>
 SDM<4800, 13, 15, 12> sdm;  //baudrate, rx pin, tx pin, dere pin(optional for max485)
@@ -29,7 +29,7 @@ to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resis
 **Reading:**</br>
 List of available registers for SDM120/220/630:
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
-```
+```cpp
 //reading voltage from SDM with slave address 0x01 (default)
 float voltage = sdm.readVal(SDM220T_VOLTAGE);
 
