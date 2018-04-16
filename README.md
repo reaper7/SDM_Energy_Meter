@@ -1,4 +1,4 @@
-# Template library for reading SDM120 SDM220 SDM630 Modbus Energy meters.
+## Template library for reading SDM120 SDM220 SDM630 Modbus Energy meters. ##
 
 Allows you reading SDM module(s) via:
 * Hardware Serial
@@ -39,16 +39,20 @@ float voltage = sdm.readVal(SDM220T_VOLTAGE);
 float power1 = sdm.readVal(SDM220T_POWER, 0x01);
 float power2 = sdm.readVal(SDM220T_POWER, 0x02);
 ```
+NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
+remember to set the same transmission parameters on each device,</br>
+only ID must be different for each SDM device.</i>
+
+---
 
 Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0
 
-- - - -
+---
 
-:+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
+:+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)</br>
+:+1: new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)</br>
 
-:+1: new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)
-
-- - - -
+---
 
 **2018 Reaper7**
 
