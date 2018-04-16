@@ -53,6 +53,36 @@ NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
 only ID must be different for each SDM device.</i>
 
+**Debuging:**</br>
+Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
+this means that the requested value could not be read from the sdm module for various reasons.</br>
+You can get this error code using function:
+```cpp
+//get last error code
+uint16_t lasterror = sdm.getErrCode(true);
+//                                     |__________optional parameter, where true mean read error code and clear stored code
+//                                                without parameter or when set to false 
+//                                                error is returning and stored for future checking
+//                                                and will be overwriten when next error occurs
+
+//clear error code also available with:
+sdm.clearErrCode();
+```
+Errors list returned by <b>getErrCode</b>: https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L103</br>
+<b>Please check out open and close issues, maybe the cause of your error is explained or solved there.</b>
+
+You can also check total number of errors using function:
+```cpp
+//get total errors count
+uint16_t cnterrors = sdm.getErrCount(true);
+//                                     |__________optional parameter, where true mean read errors count and clear stored count
+//                                                without parameter or when set to false 
+//                                                errors count is returning and stored for future checking
+
+//clear errors count also available with:
+sdm.clearErrCount();
+```
+
 ---
 
 Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0
