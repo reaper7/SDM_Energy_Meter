@@ -9,7 +9,7 @@ and rs232<->rs485 converters:
 * with converters with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
-**Initializing:**
+### Initializing: ###
 ```cpp
 //lib init when Software Serial is used:
 #include <SDM.h>
@@ -33,7 +33,7 @@ connection this type of converters to ESP8266 pin GPIO15 block booting process.<
 In this case you can replace the pull-up resistor on converter with higher value (100k),</br>
 to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resistor.</br></i>
 
-**Reading:**</br>
+### Reading: ###
 List of available registers for SDM120/220/630:
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
 ```cpp
@@ -53,7 +53,7 @@ NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
 only ID must be different for each SDM device.</i>
 
-**Debuging:**</br>
+### Debuging: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
 You can get this error code using function:
@@ -69,7 +69,7 @@ uint16_t lasterror = sdm.getErrCode(true);
 sdm.clearErrCode();
 ```
 Errors list returned by <b>getErrCode</b>: https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L103</br>
-<b>Please check out open and close issues, maybe the cause of your error is explained or solved there.</b>
+__Please check out open and close issues, maybe the cause of your error is explained or solved there.__
 
 You can also check total number of errors using function:
 ```cpp
