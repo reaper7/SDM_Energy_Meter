@@ -64,7 +64,21 @@ only ID must be different for each SDM device.</i>
 ### Debuging: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
-You can get this error code using function:
+The most common problems are:
+- weak or poorly filtered power supply, causing NaN readings and ESP crashes</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353532711</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353572909</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/8#issuecomment-381402008</br>
+- faulty or incorrectly prepared converter</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/16#issue-311042308</br>
+- faulty esp module</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/8#issuecomment-381398551</br>
+- many users report that between each readings should be placed <i>delay(200);</i></br>
+  (I did not observe such problems using the HardwareSerial connection)</br>
+- using GPIO15 without checking signal level (note above)</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/17#issue-313606825</br>
+
+You can get last error code using function:
 ```cpp
 //get last error code
 uint16_t lasterror = sdm.getErrCode(true);
