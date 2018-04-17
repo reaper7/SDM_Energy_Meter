@@ -1,5 +1,15 @@
 ## Template library for reading SDM120 SDM220 SDM630 Modbus Energy meters. ##
 
+### SECTIONS: ###
+#### 1. [INTRODUCTION](#introduction) ####
+#### 2. [INITIALIZING](#initializing) ####
+#### 3. [READING](#reading) ####
+#### 4. [DEBUGING](#debuging) ####
+#### 5. [CREDITS](#credits) ####
+
+---
+
+### Introduction: ###
 Allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i>recommended option, smallest number of reads errors</i>) <b><i>or</i></b>
 - [x] Software Serial (<i>library for ESP8266</i> https://github.com/plerup/espsoftwareserial)
@@ -10,14 +20,6 @@ you also need rs232<->rs485 converter:
      (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
 _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
-
----
-
-### SECTIONS: ###
-#### 1. [INITIALIZING](#initializing) ####
-#### 2. [READING](#reading) ####
-#### 3. [DEBUGING](#debuging) ####
-#### 4. [CREDITS](#credits) ####
 
 ---
 
