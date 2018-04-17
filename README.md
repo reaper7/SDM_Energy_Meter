@@ -6,8 +6,8 @@ Allows you reading SDM module(s) using:
 
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at img directory or below</i>) <b><i>or</i></b>
-- [x] with additional pins for flow control, like MAX485
-(<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
+- [x] with additional pins for flow control, like MAX485</br>
+     (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
 _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
 
