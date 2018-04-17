@@ -107,7 +107,7 @@ You can get last error code using function:
 //get last error code
 uint16_t lasterror = sdm.getErrCode(true);
 //                                     |__________optional parameter,
-//                                                true -> read error code and reset stored code
+//                                                true -> read and reset error code
 //                                                false or no parameter -> read error code
 //                                                but not reset stored code (for future checking)
 //                                                will be overwriten when next error occurs
