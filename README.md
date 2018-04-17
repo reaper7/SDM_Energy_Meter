@@ -126,7 +126,7 @@ sdm.clearErrCount();
 ---
 
 <p align="center">
-  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.jpg"></br>
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.gif"></br>
   <i>live page example (extended) screenshot</i>
 </p>
 
