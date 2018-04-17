@@ -11,7 +11,7 @@
 ---
 
 ### Introduction: ###
-Allows you reading SDM module(s) using:
+This library allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i>recommended option, smallest number of reads errors</i>) <b><i>or</i></b>
 - [x] Software Serial (<i>library for ESP8266</i> https://github.com/plerup/espsoftwareserial)
 
