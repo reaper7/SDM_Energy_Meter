@@ -2,10 +2,11 @@
 
 ### SECTIONS: ###
 #### 1. [INTRODUCTION](#introduction) ####
-#### 2. [INITIALIZING](#initializing) ####
-#### 3. [READING](#reading) ####
-#### 4. [DEBUGING](#debuging) ####
-#### 5. [CREDITS](#credits) ####
+#### 2. [SCREENSHOTS](#screenshots) ####
+#### 3. [INITIALIZING](#initializing) ####
+#### 4. [READING](#reading) ####
+#### 5. [DEBUGING](#debuging) ####
+#### 6. [CREDITS](#credits) ####
 
 ---
 
@@ -23,7 +24,12 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 
 ---
 
-<img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_1.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330">
+### Screenshots: ###
+<img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_1.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330"></br>
+<p align="center">
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.gif"></br>
+  <i>live page example (extended) screenshot</i>
+</p>
 
 ---
 
@@ -124,13 +130,6 @@ uint16_t cnterrors = sdm.getErrCount(true);
 //clear errors counter also available with:
 sdm.clearErrCount();
 ```
-
----
-
-<p align="center">
-  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.gif"></br>
-  <i>live page example (extended) screenshot</i>
-</p>
 
 ---
 
