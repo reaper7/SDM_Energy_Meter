@@ -64,6 +64,7 @@ only ID must be different for each SDM device.</i>
 ### Debuging: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
+
 The most common problems are:
 - weak or poorly filtered power supply, causing NaN readings and ESP crashes</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353532711</br>
