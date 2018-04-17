@@ -95,6 +95,13 @@ sdm.clearErrCount();
 
 ---
 
+<p align="center">
+  <i>live page example (extended) screenshot</i></br>
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.jpg">
+</p>
+
+---
+
 _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0_
 
 ---
