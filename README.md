@@ -9,12 +9,15 @@ you also need rs232<->rs485 converter:
 - [x] with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
+_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0_
+
 ---
 
 ### SECTIONS: ###
 #### 1. [INITIALIZING](#initializing) ####
 #### 2. [READING](#reading) ####
 #### 3. [DEBUGING](#debuging) ####
+#### 4. [CREDITS](#credits) ####
 
 ---
 
@@ -129,11 +132,7 @@ sdm.clearErrCount();
 
 ---
 
-_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.0_
-
----
-
-__Credits:__
+### Credits: ###
 
 :+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
