@@ -78,6 +78,8 @@ The most common problems are:
   (I did not observe such problems using the HardwareSerial connection)</br>
 - using GPIO15 without checking signal level (note above)</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/17#issue-313606825</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353413146</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353417658</br>
 
 You can get last error code using function:
 ```cpp
