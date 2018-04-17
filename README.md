@@ -9,6 +9,11 @@ you also need rs232<->rs485 converter:
 - [x] with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
+### SECTIONS: ###
+#### 1. [INITIALIZING](#initializing) ####
+#### 2. [READING](#reading) ####
+#### 3. [DEBUGING](#debuging) ####
+
 <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330">
 
 ---
