@@ -16,7 +16,7 @@ Allows you reading SDM module(s) using:
 - [x] Software Serial (<i>library for ESP8266</i> https://github.com/plerup/espsoftwareserial)
 
 you also need rs232<->rs485 converter:
-- [x] with automatic flow direction control (<i>look at img directory or below</i>) <b><i>or</i></b>
+- [x] with automatic flow direction control (<i>look at imgages below</i>) <b><i>or</i></b>
 - [x] with additional pins for flow control, like MAX485</br>
      (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
