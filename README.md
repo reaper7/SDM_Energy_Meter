@@ -47,8 +47,8 @@ https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
 float voltage = sdm.readVal(SDM220T_VOLTAGE);
 //                                     |__________register name
 
-//reading power from SDM with slave address ID = 0x01
-//reading power from SDM with slave address ID = 0x02
+//reading power from 1st SDM with slave address ID = 0x01
+//reading power from 2nd SDM with slave address ID = 0x02
 //useful with several meters on RS485 line
 float power1 = sdm.readVal(SDM220T_POWER, 0x01);
 float power2 = sdm.readVal(SDM220T_POWER, 0x02);
@@ -68,10 +68,11 @@ You can get this error code using function:
 ```cpp
 //get last error code
 uint16_t lasterror = sdm.getErrCode(true);
-//                                     |__________optional parameter, where true mean read error code and clear stored code
-//                                                without parameter or when set to false 
-//                                                error is returning but is not reset (for future checking)
-//                                                and will be overwriten when next error occurs
+//                                     |__________optional parameter,
+//                                                true -> read error code and reset stored code
+//                                                false or no parameter -> read error code
+//                                                but not reset stored code (for future checking)
+//                                                will be overwriten when next error occurs
 
 //clear error code also available with:
 sdm.clearErrCode();
@@ -81,13 +82,14 @@ __Please check out open and close issues, maybe the cause of your error is expla
 
 You can also check total number of errors using function:
 ```cpp
-//get total errors count
+//get total errors counter
 uint16_t cnterrors = sdm.getErrCount(true);
-//                                     |__________optional parameter, where true mean read errors count and clear stored count
-//                                                without parameter or when set to false 
-//                                                errors count is returning but is not reset (for future checking)
+//                                      |_________optional parameter,
+//                                                true -> read and reset errors counter
+//                                                false or no parameter -> read errors counter
+//                                                but not reset stored counter (for future checking)
 
-//clear errors count also available with:
+//clear errors counter also available with:
 sdm.clearErrCount();
 ```
 
