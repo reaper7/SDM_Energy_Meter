@@ -9,13 +9,13 @@
                      ______________________________                
                     |   L T L T L T L T L T L T    |
                     |                              |
-                 RST|                             1|TX
-                  A0|                             3|RX
+                 RST|                             1|TX HSer
+                  A0|                             3|RX HSer
                   D0|16                           5|D1
                   D5|14                           4|D2
                   D6|12                    10kPUP_0|D3
 RX SSer/HSer swap D7|13                LED_10kPUP_2|D4
-TX_SSer/HSer swap D8|15                            |GND
+TX SSer/HSer swap D8|15                            |GND
                  3V3|__                            |5V
                        |                           |
                        |___________________________|
@@ -55,7 +55,6 @@ const char* wifi_password = "YOUR_PASSWORD";
 String lastresetreason = "";
 
 unsigned long readtime;
-volatile bool otalock = false;
 //------------------------------------------------------------------------------
 typedef volatile struct {
   volatile float regvalarr;
@@ -73,12 +72,10 @@ volatile sdm_struct sdmarr[NBREG] = {
 //------------------------------------------------------------------------------
 void xmlrequest(AsyncWebServerRequest *request) {
   String XML = F("<?xml version='1.0'?><xml>");
-  if(!otalock) {
-    for (int i = 0; i < NBREG; i++) { 
-      XML += "<response" + (String)i + ">";
-      XML += String(sdmarr[i].regvalarr,2);
-      XML += "</response" + (String)i + ">";
-    }
+  for (int i = 0; i < NBREG; i++) { 
+    XML += "<response" + (String)i + ">";
+    XML += String(sdmarr[i].regvalarr,2);
+    XML += "</response" + (String)i + ">";
   }
   XML += F("<freeh>");
   XML += String(ESP.getFreeHeap());
@@ -110,7 +107,6 @@ void otaInit() {
   ArduinoOTA.setHostname(devicename.c_str());
 
   ArduinoOTA.onStart([]() {
-    otalock = true;
     ledOn();
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
@@ -118,11 +114,9 @@ void otaInit() {
   });
   ArduinoOTA.onEnd([]() {
     ledOff();
-    otalock = false;
   });
   ArduinoOTA.onError([](ota_error_t error) {
     ledOff();
-    otalock = false;
   });
   ArduinoOTA.begin();
 }
@@ -184,7 +178,7 @@ void setup() {
 void loop() {
   ArduinoOTA.handle();
 
-  if ((!otalock) && (millis() - readtime >= READSDMEVERY)) {
+  if (millis() - readtime >= READSDMEVERY) {
     sdmRead();
     readtime = millis();
   }
