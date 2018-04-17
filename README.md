@@ -108,8 +108,9 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 
 __Credits:__
 
-:+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)</br>
-:+1: new registers for SDM120 and SDM630 by beireken (https://github.com/beireken/SDM220t)</br>
+:+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
+:+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
+:+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/beireken/SDM220t)</br>
 
 ---
 
