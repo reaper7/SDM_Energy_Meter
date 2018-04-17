@@ -74,7 +74,8 @@ The most common problems are:
   https://github.com/reaper7/SDM_Energy_Meter/issues/16#issue-311042308</br>
 - faulty esp module</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/8#issuecomment-381398551</br>
-- many users report that between each readings should be placed <i>delay(200);</i></br>
+- many users report that between each readings should be placed <i>delay(50);</i></br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272080139</br>
   (I did not observe such problems using the HardwareSerial connection)</br>
 - using GPIO15 without checking signal level (note above)</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/17#issue-313606825</br>
