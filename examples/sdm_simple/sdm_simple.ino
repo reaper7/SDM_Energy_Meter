@@ -2,13 +2,13 @@
                      ______________________________                
                     |   L T L T L T L T L T L T    |
                     |                              |
-                 RST|                             1|TX
-                  A0|                             3|RX
+                 RST|                             1|TX HSer
+                  A0|                             3|RX HSer
                   D0|16                           5|D1
                   D5|14                           4|D2
                   D6|12                    10kPUP_0|D3
 RX SSer/HSer swap D7|13                LED_10kPUP_2|D4
-TX_SSer/HSer swap D8|15                            |GND
+TX SSer/HSer swap D8|15                            |GND
                  3V3|__                            |5V
                        |                           |
                        |___________________________|
