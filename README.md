@@ -1,12 +1,12 @@
 ## Template library for reading SDM120 SDM220 SDM630 Modbus Energy meters. ##
 
 Allows you reading SDM module(s) using:
-* Hardware Serial <i>or</i>
-* Software Serial (library https://github.com/plerup/espsoftwareserial)
+- [x] Hardware Serial <b><i>or</i></b>
+- [x] Software Serial (library https://github.com/plerup/espsoftwareserial)
 
 you also need rs232<->rs485 converter:
-* with automatic flow direction control (<i>look at img directory or below</i>) <i>or</i>
-* with additional pins for flow control, like MAX485
+- [x] with automatic flow direction control (<i>look at img directory or below</i>) <b><i>or</i></b>
+- [x] with additional pins for flow control, like MAX485
 (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
 
 <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330">
@@ -96,8 +96,8 @@ sdm.clearErrCount();
 ---
 
 <p align="center">
-  <i>live page example (extended) screenshot</i></br>
-  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.jpg">
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.jpg"></br>
+  <i>live page example (extended) screenshot</i>
 </p>
 
 ---
