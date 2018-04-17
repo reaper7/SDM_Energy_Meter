@@ -66,7 +66,7 @@ Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
 
 The most common problems are:
-- weak or poorly filtered power supply, causing NaN readings and ESP crashes</br>
+- weak or poorly filtered power supply / LDO, causing NaN readings and ESP crashes</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353532711</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/13#issuecomment-353572909</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/8#issuecomment-381402008</br>
