@@ -18,7 +18,8 @@ This library allows you reading SDM module(s) using:
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
 - [x] with additional pins for flow control, like MAX485</br>
-     (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin and this pin must be passed when initializing the library</i>)
+     (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin</br>
+     and this pin must be passed when initializing the library</i>)
 
 _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
 
@@ -60,7 +61,7 @@ to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resis
 ---
 
 ### Reading: ###
-List of available registers for SDM120/220/630:
+List of available registers for SDM120/220/630:</br>
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
@@ -84,6 +85,8 @@ only ID must be different for each SDM device.</i>
 ### Debuging: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
+
+__Please check out open and close issues, maybe the cause of your error is explained or solved there.__
 
 The most common problems are:
 - weak or poorly filtered power supply / LDO, causing NaN readings and ESP crashes</br>
@@ -115,8 +118,8 @@ uint16_t lasterror = sdm.getErrCode(true);
 //clear error code also available with:
 sdm.clearErrCode();
 ```
-Errors list returned by <b>getErrCode</b>: https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L103</br>
-__Please check out open and close issues, maybe the cause of your error is explained or solved there.__
+Errors list returned by <b>getErrCode</b>:</br>
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L103</br>
 
 You can also check total number of errors using function:
 ```cpp
