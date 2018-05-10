@@ -114,7 +114,11 @@ template <long _speed = SDM_BAUD, int _dere_pin = DERE_PIN, bool _swapuart = SWA
 struct SDM {
 
 #if !defined ( USE_HARDWARESERIAL )
-  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);
+#if defined ( ESP8266 )
+  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);					//for esp8266 SoftwareSerial (https://github.com/plerup/espsoftwareserial)
+#else
+  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin);											//for standard avr SoftwareSerial library
+#endif
 #else
   HardwareSerial sdmSer = HardwareSerial(0);
 #endif
