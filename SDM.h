@@ -115,9 +115,9 @@ struct SDM {
 
 #if !defined ( USE_HARDWARESERIAL )
 #if defined ( ESP8266 )
-  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);					//for esp8266 SoftwareSerial (https://github.com/plerup/espsoftwareserial)
+  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin, false, 32);          //for esp8266 SoftwareSerial (https://github.com/plerup/espsoftwareserial)
 #else
-  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin);											//for standard avr SoftwareSerial library
+  SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin);                     //for standard avr SoftwareSerial library
 #endif
 #else
   HardwareSerial sdmSer = HardwareSerial(0);
