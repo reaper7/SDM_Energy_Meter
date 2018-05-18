@@ -120,7 +120,11 @@ struct SDM {
   SoftwareSerial sdmSer = SoftwareSerial(_rx_pin, _tx_pin);                     //for standard avr SoftwareSerial library
 #endif
 #else
+#if defined ( ESP8266 )
   HardwareSerial sdmSer = HardwareSerial(0);
+#else
+  #error Hardware Serial option available only for ESP8266.
+#endif
 #endif
 
   private:
