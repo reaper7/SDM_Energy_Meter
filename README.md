@@ -38,19 +38,21 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 ```cpp
 //lib init when Software Serial is used:
 #include <SDM.h>
+//      ______________________baudrate
+//     |    __________________rx pin
+//     |   |    ______________tx pin
+//     |   |   |    __________dere pin(optional for max485)
+//     |   |   |   |
 SDM<4800, 13, 15, 12> sdm;
-//     |   |   |   |__________dere pin(optional for max485)
-//     |   |   |______________tx pin
-//     |   |__________________rx pin
-//     |______________________baudrate
 
 //lib init when Hardware Serial is used:
 #define USE_HARDWARESERIAL
 #include <SDM.h>
+//      ______________________baudrate
+//     |    __________________dere pin(optional for max485)
+//     |   |    ______________swap hw serial pins from 3/1 to 13/15(default false)
+//     |   |   |
 SDM<4800, 12, false> sdm;
-//     |   |   |______________swap hw serial pins from 3/1 to 13/15(default false)
-//     |   |__________________dere pin(optional for max485)
-//     |______________________baudrate
 ```
 NOTE: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
 some converters (like mine) have built-in pullup resistors on TX/RX lines from rs232 side,</br>
@@ -65,16 +67,18 @@ List of available registers for SDM120/220/630:</br>
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L36
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
+//                                      __________register name
+//                                     |
 float voltage = sdm.readVal(SDM220T_VOLTAGE);
-//                                     |__________register name
 
 //reading power from 1st SDM with slave address ID = 0x01
 //reading power from 2nd SDM with slave address ID = 0x02
 //useful with several meters on RS485 line
+//                                      __________register name
+//                                     |      ____SDM device ID  
+//                                     |     |
 float power1 = sdm.readVal(SDM220T_POWER, 0x01);
 float power2 = sdm.readVal(SDM220T_POWER, 0x02);
-//                                     |     |____SDM device ID  
-//                                     |__________register name
 ```
 NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
@@ -108,12 +112,12 @@ The most common problems are:
 You can get last error code using function:
 ```cpp
 //get last error code
+//                                      __________optional parameter,
+//                                     |          true -> read and reset error code
+//                                     |          false or no parameter -> read error code
+//                                     |          but not reset stored code (for future checking)
+//                                     |          will be overwriten when next error occurs
 uint16_t lasterror = sdm.getErrCode(true);
-//                                     |__________optional parameter,
-//                                                true -> read and reset error code
-//                                                false or no parameter -> read error code
-//                                                but not reset stored code (for future checking)
-//                                                will be overwriten when next error occurs
 
 //clear error code also available with:
 sdm.clearErrCode();
@@ -124,11 +128,11 @@ https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L103</br>
 You can also check total number of errors using function:
 ```cpp
 //get total errors counter
+//                                       _________optional parameter,
+//                                      |         true -> read and reset errors counter
+//                                      |         false or no parameter -> read errors counter
+//                                      |         but not reset stored counter (for future checking)
 uint16_t cnterrors = sdm.getErrCount(true);
-//                                      |_________optional parameter,
-//                                                true -> read and reset errors counter
-//                                                false or no parameter -> read errors counter
-//                                                but not reset stored counter (for future checking)
 
 //clear errors counter also available with:
 sdm.clearErrCount();
