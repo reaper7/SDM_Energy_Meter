@@ -1,4 +1,4 @@
-## Template library for reading SDM120 SDM220 SDM630 Modbus Energy meters. ##
+## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
 #### 1. [INTRODUCTION](#introduction) ####
