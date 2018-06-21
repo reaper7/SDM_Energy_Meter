@@ -46,13 +46,14 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 SDM<4800, 13, 15, 12> sdm;
 
 //lib init when Hardware Serial is used:
-#define USE_HARDWARESERIAL
 #include <SDM.h>
-//      ______________________baudrate
-//     |    __________________dere pin(optional for max485)
-//     |   |    ______________swap hw serial pins from 3/1 to 13/15(default false)
-//     |   |   |
-SDM<4800, 12, false> sdm;
+//            __________________________________________________hardware serial reference
+//           |      ____________________________________________baudrate(optional, default 4800)
+//           |     |           _________________________________dere pin for max485(optional, default NOT_A_PIN)
+//           |     |          |            _____________________hardware uart config(optional, default SERIAL_8N1)
+//           |     |          |           |       ______________swap hw serial pins from 3/1 to 13/15(optional, default false)
+//           |     |          |           |      |
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 ```
 NOTE: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
 some converters (like mine) have built-in pullup resistors on TX/RX lines from rs232 side,</br>
