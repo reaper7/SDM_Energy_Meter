@@ -6,7 +6,11 @@
 //------------------------------------------------------------------------------
 //DEFAULT CONFIG:
 //------------------------------------------------------------------------------
-//#define USE_HARDWARESERIAL
+//#define USE_HARDWARESERIAL                                                    //define USE_HARDWARESERIAL for hardwareserial
+// or
+#ifdef USE_HARDWARESERIAL
+  #undef USE_HARDWARESERIAL                                                     //undefine USE_HARDWARESERIAL for softwareserial
+#endif
 //------------------------------------------------------------------------------
 #define SDM_UART_BAUD                       4800                                //baudrate
 

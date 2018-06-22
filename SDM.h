@@ -11,9 +11,9 @@
 #include <SDM_Config.h>
 #include <SDM_Config_User.h>
 #ifdef USE_HARDWARESERIAL
-  #include <SoftwareSerial.h>
-#else
   #include <HardwareSerial.h>
+#else
+  #include <SoftwareSerial.h>
 #endif
 //------------------------------------------------------------------------------
 #ifndef SDM_UART_BAUD
