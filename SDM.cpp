@@ -27,7 +27,11 @@ void SDM::begin(void) {
 #if !defined ( USE_HARDWARESERIAL )
   sdmSer.begin(_baud);
 #else
+#if defined ( ESP8266 )
   sdmSer.begin(_baud, (SerialConfig)_config);
+#else
+  sdmSer.begin(_baud, _config);
+#endif
 #endif
 #if defined ( USE_HARDWARESERIAL ) && defined ( ESP8266 )
   if (_swapuart)
