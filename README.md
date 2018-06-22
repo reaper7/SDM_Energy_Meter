@@ -48,10 +48,10 @@ SDM<4800, 13, 15, 12> sdm;
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 //            _____________________________________hardware serial reference
-//           |      _______________________________baudrate(optional, default 4800)
-//           |     |           ____________________dere pin for max485(optional, default NOT_A_PIN)
-//           |     |          |            ________hardware uart config(optional, default SERIAL_8N1)
-//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default false)
+//           |      _______________________________baudrate(optional, default from SDM_Config.h)
+//           |     |           ____________________dere pin for max485(optional, default from SDM_Config.h)
+//           |     |          |            ________hardware uart config(optional, default from SDM_Config.h)
+//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config.h)
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 ```
