@@ -1,6 +1,5 @@
 //sdm live page example by reaper7
 
-//#define USE_HARDWARESERIAL
 #define READSDMEVERY  2000                                                      //read sdm every 2000ms
 #define NBREG   6                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
@@ -26,20 +25,21 @@ TX SSer/HSer swap D8|15                            |GND
 #include <ESP8266mDNS.h>
 #include <ArduinoOTA.h>
 
-#include <ESPAsyncTCP.h>                                                        // https://github.com/me-no-dev/ESPAsyncTCP
-#include <ESPAsyncWebServer.h>                                                  // https://github.com/me-no-dev/ESPAsyncWebServer
+#include <ESPAsyncTCP.h>                                                        //https://github.com/me-no-dev/ESPAsyncTCP
+#include <ESPAsyncWebServer.h>                                                  //https://github.com/me-no-dev/ESPAsyncWebServer
 
-#include <SDM.h>                                                                // https://github.com/reaper7/SDM_Energy_Meter
+#include <SoftwareSerial.h>                                                     //import SoftwareSerial library (if used)
+#include <SDM.h>                                                                //https://github.com/reaper7/SDM_Energy_Meter
 
 #include "index_page.h"
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 
-#if !defined ( USE_HARDWARESERIAL )                                             // SOFTWARE SERIAL
-SDM<4800, 13, 15, NOT_A_PIN> sdm;                                               // baud, rx_pin, tx_pin, de/re_pin(not used in this example)
-#else                                                                           // HARDWARE SERIAL
-SDM<4800, NOT_A_PIN, false> sdm;                                                // baud, de/re_pin(not used in this example), uart0 pins 3/1(false) or 13/15(true)
-#endif
+SoftwareSerial swSerSDM(13, 15);                                                //config SoftwareSerial (rx->pin13 / tx->pin15) (if used)
+
+SDM sdm(swSerSDM, 9600, NOT_A_PIN);                                             //SOFTWARE SERIAL
+//SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);                            //HARDWARE SERIAL
+
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";
 
