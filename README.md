@@ -1,12 +1,13 @@
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
-#### 1. [INTRODUCTION](#introduction) ####
-#### 2. [SCREENSHOTS](#screenshots) ####
-#### 3. [INITIALIZING](#initializing) ####
-#### 4. [READING](#reading) ####
-#### 5. [DEBUGING](#debuging) ####
-#### 6. [CREDITS](#credits) ####
+#### 1. [CONFIGURING](#configuring) ####
+#### 2. [INTRODUCTION](#introduction) ####
+#### 3. [SCREENSHOTS](#screenshots) ####
+#### 4. [INITIALIZING](#initializing) ####
+#### 5. [READING](#reading) ####
+#### 6. [DEBUGING](#debuging) ####
+#### 7. [CREDITS](#credits) ####
 
 ---
 
@@ -31,6 +32,10 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
   <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.gif"></br>
   <i>live page example (extended) screenshot</i>
 </p>
+
+---
+
+### Configuring: ###
 
 ---
 
