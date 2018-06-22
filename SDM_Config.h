@@ -5,34 +5,16 @@
 */
 //------------------------------------------------------------------------------
 //DEFAULT CONFIG:
-/*
 //------------------------------------------------------------------------------
-#define USE_HARDWARESERIAL
+//#define USE_HARDWARESERIAL
 //------------------------------------------------------------------------------
 #define SDM_UART_BAUD                       4800                                //baudrate
 
 #define DERE_PIN                            NOT_A_PIN                           //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 
-#if defined ( USE_HARDWARESERIAL )
-#define SDM_UART_CONFIG                     SERIAL_8N1                          //uart config
-#define SWAPHWSERIAL                        0                                   //when hwserial used, then swap uart pins from 3/1 to 13/15
-#endif
-
-#define MAX_MILLIS_TO_WAIT                  500                                 //max time to wait for response from SDM
-//------------------------------------------------------------------------------
-*/
-
-//USER CONFIG:
-//------------------------------------------------------------------------------
-//#define USE_HARDWARESERIAL
-//------------------------------------------------------------------------------
-#define SDM_UART_BAUD                       9600                                //baudrate
-
-#define DERE_PIN                            NOT_A_PIN                           //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
-
-#if defined ( USE_HARDWARESERIAL )
-#define SDM_UART_CONFIG                     SERIAL_8N1                          //uart config
-#define SWAPHWSERIAL                        0                                   //when hwserial used, then swap uart pins from 3/1 to 13/15
+#ifdef USE_HARDWARESERIAL
+  #define SDM_UART_CONFIG                   SERIAL_8N1                          //uart config
+  #define SWAPHWSERIAL                      0                                   //when hwserial used, then swap uart pins from 3/1 to 13/15
 #endif
 
 #define MAX_MILLIS_TO_WAIT                  500                                 //max time to wait for response from SDM

@@ -6,17 +6,17 @@
 //------------------------------------------------------------------------------
 #include "SDM.h"
 //------------------------------------------------------------------------------
-#if !defined ( USE_HARDWARESERIAL )
-SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin) : sdmSer(serial) {
-  this->_baud = baud;
-  this->_dere_pin = dere_pin;
-}
-#else
+#ifdef USE_HARDWARESERIAL
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, bool swapuart) : sdmSer(serial) {
   this->_baud = baud;
   this->_config = config;
   this->_dere_pin = dere_pin;
   this->_swapuart = swapuart;
+}
+#else
+SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin) : sdmSer(serial) {
+  this->_baud = baud;
+  this->_dere_pin = dere_pin;
 }
 #endif
 
@@ -24,18 +24,20 @@ SDM::~SDM() {
 }
 
 void SDM::begin(void) {
-#if !defined ( USE_HARDWARESERIAL )
+#ifdef USE_HARDWARESERIAL
+  #ifdef ESP8266
+    sdmSer.begin(_baud, (SerialConfig)_config);
+  #else
+    sdmSer.begin(_baud, _config);
+  #endif
+#else
   sdmSer.begin(_baud);
-#else
-#if defined ( ESP8266 )
-  sdmSer.begin(_baud, (SerialConfig)_config);
-#else
-  sdmSer.begin(_baud, _config);
 #endif
-#endif
-#if defined ( USE_HARDWARESERIAL ) && defined ( ESP8266 )
-  if (_swapuart)
-    sdmSer.swap();
+#ifdef USE_HARDWARESERIAL
+  #ifdef ESP8266
+    if (_swapuart)
+      sdmSer.swap();
+  #endif
 #endif
   if (_dere_pin != NOT_A_PIN)	                                                  //set output pin mode for DE/RE pin when used (for control MAX485)
     pinMode(_dere_pin, OUTPUT);
@@ -56,7 +58,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   sdmarr[6] = lowByte(temp);
   sdmarr[7] = highByte(temp);
 
-#if !defined ( USE_HARDWARESERIAL )
+#ifndef USE_HARDWARESERIAL
   sdmSer.listen();                                                              //enable softserial rx interrupt
 #endif
 
@@ -120,7 +122,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     readingerrcount++; 
   }
 
-#if !defined ( USE_HARDWARESERIAL )
+#ifndef USE_HARDWARESERIAL
   sdmSer.end();                                                                 //disable softserial rx interrupt
 #endif
 

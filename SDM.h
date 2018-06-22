@@ -9,10 +9,11 @@
 //------------------------------------------------------------------------------
 #include <Arduino.h>
 #include <SDM_Config.h>
-#if !defined ( USE_HARDWARESERIAL )
-#include <SoftwareSerial.h>
+#include <SDM_Config_User.h>
+#ifdef USE_HARDWARESERIAL
+  #include <SoftwareSerial.h>
 #else
-#include <HardwareSerial.h>
+  #include <HardwareSerial.h>
 #endif
 //------------------------------------------------------------------------------
 #ifndef SDM_UART_BAUD
@@ -23,15 +24,15 @@
   #define DERE_PIN                          NOT_A_PIN
 #endif
 
-#if defined ( USE_HARDWARESERIAL )
+#ifdef USE_HARDWARESERIAL
 
-#ifndef SDM_UART_CONFIG
-  #define SDM_UART_CONFIG                   SERIAL_8N1
-#endif
+  #ifndef SDM_UART_CONFIG
+    #define SDM_UART_CONFIG                 SERIAL_8N1
+  #endif
 
-#ifndef SWAPHWSERIAL
-  #define SWAPHWSERIAL                      0
-#endif
+  #ifndef SWAPHWSERIAL
+    #define SWAPHWSERIAL                    0
+  #endif
 
 #endif
 
@@ -145,10 +146,10 @@
 //------------------------------------------------------------------------------
 class SDM {
   public:
-#if !defined ( USE_HARDWARESERIAL )
-    SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN);
-#else
+#ifdef USE_HARDWARESERIAL
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, bool swapuart = SWAPHWSERIAL);
+#else
+    SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN);
 #endif
     virtual ~SDM();
 
@@ -160,13 +161,13 @@ class SDM {
     void clearErrCount();                                                       //clear total errors count
 
   private:
-#if !defined ( USE_HARDWARESERIAL )
-    SoftwareSerial& sdmSer;
-#else
+#ifdef USE_HARDWARESERIAL
     HardwareSerial& sdmSer;
+#else
+    SoftwareSerial& sdmSer;
 #endif
 
-#if defined ( USE_HARDWARESERIAL )
+#ifdef USE_HARDWARESERIAL
     int _config = SDM_UART_CONFIG;
     bool _swapuart = SWAPHWSERIAL;
 #endif
