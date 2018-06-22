@@ -167,10 +167,10 @@ class SDM {
 #endif
 
 #if defined ( USE_HARDWARESERIAL )
+    int _config = SDM_UART_CONFIG;
     bool _swapuart = SWAPHWSERIAL;
 #endif
     long _baud = SDM_UART_BAUD;
-    int _config = SDM_UART_CONFIG;
     int _dere_pin = DERE_PIN;
     uint16_t readingerrcode = SDM_ERR_NO_ERROR;                                 //4 = timeout; 3 = not enough bytes; 2 = number of bytes OK but bytes b0,b1 or b2 wrong, 1 = crc error
     uint16_t readingerrcount = 0;                                               //total errors couter 

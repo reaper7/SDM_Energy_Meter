@@ -9,8 +9,6 @@
 //------------------------------------------------------------------------------
 #define USE_HARDWARESERIAL
 //------------------------------------------------------------------------------
-#define USE_HARDWARESERIAL
-//------------------------------------------------------------------------------
 #define SDM_UART_BAUD                       4800                                //baudrate
 
 #define DERE_PIN                            NOT_A_PIN                           //digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)

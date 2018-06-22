@@ -9,7 +9,6 @@
 #if !defined ( USE_HARDWARESERIAL )
 SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin) : sdmSer(serial) {
   this->_baud = baud;
-  this->_config = config;
   this->_dere_pin = dere_pin;
 }
 #else
