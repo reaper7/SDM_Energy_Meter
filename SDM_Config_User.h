@@ -9,6 +9,9 @@
 #ifdef USE_HARDWARESERIAL
   #undef USE_HARDWARESERIAL                                                     //undefine USE_HARDWARESERIAL from SDM_Config.h
 #endif
+*/
+// or
+/*
 #define USE_HARDWARESERIAL                                                      //define USE_HARDWARESERIAL
 */
 //------------------------------------------------------------------------------
