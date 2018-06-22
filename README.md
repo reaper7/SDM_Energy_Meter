@@ -42,16 +42,21 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 ### Initializing: ###
 ```cpp
 //lib init when Software Serial is used:
+#include <SoftwareSerial.h>
 #include <SDM.h>
-//      ______________________baudrate
-//     |    __________________rx pin
-//     |   |    ______________tx pin
-//     |   |   |    __________dere pin(optional for max485)
-//     |   |   |   |
-SDM<4800, 13, 15, 12> sdm;
+
+SoftwareSerial swSerSDM(13, 15);
+
+//              __________________software serial reference
+//             |      ____________baudrate(optional, default from SDM_Config.h)   
+//             |     |           _dere pin for max485(optional, default from SDM_Config.h)
+//             |     |          |
+SDM sdm(swSerSDM, 9600, NOT_A_PIN);
+
 
 //lib init when Hardware Serial is used:
 #include <SDM.h>
+
 //            _____________________________________hardware serial reference
 //           |      _______________________________baudrate(optional, default from SDM_Config.h)
 //           |     |           ____________________dere pin for max485(optional, default from SDM_Config.h)
