@@ -48,8 +48,8 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 SoftwareSerial swSerSDM(13, 15);
 
 //              __________________software serial reference
-//             |      ____________baudrate(optional, default from SDM_Config.h)   
-//             |     |           _dere pin for max485(optional, default from SDM_Config.h)
+//             |      ____________baudrate(optional, default from SDM_Config_User.h)   
+//             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
 //             |     |          |
 SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 
@@ -58,10 +58,10 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 #include <SDM.h>
 
 //            _____________________________________hardware serial reference
-//           |      _______________________________baudrate(optional, default from SDM_Config.h)
-//           |     |           ____________________dere pin for max485(optional, default from SDM_Config.h)
-//           |     |          |            ________hardware uart config(optional, default from SDM_Config.h)
-//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config.h)
+//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 ```
