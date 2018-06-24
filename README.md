@@ -1,9 +1,11 @@
+## WARNING! library initialization changed! ##
+
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
-#### 1. [CONFIGURING](#configuring) ####
-#### 2. [INTRODUCTION](#introduction) ####
-#### 3. [SCREENSHOTS](#screenshots) ####
+#### 1. [INTRODUCTION](#introduction) ####
+#### 2. [SCREENSHOTS](#screenshots) ####
+#### 3. [CONFIGURING](#configuring) ####
 #### 4. [INITIALIZING](#initializing) ####
 #### 5. [READING](#reading) ####
 #### 6. [DEBUGING](#debuging) ####
