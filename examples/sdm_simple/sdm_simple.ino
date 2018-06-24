@@ -14,26 +14,21 @@ TX SSer/HSer swap D8|15                            |GND
                        |___________________________|
 */
 
-#include <SDM.h>                                                                //import SDM template library
+#include <SoftwareSerial.h>                                                     //import SoftwareSerial library
+#include <SDM.h>                                                                //import SDM library
 
-#define ASCII_ESC 27
+SoftwareSerial swSerSDM(13, 15);                                                //config SoftwareSerial (rx->pin13 / tx->pin15)
 
-char bufout[10];
-
-//SDM<2400, 13, 15> sdm;                                                        //SDM120T	baud, rx pin, tx pin, dere pin(optional for max485)
-//SDM<4800, 13, 15> sdm;                                                        //SDM220T	baud, rx pin, tx pin, dere pin(optional for max485)
-//SDM<9600, 13, 15> sdm;                                                        //SDM630	baud, rx pin, tx pin, dere pin(optional for max485)
-//or without parameters (default from SDM.h will be used): 
-SDM<> sdm;
+SDM sdm(swSerSDM, 9600, NOT_A_PIN);                                             //config SDM
 
 void setup() {
   Serial.begin(115200);                                                         //initialize serial
-  sdm.begin();                                                                  //initialize SDM220 communication baudrate
+  sdm.begin();                                                                  //initialize SDM communication
 }
 
 void loop() {
-
-  sprintf(bufout,"%c[1;0H",ASCII_ESC);
+  char bufout[10];
+  sprintf(bufout, "%c[1;0H", 27);
   Serial.print(bufout);
 
   Serial.print("Voltage:   ");

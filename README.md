@@ -1,12 +1,13 @@
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
-#### 1. [INTRODUCTION](#introduction) ####
-#### 2. [SCREENSHOTS](#screenshots) ####
-#### 3. [INITIALIZING](#initializing) ####
-#### 4. [READING](#reading) ####
-#### 5. [DEBUGING](#debuging) ####
-#### 6. [CREDITS](#credits) ####
+#### 1. [CONFIGURING](#configuring) ####
+#### 2. [INTRODUCTION](#introduction) ####
+#### 3. [SCREENSHOTS](#screenshots) ####
+#### 4. [INITIALIZING](#initializing) ####
+#### 5. [READING](#reading) ####
+#### 6. [DEBUGING](#debuging) ####
+#### 7. [CREDITS](#credits) ####
 
 ---
 
@@ -34,25 +35,66 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 
 ---
 
+### Configuring: ###
+Default configuration is specified in the SDM.h file, and parameters are set to:</br>
+Software Serial, 4800 baud, uart config SERIAL_8N1, without DE/RE pin.</br>
+
+User can set the parameters in two ways:
+- by editing the SDM_Config_User.h file
+- by passing values during initialization (section below)
+
+---
+
 ### Initializing: ###
+If the configuration is specified in the SDM_Config_User.h file</br>
+or if the default configuration from the SDM.h file is suitable</br>
+initialization is limited to passing serial port references (software or hardware)</br>
+and looks as follows:
 ```cpp
 //lib init when Software Serial is used:
+#include <SoftwareSerial.h>
 #include <SDM.h>
-//      ______________________baudrate
-//     |    __________________rx pin
-//     |   |    ______________tx pin
-//     |   |   |    __________dere pin(optional for max485)
-//     |   |   |   |
-SDM<4800, 13, 15, 12> sdm;
+
+SoftwareSerial swSerSDM(13, 15);
+
+//              _software serial reference
+//             |
+SDM sdm(swSerSDM);
+
 
 //lib init when Hardware Serial is used:
-#define USE_HARDWARESERIAL
 #include <SDM.h>
-//      ______________________baudrate
-//     |    __________________dere pin(optional for max485)
-//     |   |    ______________swap hw serial pins from 3/1 to 13/15(default false)
-//     |   |   |
-SDM<4800, 12, false> sdm;
+
+//            _hardware serial reference
+//           |
+SDM sdm(Serial);
+```
+If the user wants to temporarily change the configuration during the initialization process</br>
+then can pass addidtional parameters as below:
+```cpp
+//lib init when Software Serial is used:
+#include <SoftwareSerial.h>
+#include <SDM.h>
+
+SoftwareSerial swSerSDM(13, 15);
+
+//              __________________software serial reference
+//             |      ____________baudrate(optional, default from SDM_Config_User.h)   
+//             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
+//             |     |          |
+SDM sdm(swSerSDM, 9600, NOT_A_PIN);
+
+
+//lib init when Hardware Serial is used:
+#include <SDM.h>
+
+//            _____________________________________hardware serial reference
+//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
+//           |     |          |           |      |
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 ```
 NOTE: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
 some converters (like mine) have built-in pullup resistors on TX/RX lines from rs232 side,</br>
