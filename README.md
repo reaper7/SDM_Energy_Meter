@@ -48,7 +48,7 @@ User can set the parameters in two ways:
 ### Initializing: ###
 If the configuration is specified in the SDM_Config_User.h file</br>
 or if the default configuration from the SDM.h file is suitable</br>
-initialization is limited to passing serial port references (hardware or software)</br>
+initialization is limited to passing serial port references (software or hardware)</br>
 and looks as follows:
 ```cpp
 //lib init when Software Serial is used:
