@@ -46,6 +46,31 @@ User can set the parameters in two ways:
 ---
 
 ### Initializing: ###
+If the configuration is specified in the SDM_Config_User.h file</br>
+or if the default configuration from the SDM.h file is suitable</br>
+initialization is limited to passing serial port references (hardware or software)</br>
+and looks as follows:
+```cpp
+//lib init when Software Serial is used:
+#include <SoftwareSerial.h>
+#include <SDM.h>
+
+SoftwareSerial swSerSDM(13, 15);
+
+//              _software serial reference
+//             |
+SDM sdm(swSerSDM);
+
+
+//lib init when Hardware Serial is used:
+#include <SDM.h>
+
+//            _hardware serial reference
+//           |
+SDM sdm(Serial);
+```
+If the user wants to temporarily change the configuration during the initialization process</br>
+then can pass addidtional parameters as below:
 ```cpp
 //lib init when Software Serial is used:
 #include <SoftwareSerial.h>
