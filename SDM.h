@@ -8,7 +8,6 @@
 #define SDM_h
 //------------------------------------------------------------------------------
 #include <Arduino.h>
-#include <SDM_Config.h>
 #include <SDM_Config_User.h>
 #ifdef USE_HARDWARESERIAL
   #include <HardwareSerial.h>
@@ -17,27 +16,27 @@
 #endif
 //------------------------------------------------------------------------------
 #ifndef SDM_UART_BAUD
-  #define SDM_UART_BAUD                     4800
+  #define SDM_UART_BAUD                     4800                                //default baudrate
 #endif
 
 #ifndef DERE_PIN
-  #define DERE_PIN                          NOT_A_PIN
+  #define DERE_PIN                          NOT_A_PIN                           //default digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 #endif
 
 #ifdef USE_HARDWARESERIAL
 
   #ifndef SDM_UART_CONFIG
-    #define SDM_UART_CONFIG                 SERIAL_8N1
+    #define SDM_UART_CONFIG                 SERIAL_8N1                          //default hardware uart config
   #endif
 
   #ifndef SWAPHWSERIAL
-    #define SWAPHWSERIAL                    0
+    #define SWAPHWSERIAL                    0                                   //(only esp8266) when hwserial used, then swap uart pins from 3/1 to 13/15 (default not swap)
   #endif
 
 #endif
 
 #ifndef MAX_MILLIS_TO_WAIT
-  #define MAX_MILLIS_TO_WAIT                500
+  #define MAX_MILLIS_TO_WAIT                500                                 //default max time to wait for response from SDM
 #endif
 //------------------------------------------------------------------------------
 #define FRAMESIZE                           9                                   //size of out/in array
