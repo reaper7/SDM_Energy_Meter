@@ -1,7 +1,7 @@
 //sdm live page example by reaper7
 
 #define READSDMEVERY  2000                                                      //read sdm every 2000ms
-#define NBREG   6                                                               //number of sdm registers to read
+#define NBREG   5                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
 
 /*  WEMOS D1 Mini
@@ -66,7 +66,6 @@ volatile sdm_struct sdmarr[NBREG] = {
   {0.00, SDM220T_CURRENT},                                                      //A
   {0.00, SDM220T_POWER},                                                        //W
   {0.00, SDM220T_POWER_FACTOR},                                                 //PF
-  {0.00, SDM220T_PHASE_ANGLE},                                                  //DEGREE
   {0.00, SDM220T_FREQUENCY},                                                    //Hz
 };
 //------------------------------------------------------------------------------
