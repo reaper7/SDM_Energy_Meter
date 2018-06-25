@@ -39,7 +39,7 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 
 ### Configuring: ###
 Default configuration is specified in the SDM.h file, and parameters are set to:</br>
-Software Serial, 4800 baud, uart config SERIAL_8N1, without DE/RE pin.</br>
+<i>Software Serial, baud 4800, uart config SERIAL_8N1, without DE/RE pin</i>.</br>
 
 User can set the parameters in two ways:
 - by editing the SDM_Config_User.h file
