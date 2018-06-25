@@ -4,8 +4,8 @@
 #define NBREG   6                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
 
-/*  WEMOS D1 Mini                            
-                     ______________________________                
+/*  WEMOS D1 Mini
+                     ______________________________
                     |   L T L T L T L T L T L T    |
                     |                              |
                  RST|                             1|TX HSer
