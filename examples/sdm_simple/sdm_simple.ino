@@ -1,5 +1,5 @@
 /*  WEMOS D1 Mini                            
-                     ______________________________                
+                     ______________________________ 
                     |   L T L T L T L T L T L T    |
                     |                              |
                  RST|                             1|TX HSer
@@ -34,7 +34,7 @@ void loop() {
   Serial.print("Voltage:   ");
   Serial.print(sdm.readVal(SDM220T_VOLTAGE), 2);                                //display voltage
   Serial.println("V");
-  
+
   delay(50);
 
   Serial.print("Current:   ");
