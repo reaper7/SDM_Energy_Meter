@@ -1,5 +1,5 @@
-/*  WEMOS D1 Mini                            
-                     ______________________________ 
+/*  WEMOS D1 Mini
+                     ______________________________
                     |   L T L T L T L T L T L T    |
                     |                              |
                  RST|                             1|TX HSer
