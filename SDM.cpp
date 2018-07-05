@@ -80,7 +80,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   resptime = millis() + MAX_MILLIS_TO_WAIT;
 
-    while (sdmSer.available() < FRAMESIZE) {
+  while (sdmSer.available() < FRAMESIZE) {
     if (resptime < millis()) {
       readErr = SDM_ERR_TIMEOUT;                                                //err debug (4)
       break;
@@ -117,7 +117,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   }
 
-    if (readErr != SDM_ERR_NO_ERROR) {                                          //if error then copy temp error value to global val and increment global error counter
+  if (readErr != SDM_ERR_NO_ERROR) {                                            //if error then copy temp error value to global val and increment global error counter
     readingerrcode = readErr;
     readingerrcount++; 
   }
