@@ -1,7 +1,7 @@
 ## WARNING! library initialization changed! ##
 <i>old library version is available at old_template branch:<br>
 https://github.com/reaper7/SDM_Energy_Meter/tree/old_template</i>
-
+</br>
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
