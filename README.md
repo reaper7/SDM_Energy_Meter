@@ -23,7 +23,7 @@ This library allows you reading SDM module(s) using:
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
 - [x] with additional pins for flow control, like MAX485</br>
-     (<i>in this case MAX485 DE and RE pins must be connected together to one of esp pin</br>
+     (<i>in this case MAX485 DE and RE pins must be connected together to one of uC pin</br>
      and this pin must be passed when initializing the library</i>)
 
 _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
@@ -100,7 +100,7 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 ```
-NOTE: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
+NOTE for ESP8266: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
 some converters (like mine) have built-in pullup resistors on TX/RX lines from rs232 side,</br>
 connection this type of converters to ESP8266 pin GPIO15 block booting process.</br>
 In this case you can replace the pull-up resistor on converter with higher value (100k),</br>
