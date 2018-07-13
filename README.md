@@ -1,6 +1,5 @@
 ## WARNING! library initialization changed! ##
 <i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
-</br>
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
@@ -49,9 +48,9 @@ User can set the parameters in two ways:
 ---
 
 ### Initializing: ###
-If the configuration is specified in the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file</br>
+If the user configuration is specified in the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file</br>
 or if the default configuration from the [SDM.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L18) file is suitable</br>
-initialization is limited to passing serial port references (software or hardware)</br>
+initialization is limited to passing serial port reference (software or hardware)</br>
 and looks as follows:
 ```cpp
 //lib init when Software Serial is used:
@@ -73,7 +72,7 @@ SDM sdm(swSerSDM);
 SDM sdm(Serial);
 ```
 If the user wants to temporarily change the configuration during the initialization process</br>
-then can pass addidtional parameters as below:
+then can pass additional parameters as below:
 ```cpp
 //lib init when Software Serial is used:
 #include <SoftwareSerial.h>
