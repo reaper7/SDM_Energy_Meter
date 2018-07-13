@@ -15,7 +15,7 @@
   #include <SoftwareSerial.h>
 #endif
 //------------------------------------------------------------------------------
-//DEFAULT CONFIG:
+//DEFAULT CONFIG (DO NOT CHANGE ANYTHING!!! for changes use SDM_Config_User.h):
 //------------------------------------------------------------------------------
 #ifndef SDM_UART_BAUD
   #define SDM_UART_BAUD                     4800                                //default baudrate
