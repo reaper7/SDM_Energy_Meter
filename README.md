@@ -1,6 +1,5 @@
 ## WARNING! library initialization changed! ##
-<i>old library version is available at old_template branch:<br>
-https://github.com/reaper7/SDM_Energy_Meter/tree/old_template</i>
+<i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 </br>
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
@@ -18,7 +17,7 @@ https://github.com/reaper7/SDM_Energy_Meter/tree/old_template</i>
 ### Introduction: ###
 This library allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i>recommended option, smallest number of reads errors</i>) <b><i>or</i></b>
-- [x] Software Serial (<i>library for ESP8266</i> https://github.com/plerup/espsoftwareserial)
+- [x] Software Serial (<i>[library for ESP8266](https://github.com/plerup/espsoftwareserial)</i>)
 
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
@@ -40,18 +39,18 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.
 ---
 
 ### Configuring: ###
-Default configuration is specified in the SDM.h file, and parameters are set to:</br>
+Default configuration is specified in the [SDM.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L18) file, and parameters are set to:</br>
 <i>Software Serial, baud 4800, uart config SERIAL_8N1, without DE/RE pin</i>.</br>
 
 User can set the parameters in two ways:
-- by editing the SDM_Config_User.h file
+- by editing the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file
 - by passing values during initialization (section below)
 
 ---
 
 ### Initializing: ###
-If the configuration is specified in the SDM_Config_User.h file</br>
-or if the default configuration from the SDM.h file is suitable</br>
+If the configuration is specified in the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file</br>
+or if the default configuration from the [SDM.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L18) file is suitable</br>
 initialization is limited to passing serial port references (software or hardware)</br>
 and looks as follows:
 ```cpp
