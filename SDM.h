@@ -135,6 +135,14 @@
 #define SDM630_EXPORT_REACTIVE_ENERGY       0x004E                              //VARh
 #define SDM630_TOTAL_SYSTEM_POWER_DEMAND    0x0054                              //W
 #define SDM630_MAXIMUM_TOTAL_SYSTEM_POWER   0x0056                              //W
+#define SDM630_PHASE_1_LN_VOLTS_THD         0x00EA                              //%
+#define SDM630_PHASE_2_LN_VOLTS_THD         0x00EC                              //%
+#define SDM630_PHASE_3_LN_VOLTS_THD         0x00EE                              //%
+#define SDM630_AVERAGE_VOLTS_THD            0x00F8                              //%
+#define SDM630_PHASE_1_CURRENT_THD          0x00F0                              //%
+#define SDM630_PHASE_2_CURRENT_THD          0x00F2                              //%
+#define SDM630_PHASE_3_CURRENT_THD          0x00F4                              //%
+#define SDM630_AVERAGE_CURRENT_THD          0x00FA                              //%
 
 #define SDM_B_05                            0x00                                //BYTE 5
 #define SDM_B_06                            0x02                                //BYTE 6
