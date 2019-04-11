@@ -143,6 +143,15 @@
 #define SDM630_PHASE_2_CURRENT_THD          0x00F2                              //%
 #define SDM630_PHASE_3_CURRENT_THD          0x00F4                              //%
 #define SDM630_AVERAGE_CURRENT_THD          0x00FA                              //%
+#define SDM630_IMPORT1                      0x015a                              //kWh
+#define SDM630_IMPORT2                      0x015c                              //kWh
+#define SDM630_IMPORT3                      0x015e                              //kWh
+#define SDM630_EXPORT1                      0x0160                              //kWh
+#define SDM630_EXPORT2                      0x0162                              //kWh
+#define SDM630_EXPORT3                      0x0164                              //kWh
+#define SDM630_TOTAL_ENERGY1                0x0166                              //kWh
+#define SDM630_TOTAL_ENERGY2                0x0168                              //kWh
+#define SDM630_TOTAL_ENERGY3                0x016a                              //kWh
 
 #define SDM_B_05                            0x00                                //BYTE 5
 #define SDM_B_06                            0x02                                //BYTE 6
