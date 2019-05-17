@@ -90,8 +90,9 @@ SoftwareSerial swSerSDM(13, 15);
 //             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
 //             |     |          |
 SDM sdm(swSerSDM, 9600, NOT_A_PIN);
+```
 
-
+```cpp
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 
