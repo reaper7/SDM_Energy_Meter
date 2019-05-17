@@ -46,7 +46,7 @@ User can set the parameters in two ways:
 - by passing values during initialization (section below)
 
 NOTE for Hardware Serial mode: <i>to force the Hardware Serial mode,</br>
-user must edit the corresponding entry in [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h#L13) file.</br>
+user must edit the corresponding entry in [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h#L17) file.</br>
 adding #define USE_HARDWARESERIAL to the main ino file is not enough.</i>
 
 ---
@@ -112,7 +112,7 @@ to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resis
 
 ### Reading: ###
 List of available registers for SDM120/220/230/630:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L50
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L52
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
 //                                      __________register name
@@ -174,7 +174,7 @@ uint16_t lasterror = sdm.getErrCode(true);
 sdm.clearErrCode();
 ```
 Errors list returned by <b>getErrCode</b>:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L142</br>
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L161</br>
 
 You can also check total number of errors using function:
 ```cpp
