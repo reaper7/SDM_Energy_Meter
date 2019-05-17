@@ -1,6 +1,6 @@
 /* Library for reading SDM 120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2018 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
+*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
@@ -31,8 +31,10 @@
     #define SDM_UART_CONFIG                 SERIAL_8N1                          //default hardware uart config
   #endif
 
-  #ifndef SWAPHWSERIAL
-    #define SWAPHWSERIAL                    0                                   //(only esp8266) when hwserial used, then swap uart pins from 3/1 to 13/15 (default not swap)
+  #ifdef ESP8266
+    #ifndef SWAPHWSERIAL
+      #define SWAPHWSERIAL                    0                                 //(only esp8266) when hwserial used, then swap uart pins from 3/1 to 13/15 (default not swap)
+    #endif
   #endif
 
 #endif
@@ -165,7 +167,13 @@
 class SDM {
   public:
 #ifdef USE_HARDWARESERIAL
+  #if defined ( ESP8266 )
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, bool swapuart = SWAPHWSERIAL);
+  #elif defined ( ESP32 )
+    SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, int8_t rx_pin=-1, int8_t tx_pin=-1);
+  #else
+    SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG);
+  #endif
 #else
     SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN);
 #endif
@@ -187,7 +195,12 @@ class SDM {
 
 #ifdef USE_HARDWARESERIAL
     int _config = SDM_UART_CONFIG;
+  #if defined ( ESP8266 )
     bool _swapuart = SWAPHWSERIAL;
+  #elif defined ( ESP32 )
+    int8_t _rx_pin=-1;
+    int8_t _tx_pin=-1;
+  #endif
 #endif
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;

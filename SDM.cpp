@@ -1,18 +1,34 @@
 /* Library for reading SDM 120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2018 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
+*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
 #include "SDM.h"
 //------------------------------------------------------------------------------
 #ifdef USE_HARDWARESERIAL
+#if defined ( ESP8266 )
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, bool swapuart) : sdmSer(serial) {
   this->_baud = baud;
   this->_config = config;
   this->_dere_pin = dere_pin;
   this->_swapuart = swapuart;
 }
+#elif defined ( ESP32 )
+SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, int8_t rx_pin, int8_t tx_pin) : sdmSer(serial) {
+  this->_baud = baud;
+  this->_config = config;
+  this->_dere_pin = dere_pin;
+  this->_rx_pin = rx_pin;
+  this->_tx_pin = tx_pin;
+}
+#else
+SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config) : sdmSer(serial) {
+  this->_baud = baud;
+  this->_config = config;
+  this->_dere_pin = dere_pin;
+}
+#endif
 #else
 SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin) : sdmSer(serial) {
   this->_baud = baud;
@@ -25,19 +41,21 @@ SDM::~SDM() {
 
 void SDM::begin(void) {
 #ifdef USE_HARDWARESERIAL
-  #ifdef ESP8266
-    sdmSer.begin(_baud, (SerialConfig)_config);
-  #else
-    sdmSer.begin(_baud, _config);
-  #endif
+#if defined ( ESP8266 )
+  sdmSer.begin(_baud, (SerialConfig)_config);
+#elif defined ( ESP32 )
+  sdmSer.begin(_baud, _config, _rx_pin, _tx_pin);
+#else
+  sdmSer.begin(_baud, _config);
+#endif
 #else
   sdmSer.begin(_baud);
 #endif
 #ifdef USE_HARDWARESERIAL
-  #ifdef ESP8266
-    if (_swapuart)
-      sdmSer.swap();
-  #endif
+#ifdef ESP8266
+  if (_swapuart)
+    sdmSer.swap();
+#endif
 #endif
   if (_dere_pin != NOT_A_PIN)	                                                  //set output pin mode for DE/RE pin when used (for control MAX485)
     pinMode(_dere_pin, OUTPUT);
