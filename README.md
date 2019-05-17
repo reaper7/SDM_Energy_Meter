@@ -66,8 +66,9 @@ SoftwareSerial swSerSDM(13, 15);
 //              _software serial reference
 //             |
 SDM sdm(swSerSDM);
+```
 
-
+```cpp
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 
