@@ -96,6 +96,7 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 
+// for ESP8266
 //            _____________________________________hardware serial reference
 //           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
 //           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
@@ -103,6 +104,27 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 //           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
+
+
+// for ESP32
+//            ____________________________________________hardware serial reference
+//           |      ______________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           ___________________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _______________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |       ________rx pin number(optional)
+//           |     |          |           |      |       _tx pin number(optional)
+//           |     |          |           |      |      | 
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, rxpin, txpin);
+
+
+// for AVR
+//            _____________________________________hardware serial reference
+//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |
+//           |     |          |           |
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1);
 ```
 NOTE for ESP8266: <i>when GPIO15 is used (especially for swapped hardware serial):</br>
 some converters (like mine) have built-in pullup resistors on TX/RX lines from rs232 side,</br>
