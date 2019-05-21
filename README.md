@@ -236,6 +236,6 @@ sdm.clearSuccCount();
 
 ---
 
-**2016-2018 Reaper7**
+**2016-2019 Reaper7**
 
 [paypal.me/reaper7md](https://www.paypal.me/reaper7md)
