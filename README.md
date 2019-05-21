@@ -1,5 +1,3 @@
-## WARNING! library initialization changed! ##
-<i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 ## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
@@ -233,6 +231,10 @@ sdm.clearSuccCount();
 :+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
 :+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/beireken/SDM220t)</br>
+
+---
+
+<i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 
 ---
 
