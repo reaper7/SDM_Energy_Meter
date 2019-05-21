@@ -213,6 +213,19 @@ uint16_t cnterrors = sdm.getErrCount(true);
 sdm.clearErrCount();
 ```
 
+And finally you can read the counter of correctly made readings:
+```cpp
+//get total success counter
+//                                         _________optional parameter,
+//                                        |         true -> read and reset success counter
+//                                        |         false or no parameter -> read success counter
+//                                        |         but not reset stored counter (for future checking)
+uint16_t cntsuccess = sdm.getSuccCount(true);
+
+//clear success counter also available with:
+sdm.clearSuccCount();
+```
+
 ---
 
 ### Credits: ###
