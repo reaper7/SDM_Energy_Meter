@@ -138,6 +138,8 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   if (readErr != SDM_ERR_NO_ERROR) {                                            //if error then copy temp error value to global val and increment global error counter
     readingerrcode = readErr;
     readingerrcount++; 
+  } else {
+    ++readingsuccesscount;
   }
 
   while (sdmSer.available() > 0)  {                                             //read redundant serial bytes, if any
@@ -165,12 +167,23 @@ uint16_t SDM::getErrCount(bool _clear) {
   return (_tmp);
 }
 
+uint16_t SDM::getSuccCount(bool _clear) {
+  uint16_t _tmp = readingsuccesscount;
+  if (_clear == true)
+    clearSuccCount();
+  return (_tmp);
+}
+
 void SDM::clearErrCode() {
   readingerrcode = SDM_ERR_NO_ERROR;
 }
 
 void SDM::clearErrCount() {
   readingerrcount = 0;
+}
+
+void SDM::clearSuccCount() {
+  readingsuccesscount = 0;
 }
 
 uint16_t SDM::calculateCRC(uint8_t *array, uint8_t num) {
