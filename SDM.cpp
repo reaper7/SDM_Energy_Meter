@@ -10,23 +10,23 @@
 #if defined ( ESP8266 )
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, bool swapuart) : sdmSer(serial) {
   this->_baud = baud;
-  this->_config = config;
   this->_dere_pin = dere_pin;
+  this->_config = config;
   this->_swapuart = swapuart;
 }
 #elif defined ( ESP32 )
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, int8_t rx_pin, int8_t tx_pin) : sdmSer(serial) {
   this->_baud = baud;
-  this->_config = config;
   this->_dere_pin = dere_pin;
+  this->_config = config;
   this->_rx_pin = rx_pin;
   this->_tx_pin = tx_pin;
 }
 #else
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config) : sdmSer(serial) {
   this->_baud = baud;
-  this->_config = config;
   this->_dere_pin = dere_pin;
+  this->_config = config;
 }
 #endif
 #else
