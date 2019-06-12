@@ -57,8 +57,10 @@ void SDM::begin(void) {
     sdmSer.swap();
 #endif
 #endif
-  if (_dere_pin != NOT_A_PIN)	                                                  //set output pin mode for DE/RE pin when used (for control MAX485)
-    pinMode(_dere_pin, OUTPUT);
+  if (_dere_pin != NOT_A_PIN) {
+    pinMode(_dere_pin, OUTPUT);                                                 //set output pin mode for DE/RE pin when used (for control MAX485)
+    digitalWrite(_dere_pin, LOW);                                               //set init state as receive from SDM -> DE Disable, /RE Enable (for control MAX485)
+  }
 }
 
 float SDM::readVal(uint16_t reg, uint8_t node) {
@@ -84,8 +86,8 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     sdmSer.read();
   }
 
-  if (_dere_pin != NOT_A_PIN)                                                   //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
-    digitalWrite(_dere_pin, HIGH);
+  if (_dere_pin != NOT_A_PIN)
+    digitalWrite(_dere_pin, HIGH);                                              //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
 
   delay(2);                                                                     //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
 
@@ -93,8 +95,8 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   sdmSer.flush();                                                               //clear out tx buffer
 
-  if (_dere_pin != NOT_A_PIN)                                                   //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
-    digitalWrite(_dere_pin, LOW);
+  if (_dere_pin != NOT_A_PIN)
+    digitalWrite(_dere_pin, LOW);                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
   resptime = millis() + MAX_MILLIS_TO_WAIT;
 
