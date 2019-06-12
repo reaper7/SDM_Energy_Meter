@@ -59,7 +59,7 @@ void SDM::begin(void) {
 #endif
   if (_dere_pin != NOT_A_PIN) {
     pinMode(_dere_pin, OUTPUT);                                                 //set output pin mode for DE/RE pin when used (for control MAX485)
-    digitalWrite(_dere_pin, LOW);                                               //set init state as receive from SDM -> DE Disable, /RE Enable (for control MAX485)
+    digitalWrite(_dere_pin, LOW);                                               //set init state to receive from SDM -> DE Disable, /RE Enable (for control MAX485)
   }
 }
 
