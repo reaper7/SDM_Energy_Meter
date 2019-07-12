@@ -6,7 +6,7 @@
 #### 3. [CONFIGURING](#configuring) ####
 #### 4. [INITIALIZING](#initializing) ####
 #### 5. [READING](#reading) ####
-#### 6. [DEBUGING](#debuging) ####
+#### 6. [PROBLEMS](#problems) ####
 #### 7. [CREDITS](#credits) ####
 
 ---
@@ -156,7 +156,7 @@ only ID must be different for each SDM device.</i>
 
 ---
 
-### Debuging: ###
+### Problems: ###
 Sometimes <b>readVal</b> return <b>NaN</b> value (not a number),</br>
 this means that the requested value could not be read from the sdm module for various reasons.</br>
 
