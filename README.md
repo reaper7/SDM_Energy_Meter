@@ -13,7 +13,7 @@
 
 ### Introduction: ###
 This library allows you reading SDM module(s) using:
-- [x] Hardware Serial (<i>recommended option, smallest number of reads errors</i>) <b><i>or</i></b>
+- [x] Hardware Serial (<i><b>recommended option</b>, smallest number of reads errors, especially for esp8266</i>) <b><i>or</i></b>
 - [x] Software Serial (<i>[library for ESP8266](https://github.com/plerup/espsoftwareserial)</i>), attached as libraries for esp8266 and avr
 
 you also need rs232<->rs485 converter:
