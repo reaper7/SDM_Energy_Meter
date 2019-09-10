@@ -1,4 +1,4 @@
-## Library for reading SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
+## Library for reading SDM72 SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
 
 ### SECTIONS: ###
 #### 1. [INTRODUCTION](#introduction) ####
@@ -133,7 +133,7 @@ to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resis
 ---
 
 ### Reading: ###
-List of available registers for SDM120/220/230/630:</br>
+List of available registers for SDM72/120/220/230/630:</br>
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L52
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
@@ -231,6 +231,7 @@ sdm.clearSuccCount();
 :+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
 :+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/beireken/SDM220t)</br>
+:+1: new registers for SDM72 by jegaha (https://github.com/jegaha/SDM_Energy_Meter)</br>
 
 ---
 
