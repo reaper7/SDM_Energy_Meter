@@ -49,6 +49,16 @@
 #define SDM_B_01                            0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
 #define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 0x04 read from 3X input registers)
                                                                                 //BYTES 3 & 4 (BELOW)
+//SDM 72 registers
+#define SDM72_TOTAL_POWER                   0x0034                              //W
+#define SDM72_IMPORT_ENERGY                 0x0048                              //kWh
+#define SDM72_EXPORT_ENERGY                 0x004A                              //kWh
+#define SDM72_TOTAL_ENERGY                  0x0156                              //kWh
+#define SDM72_SETABLE_TOTAL_ENERGY          0x0180                              //kWh
+#define SDM72_SETABLE_IMPORT_ENERGY         0x0184                              //kWh
+#define SDM72_SETABLE_EXPORT_ENERGY         0x0186                              //kWh
+#define SDM72_IMPORT_POWER                  0x0500                              //W
+#define SDM72_EXPORT_POWER                  0x0502                              //W
 //SDM 120 registers
 #define SDM120C_VOLTAGE                     0x0000                              //V
 #define SDM120C_CURRENT                     0x0006                              //A
