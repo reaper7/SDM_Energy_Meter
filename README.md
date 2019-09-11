@@ -228,10 +228,17 @@ sdm.clearSuccCount();
 
 ### Credits: ###
 
+contribution to this project:</br>
 :+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
 :+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/beireken/SDM220t)</br>
 :+1: new registers for SDM72 by jegaha (https://github.com/jegaha/SDM_Energy_Meter)</br>
+
+other projects based on or using this library</br>
+:point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
+:point_right: DDS238 Energy Meter by E-NINA (https://github.com/E-NINA/dds238_Energy_Meter)</br>
+:point_right: ESPEasy by TD-er (https://github.com/TD-er/ESPEasy)</br>
+:point_right: Sonoff-Tasmota by arendst (https://github.com/arendst/Sonoff-Tasmota)</br>
 
 ---
 
