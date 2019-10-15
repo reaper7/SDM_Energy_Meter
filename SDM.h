@@ -220,5 +220,7 @@ class SDM {
     uint16_t readingerrcount = 0;                                               //total errors counter
     uint32_t readingsuccesscount = 0;                                           //total success counter
     uint16_t calculateCRC(uint8_t *array, uint8_t num);
+    void flush();                                                               //read serial if any old data is available
+    void dereSet(bool _state = LOW);                                            //for control MAX485 DE/RE pins, LOW receive from SDM, HIGH transmit to SDM
 };
 #endif //SDM_h

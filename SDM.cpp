@@ -59,8 +59,8 @@ void SDM::begin(void) {
 #endif
   if (_dere_pin != NOT_A_PIN) {
     pinMode(_dere_pin, OUTPUT);                                                 //set output pin mode for DE/RE pin when used (for control MAX485)
-    digitalWrite(_dere_pin, LOW);                                               //set init state to receive from SDM -> DE Disable, /RE Enable (for control MAX485)
   }
+  dereSet(LOW);                                                                 //set init state to receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 }
 
 float SDM::readVal(uint16_t reg, uint8_t node) {
@@ -82,12 +82,9 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   sdmSer.listen();                                                              //enable softserial rx interrupt
 #endif
 
-  while (sdmSer.available() > 0)  {                                             //read serial if any old data is available
-    sdmSer.read();
-  }
+  flush();                                                                      //read serial if any old data is available
 
-  if (_dere_pin != NOT_A_PIN)
-    digitalWrite(_dere_pin, HIGH);                                              //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
+  dereSet(HIGH);                                                                //transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
 
   delay(2);                                                                     //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
 
@@ -95,8 +92,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   sdmSer.flush();                                                               //clear out tx buffer
 
-  if (_dere_pin != NOT_A_PIN)
-    digitalWrite(_dere_pin, LOW);                                               //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
+  dereSet(LOW);                                                                 //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
   resptime = millis() + MAX_MILLIS_TO_WAIT;
 
@@ -144,9 +140,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     ++readingsuccesscount;
   }
 
-  while (sdmSer.available() > 0)  {                                             //read redundant serial bytes, if any
-    sdmSer.read();
-  }
+  flush();                                                                      //read serial if any old data is available
 
 #ifndef USE_HARDWARESERIAL
   sdmSer.stopListening();                                                       //disable softserial rx interrupt
@@ -201,4 +195,17 @@ uint16_t SDM::calculateCRC(uint8_t *array, uint8_t num) {
     }
   }
   return _crc;
+}
+
+void SDM::flush() {
+  uint8_t _i = 0;
+  while (sdmSer.available() && _i++ < 10)  {                                    //read serial if any old data is available
+    sdmSer.read();
+    delay(1);
+  }
+}
+
+void SDM::dereSet(bool _state) {
+  if (_dere_pin != NOT_A_PIN)
+    digitalWrite(_dere_pin, _state);                                            //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 }
