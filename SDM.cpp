@@ -149,7 +149,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   }
 
 #ifndef USE_HARDWARESERIAL
-  sdmSer.end();                                                                 //disable softserial rx interrupt
+  sdmSer.stopListening();                                                       //disable softserial rx interrupt
 #endif
 
   return (res);
