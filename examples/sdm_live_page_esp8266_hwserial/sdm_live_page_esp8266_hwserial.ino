@@ -1,5 +1,7 @@
 //sdm live page example by reaper7
 
+//REMEMBER! uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h file too.
+
 #define READSDMEVERY  2000                                                      //read sdm every 2000ms
 #define NBREG   5                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
