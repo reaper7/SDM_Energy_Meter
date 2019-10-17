@@ -14,7 +14,9 @@
 ### Introduction: ###
 This library allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i><b>recommended option</b>, smallest number of reads errors, especially for esp8266</i>) <b><i>or</i></b>
-- [x] Software Serial (<i>[library for ESP8266](https://github.com/plerup/espsoftwareserial)</i>), attached as libraries for esp8266 and avr
+- [x] Software Serial, attached as core libraries for esp8266 and avr</br>
+     (<i>the new version of esp Software Serial library</br>
+      has a different initialization compared to avr!</i>)
 
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
@@ -22,7 +24,7 @@ you also need rs232<->rs485 converter:
      (<i>in this case MAX485 DE and RE pins must be connected together to one of uC pin</br>
      and this pin must be passed when initializing the library</i>)
 
-_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
+_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.8.10 & ESP8266 core 2.3.0-2.5.2_
 
 ---
 
@@ -59,8 +61,20 @@ and looks as follows:
 #include <SoftwareSerial.h>
 #include <SDM.h>
 
-SoftwareSerial swSerSDM(13, 15);
+// for ESP8266 and ESP32
+SoftwareSerial swSerSDM;
+//              ______________________________________________software serial reference
+//             |      ________________________________________baudrate
+//             |     |           _____________________________dere pin for max485
+//             |     |          |              _______________software uart config
+//             |     |          |             |       ________rx pin number(obligatory)
+//             |     |          |             |      |       _tx pin number(obligatory)
+//             |     |          |             |      |      | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
 
+
+// for AVR
+SoftwareSerial swSerSDM(10, 11);
 //              _software serial reference
 //             |
 SDM sdm(swSerSDM);
@@ -81,8 +95,20 @@ then can pass additional parameters as below:
 #include <SoftwareSerial.h>
 #include <SDM.h>
 
-SoftwareSerial swSerSDM(13, 15);
+// for ESP8266 and ESP32
+SoftwareSerial swSerSDM;
+//              ______________________________________________software serial reference
+//             |      ________________________________________baudrate
+//             |     |           _____________________________dere pin for max485
+//             |     |          |              _______________software uart config
+//             |     |          |             |       ________rx pin number(obligatory)
+//             |     |          |             |      |       _tx pin number(obligatory)
+//             |     |          |             |      |      | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
 
+
+// for AVR
+SoftwareSerial swSerSDM(10, 11);
 //              __________________software serial reference
 //             |      ____________baudrate(optional, default from SDM_Config_User.h)   
 //             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
@@ -242,7 +268,8 @@ other projects based on or using this library</br>
 
 ---
 
-<i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
+<i>library version for old esp software serial is available at [old_esp_swserial_lib branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_lib)</i><br>
+<i>old template library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 
 ---
 

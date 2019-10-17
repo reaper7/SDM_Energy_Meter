@@ -1,6 +1,6 @@
 /* Library for reading SDM 72/120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
+*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 #include <Arduino.h>
 #include <SDM_Config_User.h>
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
   #include <HardwareSerial.h>
 #else
   #include <SoftwareSerial.h>
@@ -17,29 +17,35 @@
 //------------------------------------------------------------------------------
 //DEFAULT CONFIG (DO NOT CHANGE ANYTHING!!! for changes use SDM_Config_User.h):
 //------------------------------------------------------------------------------
-#ifndef SDM_UART_BAUD
+#if !defined ( SDM_UART_BAUD )
   #define SDM_UART_BAUD                     4800                                //default baudrate
 #endif
 
-#ifndef DERE_PIN
+#if !defined ( DERE_PIN )
   #define DERE_PIN                          NOT_A_PIN                           //default digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 #endif
 
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
 
-  #ifndef SDM_UART_CONFIG
+  #if !defined ( SDM_UART_CONFIG )
     #define SDM_UART_CONFIG                 SERIAL_8N1                          //default hardware uart config
   #endif
 
-  #ifdef ESP8266
-    #ifndef SWAPHWSERIAL
-      #define SWAPHWSERIAL                    0                                 //(only esp8266) when hwserial used, then swap uart pins from 3/1 to 13/15 (default not swap)
+  #if defined ( ESP8266 ) && !defined ( SWAPHWSERIAL )
+    #define SWAPHWSERIAL                    0                                   //(only esp8266) when hwserial used, then swap uart pins from 3/1 to 13/15 (default not swap)
+  #endif
+
+#else
+
+  #if defined ( ESP8266 ) || defined ( ESP32 )
+    #if !defined ( SDM_UART_CONFIG )
+      #define SDM_UART_CONFIG               SWSERIAL_8N1                        //default softwareware uart config for esp8266/esp32
     #endif
   #endif
 
 #endif
 
-#ifndef MAX_MILLIS_TO_WAIT
+#if !defined ( MAX_MILLIS_TO_WAIT )
   #define MAX_MILLIS_TO_WAIT                500                                 //default max time to wait for response from SDM
 #endif
 //------------------------------------------------------------------------------
@@ -176,16 +182,20 @@
 //------------------------------------------------------------------------------
 class SDM {
   public:
-#ifdef USE_HARDWARESERIAL
-  #if defined ( ESP8266 )
+#if defined ( USE_HARDWARESERIAL )                                              //hardware serial
+  #if defined ( ESP8266 )                                                       //                on esp8266
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, bool swapuart = SWAPHWSERIAL);
-  #elif defined ( ESP32 )
+  #elif defined ( ESP32 )                                                       //                on esp32
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, int8_t rx_pin=-1, int8_t tx_pin=-1);
-  #else
+  #else                                                                         //                on avr
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG);
   #endif
-#else
+#else                                                                           //software serial
+  #if defined ( ESP8266 ) || defined ( ESP32 )                                  //                on esp8266/esp32
+    SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, int8_t rx_pin=-1, int8_t tx_pin=-1);
+  #else                                                                         //                on avr
     SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN);
+  #endif
 #endif
     virtual ~SDM();
 
@@ -199,17 +209,23 @@ class SDM {
     void clearSuccCount();                                                      //clear total success count
 
   private:
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
     HardwareSerial& sdmSer;
 #else
     SoftwareSerial& sdmSer;
 #endif
 
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
     int _config = SDM_UART_CONFIG;
   #if defined ( ESP8266 )
     bool _swapuart = SWAPHWSERIAL;
   #elif defined ( ESP32 )
+    int8_t _rx_pin=-1;
+    int8_t _tx_pin=-1;
+  #endif
+#else
+  #if defined ( ESP8266 ) || defined ( ESP32 )
+    int _config = SDM_UART_CONFIG;
     int8_t _rx_pin=-1;
     int8_t _tx_pin=-1;
   #endif

@@ -1,12 +1,12 @@
 /* Library for reading SDM 72/120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.9.0-beta & 2.4.1 esp8266 core)
+*  2016-2019 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
 #include "SDM.h"
 //------------------------------------------------------------------------------
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
 #if defined ( ESP8266 )
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, bool swapuart) : sdmSer(serial) {
   this->_baud = baud;
@@ -30,17 +30,27 @@ SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config) : sdmSer(s
 }
 #endif
 #else
+#if defined ( ESP8266 ) || defined ( ESP32 )
+SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin, int config, int8_t rx_pin, int8_t tx_pin) : sdmSer(serial) {
+  this->_baud = baud;
+  this->_dere_pin = dere_pin;
+  this->_config = config;
+  this->_rx_pin = rx_pin;
+  this->_tx_pin = tx_pin;
+}
+#else
 SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin) : sdmSer(serial) {
   this->_baud = baud;
   this->_dere_pin = dere_pin;
 }
+#endif
 #endif
 
 SDM::~SDM() {
 }
 
 void SDM::begin(void) {
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
 #if defined ( ESP8266 )
   sdmSer.begin(_baud, (SerialConfig)_config);
 #elif defined ( ESP32 )
@@ -49,13 +59,16 @@ void SDM::begin(void) {
   sdmSer.begin(_baud, _config);
 #endif
 #else
+#if defined ( ESP8266 ) || defined ( ESP32 )
+  sdmSer.begin(_baud, _rx_pin, _tx_pin, (SoftwareSerialConfig)_config);
+#else
   sdmSer.begin(_baud);
 #endif
-#ifdef USE_HARDWARESERIAL
-#ifdef ESP8266
+#endif
+
+#if defined ( USE_HARDWARESERIAL ) && defined ( ESP8266 )
   if (_swapuart)
     sdmSer.swap();
-#endif
 #endif
   if (_dere_pin != NOT_A_PIN) {
     pinMode(_dere_pin, OUTPUT);                                                 //set output pin mode for DE/RE pin when used (for control MAX485)
@@ -78,7 +91,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   sdmarr[6] = lowByte(temp);
   sdmarr[7] = highByte(temp);
 
-#ifndef USE_HARDWARESERIAL
+#if !defined ( USE_HARDWARESERIAL )
   sdmSer.listen();                                                              //enable softserial rx interrupt
 #endif
 
@@ -142,7 +155,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   flush();                                                                      //read serial if any old data is available
 
-#ifndef USE_HARDWARESERIAL
+#if !defined ( USE_HARDWARESERIAL )
   sdmSer.stopListening();                                                       //disable softserial rx interrupt
 #endif
 
