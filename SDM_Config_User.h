@@ -21,7 +21,7 @@
 /*
 *  define user baudrate
 */
-//#define SDM_UART_BAUD                       9600                                
+//#define SDM_UART_BAUD                       9600
 
 //------------------------------------------------------------------------------
 
@@ -35,16 +35,23 @@
 #if defined ( USE_HARDWARESERIAL )
 
   /*
-  *  define user SDM_UART_CONFIG
+  *  define user SDM_UART_CONFIG for hardware serial
   */
-  //#define SDM_UART_CONFIG                   SERIAL_8N1                          
+  //#define SDM_UART_CONFIG                   SERIAL_8N1
 
   //----------------------------------------------------------------------------
 
   /*
   *  define user SWAPHWSERIAL, if true(1) then swap uart pins from 3/1 to 13/15 (only ESP8266)
   */
-  //#define SWAPHWSERIAL                      0                                   
+  //#define SWAPHWSERIAL                      0
+
+#else
+
+  /*
+  *  define user SDM_UART_CONFIG for software serial
+  */
+  //#define SDM_UART_CONFIG                   SWSERIAL_8N1
 
 #endif
 
@@ -53,6 +60,6 @@
 /*
 *  define user MAX_MILLIS_TO_WAIT to wait for response from SDM
 */
-//#define MAX_MILLIS_TO_WAIT                  500                                 
+//#define MAX_MILLIS_TO_WAIT                  500
 
 //------------------------------------------------------------------------------
