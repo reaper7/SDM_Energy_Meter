@@ -14,7 +14,9 @@
 ### Introduction: ###
 This library allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i><b>recommended option</b>, smallest number of reads errors, especially for esp8266</i>) <b><i>or</i></b>
-- [x] Software Serial (<i>[library for ESP8266](https://github.com/plerup/espsoftwareserial)</i>), attached as libraries for esp8266 and avr
+- [x] Software Serial, attached as core libraries for esp8266 and avr</br>
+     (<i>the new version of esp Software Serial library</br>
+      has a different initialization compared to avr!</i>)
 
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
@@ -22,7 +24,7 @@ you also need rs232<->rs485 converter:
      (<i>in this case MAX485 DE and RE pins must be connected together to one of uC pin</br>
      and this pin must be passed when initializing the library</i>)
 
-_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.9.0b & ESP8266 core 2.3.0-2.4.1_
+_Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.8.10 & ESP8266 core 2.3.0-2.5.2_
 
 ---
 
