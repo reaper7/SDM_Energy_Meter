@@ -32,7 +32,7 @@
 
 //------------------------------------------------------------------------------
 
-#ifdef USE_HARDWARESERIAL
+#if defined ( USE_HARDWARESERIAL )
 
   /*
   *  define user SDM_UART_CONFIG
