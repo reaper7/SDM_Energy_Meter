@@ -67,10 +67,10 @@ SoftwareSerial swSerSDM;
 //             |      ________________________________________baudrate
 //             |     |           _____________________________dere pin for max485
 //             |     |          |              _______________software uart config
-//             |     |          |             |       ________rx pin number(obligatory)
-//             |     |          |             |      |       _tx pin number(obligatory)
-//             |     |          |             |      |      | 
-SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
+//             |     |          |             |    ___________rx pin number(obligatory)
+//             |     |          |             |   |    _______tx pin number(obligatory)
+//             |     |          |             |   |   | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
 
 
 // for AVR
@@ -101,10 +101,10 @@ SoftwareSerial swSerSDM;
 //             |      ________________________________________baudrate
 //             |     |           _____________________________dere pin for max485
 //             |     |          |              _______________software uart config
-//             |     |          |             |       ________rx pin number(obligatory)
-//             |     |          |             |      |       _tx pin number(obligatory)
-//             |     |          |             |      |      | 
-SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
+//             |     |          |             |    ___________rx pin number(obligatory)
+//             |     |          |             |   |    _______tx pin number(obligatory)
+//             |     |          |             |   |   | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
 
 
 // for AVR
