@@ -61,8 +61,20 @@ and looks as follows:
 #include <SoftwareSerial.h>
 #include <SDM.h>
 
-SoftwareSerial swSerSDM(13, 15);
+// for ESP8266 and ESP32
+SoftwareSerial swSerSDM;
+//              ______________________________________________software serial reference
+//             |      ________________________________________baudrate
+//             |     |           _____________________________dere pin for max485
+//             |     |          |              _______________software uart config
+//             |     |          |             |       ________rx pin number(obligatory)
+//             |     |          |             |      |       _tx pin number(obligatory)
+//             |     |          |             |      |      | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
 
+
+// for AVR
+SoftwareSerial swSerSDM(10, 11);
 //              _software serial reference
 //             |
 SDM sdm(swSerSDM);
@@ -83,8 +95,20 @@ then can pass additional parameters as below:
 #include <SoftwareSerial.h>
 #include <SDM.h>
 
-SoftwareSerial swSerSDM(13, 15);
+// for ESP8266 and ESP32
+SoftwareSerial swSerSDM;
+//              ______________________________________________software serial reference
+//             |      ________________________________________baudrate
+//             |     |           _____________________________dere pin for max485
+//             |     |          |              _______________software uart config
+//             |     |          |             |       ________rx pin number(obligatory)
+//             |     |          |             |      |       _tx pin number(obligatory)
+//             |     |          |             |      |      | 
+SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, rxpin, txpin);
 
+
+// for AVR
+SoftwareSerial swSerSDM(10, 11);
 //              __________________software serial reference
 //             |      ____________baudrate(optional, default from SDM_Config_User.h)   
 //             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
@@ -244,7 +268,8 @@ other projects based on or using this library</br>
 
 ---
 
-<i>old library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
+<i>library version for old esp software serial is available at [old_esp_swserial_lib branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_lib)</i><br>
+<i>old template library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 
 ---
 
