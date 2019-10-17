@@ -58,23 +58,18 @@ initialization is limited to passing serial port reference (software or hardware
 and looks as follows:
 ```cpp
 //lib init when Software Serial is used:
-#include <SoftwareSerial.h>
 #include <SDM.h>
+#include <SoftwareSerial.h>
 
 // for ESP8266 and ESP32
 SoftwareSerial swSerSDM;
-//              ______________________________________________software serial reference
-//             |      ________________________________________baudrate
-//             |     |           _____________________________dere pin for max485
-//             |     |          |              _______________software uart config
-//             |     |          |             |    ___________rx pin number(obligatory)
-//             |     |          |             |   |    _______tx pin number(obligatory)
-//             |     |          |             |   |   | 
-SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
+//              _software serial reference
+//             |
+SDM sdm(swSerSDM);
 
 
 // for AVR
-SoftwareSerial swSerSDM(10, 11);
+SoftwareSerial swSerSDM(SDM_RX_PIN, SDM_TX_PIN);
 //              _software serial reference
 //             |
 SDM sdm(swSerSDM);
@@ -92,17 +87,17 @@ If the user wants to temporarily change the configuration during the initializat
 then can pass additional parameters as below:
 ```cpp
 //lib init when Software Serial is used:
-#include <SoftwareSerial.h>
 #include <SDM.h>
+#include <SoftwareSerial.h>
 
 // for ESP8266 and ESP32
 SoftwareSerial swSerSDM;
 //              ______________________________________________software serial reference
-//             |      ________________________________________baudrate
-//             |     |           _____________________________dere pin for max485
-//             |     |          |              _______________software uart config
-//             |     |          |             |    ___________rx pin number(obligatory)
-//             |     |          |             |   |    _______tx pin number(obligatory)
+//             |      ________________________________________baudrate(optional, default from SDM_Config_User.h)
+//             |     |           _____________________________dere pin for max485(optional, default from SDM_Config_User.h)
+//             |     |          |              _______________software uart config(optional, default from SDM_Config_User.h)
+//             |     |          |             |    ___________rx pin number(optional, default from SDM_Config_User.h)
+//             |     |          |             |   |    _______tx pin number(optional, default from SDM_Config_User.h)
 //             |     |          |             |   |   | 
 SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
 
@@ -135,8 +130,8 @@ SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 //           |      ______________________________________baudrate(optional, default from SDM_Config_User.h)
 //           |     |           ___________________________dere pin for max485(optional, default from SDM_Config_User.h)
 //           |     |          |            _______________hardware uart config(optional, default from SDM_Config_User.h)
-//           |     |          |           |       ________rx pin number(optional)
-//           |     |          |           |      |       _tx pin number(optional)
+//           |     |          |           |       ________rx pin number(optional, default from SDM_Config_User.h)
+//           |     |          |           |      |       _tx pin number(optional, default from SDM_Config_User.h)
 //           |     |          |           |      |      | 
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, rxpin, txpin);
 
