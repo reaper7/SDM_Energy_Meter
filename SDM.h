@@ -233,15 +233,15 @@ class SDM {
   #if defined ( ESP8266 )
     bool _swapuart = SWAPHWSERIAL;
   #elif defined ( ESP32 )
-    int8_t _rx_pin;
-    int8_t _tx_pin;
+    int8_t _rx_pin = SDM_RX_PIN;
+    int8_t _tx_pin = SDM_TX_PIN;
   #endif
 #else
   #if defined ( ESP8266 ) || defined ( ESP32 )
     int _config = SDM_UART_CONFIG;
   #endif
-    int8_t _rx_pin;
-    int8_t _tx_pin;  
+    int8_t _rx_pin = SDM_RX_PIN;
+    int8_t _tx_pin = SDM_TX_PIN; 
 #endif
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;
