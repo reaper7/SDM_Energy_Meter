@@ -28,17 +28,13 @@ TX SSer/HSer swap D8|15                            |GND
 #include <ESPAsyncTCP.h>                                                        //https://github.com/me-no-dev/ESPAsyncTCP
 #include <ESPAsyncWebServer.h>                                                  //https://github.com/me-no-dev/ESPAsyncWebServer
 
-#include <SoftwareSerial.h>                                                     //import SoftwareSerial library (if used)
 #include <SDM.h>                                                                //https://github.com/reaper7/SDM_Energy_Meter
 
 #include "index_page.h"
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 
-SoftwareSerial swSerSDM(13, 15);                                                //config SoftwareSerial (rx->pin13 / tx->pin15) (if used)
-
-SDM sdm(swSerSDM, 9600, NOT_A_PIN);                                             //SOFTWARE SERIAL
-//SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);                            //HARDWARE SERIAL
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);                            //HARDWARE SERIAL
 
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";

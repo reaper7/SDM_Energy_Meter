@@ -14,12 +14,35 @@ TX SSer/HSer swap D8|15                            |GND
                        |___________________________|
 */
 
+//REMEMBER! uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h file too.
+//#define USE_HARDWARESERIAL
+
+#if !defined ( USE_HARDWARESERIAL )
 #include <SoftwareSerial.h>                                                     //import SoftwareSerial library
+#endif
 #include <SDM.h>                                                                //import SDM library
 
-SoftwareSerial swSerSDM(13, 15);                                                //config SoftwareSerial (rx->pin13 / tx->pin15)
+#if defined ( USE_HARDWARESERIAL )                                              //for HWSERIAL
 
-SDM sdm(swSerSDM, 9600, NOT_A_PIN);                                             //config SDM
+#if defined ( ESP8266 )                                                         //for ESP8266
+SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1);                                  //config SDM (rx->pin13 / tx->pin15)
+#elif defined ( ESP32 )                                                         //for ESP32
+SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1, 13, 15);                          //config SDM (rx->pin13 / tx->pin15)
+#else                                                                           //for AVR
+SDM sdm(Serial1, 4800, NOT_A_PIN);                                              //config SDM on Serial1 (if available!)
+#endif
+
+#else                                                                           //for SWSERIAL
+
+#if defined ( ESP8266 ) || defined ( ESP32 )                                    //for ESP
+SoftwareSerial swSerSDM;                                                        //config SoftwareSerial
+SDM sdm(swSerSDM, 4800, NOT_A_PIN, SWSERIAL_8N1, 13, 15);                       //config SDM (rx->pin13 / tx->pin15)
+#else                                                                           //for AVR
+SoftwareSerial swSerSDM(10, 11);                                                //config SoftwareSerial (rx->pin10 / tx->pin11)
+SDM sdm(swSerSDM, 4800, NOT_A_PIN);                                             //config SDM
+#endif
+
+#endif
 
 void setup() {
   Serial.begin(115200);                                                         //initialize serial
