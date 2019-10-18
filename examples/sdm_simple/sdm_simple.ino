@@ -14,31 +14,29 @@ TX SSer/HSer swap D8|15                            |GND
                        |___________________________|
 */
 
-//REMEMBER! uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h file too.
-//#define USE_HARDWARESERIAL
+//REMEMBER! uncomment #define USE_HARDWARESERIAL 
+//in SDM_Config_User.h file if you want to use hardware uart
 
-#if !defined ( USE_HARDWARESERIAL )
-#include <SoftwareSerial.h>                                                     //import SoftwareSerial library
-#endif
 #include <SDM.h>                                                                //import SDM library
 
 #if defined ( USE_HARDWARESERIAL )                                              //for HWSERIAL
 
 #if defined ( ESP8266 )                                                         //for ESP8266
-SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1);                                  //config SDM (rx->pin13 / tx->pin15)
+SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1);                                  //config SDM
 #elif defined ( ESP32 )                                                         //for ESP32
-SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1, 13, 15);                          //config SDM (rx->pin13 / tx->pin15)
+SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);          //config SDM
 #else                                                                           //for AVR
 SDM sdm(Serial1, 4800, NOT_A_PIN);                                              //config SDM on Serial1 (if available!)
 #endif
 
 #else                                                                           //for SWSERIAL
 
+#include <SoftwareSerial.h>                                                     //import SoftwareSerial library
 #if defined ( ESP8266 ) || defined ( ESP32 )                                    //for ESP
 SoftwareSerial swSerSDM;                                                        //config SoftwareSerial
-SDM sdm(swSerSDM, 4800, NOT_A_PIN, SWSERIAL_8N1, 13, 15);                       //config SDM (rx->pin13 / tx->pin15)
+SDM sdm(swSerSDM, 4800, NOT_A_PIN, SWSERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);       //config SDM
 #else                                                                           //for AVR
-SoftwareSerial swSerSDM(10, 11);                                                //config SoftwareSerial (rx->pin10 / tx->pin11)
+SoftwareSerial swSerSDM(SDM_RX_PIN, SDM_TX_PIN);                                //config SoftwareSerial
 SDM sdm(swSerSDM, 4800, NOT_A_PIN);                                             //config SDM
 #endif
 

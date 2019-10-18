@@ -26,6 +26,27 @@
 //------------------------------------------------------------------------------
 
 /*
+*  define user SDM_RX_PIN and SDM_TX_PIN for esp/avr Software Serial option
+*  or ESP32 with Hardware Serial if default core pins are not suitable
+*/
+#if defined ( USE_HARDWARESERIAL )
+  #if defined ( ESP32 )
+    #define SDM_RX_PIN                        13
+    #define SDM_TX_PIN                        15
+  #endif
+#else
+  #if defined ( ESP8266 ) || defined ( ESP32 )
+    #define SDM_RX_PIN                        13
+    #define SDM_TX_PIN                        15
+  #else
+    #define SDM_RX_PIN                        10
+    #define SDM_TX_PIN                        11  
+  #endif
+#endif
+
+//------------------------------------------------------------------------------
+
+/*
 *  define user DERE_PIN for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 */
 //#define DERE_PIN                            NOT_A_PIN                           

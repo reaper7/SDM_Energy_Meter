@@ -1,7 +1,5 @@
 //sdm live page example by reaper7
 
-//REMEMBER! uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h file too.
-
 #define READSDMEVERY  2000                                                      //read sdm every 2000ms
 #define NBREG   5                                                               //number of sdm registers to read
 //#define USE_STATIC_IP
@@ -33,6 +31,10 @@ TX SSer/HSer swap D8|15                            |GND
 #include <SDM.h>                                                                //https://github.com/reaper7/SDM_Energy_Meter
 
 #include "index_page.h"
+
+#if !defined ( USE_HARDWARESERIAL )
+  #error "This example works with Hardware Serial on esp8266, please uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h"
+#endif
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 

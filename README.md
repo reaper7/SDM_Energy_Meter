@@ -39,7 +39,12 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.8.10 & ESP8266 core 2.3.0-2.5.
 
 ### Configuring: ###
 Default configuration is specified in the [SDM.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L18) file, and parameters are set to:</br>
-<i>Software Serial, baud 4800, uart config SERIAL_8N1, without DE/RE pin</i>.</br>
+<i>Software Serial mode, baud 4800, uart config SERIAL_8N1, without DE/RE pin,</br>
+uart pins for esp32 hwserial and esp32/esp8266/avr swserial as NOT_A_PIN (-1).</br></br>
+For esp32 hwserial this means using the default pins for the selected uart port,</br>
+specified in the core library (HardwareSerial.cpp).</br>
+For swserial option (esp32/esp8266/avr) is necessary</br>
+to specify the pin numbers, as described below.</i>
 
 User can set the parameters in two ways:
 - by editing the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file
@@ -58,24 +63,22 @@ initialization is limited to passing serial port reference (software or hardware
 and looks as follows:
 ```cpp
 //lib init when Software Serial is used:
-#include <SoftwareSerial.h>
 #include <SDM.h>
+#include <SoftwareSerial.h>
 
 // for ESP8266 and ESP32
 SoftwareSerial swSerSDM;
-//              ______________________________________________software serial reference
-//             |      ________________________________________baudrate
-//             |     |           _____________________________dere pin for max485
-//             |     |          |              _______________software uart config
-//             |     |          |             |    ___________rx pin number(obligatory)
-//             |     |          |             |   |    _______tx pin number(obligatory)
-//             |     |          |             |   |   | 
-SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
+//              _______________________________software serial reference
+//             |
+SDM sdm(swSerSDM);
 
 
 // for AVR
-SoftwareSerial swSerSDM(10, 11);
-//              _software serial reference
+SoftwareSerial swSerSDM(SDM_RX_PIN, SDM_TX_PIN);
+//                               |           |_tx pin definition(from SDM_Config_User.h)
+//                               |_____________rx pin definition(from SDM_Config_User.h)
+//
+//              _______________________________software serial reference
 //             |
 SDM sdm(swSerSDM);
 ```
@@ -84,7 +87,7 @@ SDM sdm(swSerSDM);
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 
-//            _hardware serial reference
+//            _________________________________hardware serial reference
 //           |
 SDM sdm(Serial);
 ```
@@ -92,26 +95,26 @@ If the user wants to temporarily change the configuration during the initializat
 then can pass additional parameters as below:
 ```cpp
 //lib init when Software Serial is used:
-#include <SoftwareSerial.h>
 #include <SDM.h>
+#include <SoftwareSerial.h>
 
 // for ESP8266 and ESP32
 SoftwareSerial swSerSDM;
-//              ______________________________________________software serial reference
-//             |      ________________________________________baudrate
-//             |     |           _____________________________dere pin for max485
-//             |     |          |              _______________software uart config
-//             |     |          |             |    ___________rx pin number(obligatory)
-//             |     |          |             |   |    _______tx pin number(obligatory)
+//              ________________________________________software serial reference
+//             |      __________________________________baudrate(optional, default from SDM_Config_User.h)
+//             |     |           _______________________dere pin for max485(optional, default from SDM_Config_User.h)
+//             |     |          |              _________software uart config(optional, default from SDM_Config_User.h)
+//             |     |          |             |    _____rx pin number(optional, default from SDM_Config_User.h)
+//             |     |          |             |   |    _tx pin number(optional, default from SDM_Config_User.h)
 //             |     |          |             |   |   | 
 SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
 
 
 // for AVR
 SoftwareSerial swSerSDM(10, 11);
-//              __________________software serial reference
-//             |      ____________baudrate(optional, default from SDM_Config_User.h)   
-//             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
+//              ________________________________________software serial reference
+//             |      __________________________________baudrate(optional, default from SDM_Config_User.h)   
+//             |     |           _______________________dere pin for max485(optional, default from SDM_Config_User.h)
 //             |     |          |
 SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 ```
@@ -121,31 +124,31 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 #include <SDM.h>
 
 // for ESP8266
-//            _____________________________________hardware serial reference
-//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
-//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
-//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
-//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
+//            ______________________________________hardware serial reference
+//           |      ________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           _____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |       __swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 
 
 // for ESP32
-//            ____________________________________________hardware serial reference
-//           |      ______________________________________baudrate(optional, default from SDM_Config_User.h)
-//           |     |           ___________________________dere pin for max485(optional, default from SDM_Config_User.h)
-//           |     |          |            _______________hardware uart config(optional, default from SDM_Config_User.h)
-//           |     |          |           |       ________rx pin number(optional)
-//           |     |          |           |      |       _tx pin number(optional)
-//           |     |          |           |      |      | 
-SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, rxpin, txpin);
+//            ______________________________________hardware serial reference
+//           |      ________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           _____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |    _____rx pin number(optional, default from SDM_Config_User.h)
+//           |     |          |           |   |    _tx pin number(optional, default from SDM_Config_User.h)
+//           |     |          |           |   |   | 
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, 13, 15);
 
 
 // for AVR
-//            _____________________________________hardware serial reference
-//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
-//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
-//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
+//            ______________________________________hardware serial reference
+//           |      ________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           _____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _________hardware uart config(optional, default from SDM_Config_User.h)
 //           |     |          |           |
 //           |     |          |           |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1);
@@ -163,15 +166,15 @@ List of available registers for SDM72/120/220/230/630:</br>
 https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L58
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
-//                                      __________register name
-//                                     |
+//                                         ____register name
+//                                        |
 float voltage = sdm.readVal(SDM220T_VOLTAGE);
 
 //reading power from 1st SDM with slave address ID = 0x01
 //reading power from 2nd SDM with slave address ID = 0x02
 //useful with several meters on RS485 line
-//                                      __________register name
-//                                     |      ____SDM device ID  
+//                                      _______register name
+//                                     |      _SDM device ID  
 //                                     |     |
 float power1 = sdm.readVal(SDM220T_POWER, 0x01);
 float power2 = sdm.readVal(SDM220T_POWER, 0x02);
@@ -211,11 +214,11 @@ The most common problems are:
 You can get last error code using function:
 ```cpp
 //get last error code
-//                                      __________optional parameter,
-//                                     |          true -> read and reset error code
-//                                     |          false or no parameter -> read error code
-//                                     |          but not reset stored code (for future checking)
-//                                     |          will be overwriten when next error occurs
+//                                      ______optional parameter,
+//                                     |      true -> read and reset error code
+//                                     |      false or no parameter -> read error code
+//                                     |      but not reset stored code (for future checking)
+//                                     |      will be overwriten when next error occurs
 uint16_t lasterror = sdm.getErrCode(true);
 
 //clear error code also available with:
@@ -227,10 +230,10 @@ https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L177</br>
 You can also check total number of errors using function:
 ```cpp
 //get total errors counter
-//                                       _________optional parameter,
-//                                      |         true -> read and reset errors counter
-//                                      |         false or no parameter -> read errors counter
-//                                      |         but not reset stored counter (for future checking)
+//                                       _____optional parameter,
+//                                      |     true -> read and reset errors counter
+//                                      |     false or no parameter -> read errors counter
+//                                      |     but not reset stored counter (for future checking)
 uint16_t cnterrors = sdm.getErrCount(true);
 
 //clear errors counter also available with:
@@ -240,10 +243,10 @@ sdm.clearErrCount();
 And finally you can read the counter of correctly made readings:
 ```cpp
 //get total success counter
-//                                         _________optional parameter,
-//                                        |         true -> read and reset success counter
-//                                        |         false or no parameter -> read success counter
-//                                        |         but not reset stored counter (for future checking)
+//                                         ___optional parameter,
+//                                        |   true -> read and reset success counter
+//                                        |   false or no parameter -> read success counter
+//                                        |   but not reset stored counter (for future checking)
 uint16_t cntsuccess = sdm.getSuccCount(true);
 
 //clear success counter also available with:
