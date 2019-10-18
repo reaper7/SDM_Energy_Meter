@@ -63,14 +63,17 @@ and looks as follows:
 
 // for ESP8266 and ESP32
 SoftwareSerial swSerSDM;
-//              _software serial reference
+//              _______________________________software serial reference
 //             |
 SDM sdm(swSerSDM);
 
 
 // for AVR
 SoftwareSerial swSerSDM(SDM_RX_PIN, SDM_TX_PIN);
-//              _software serial reference
+//                               |           |_tx pin definition(from SDM_Config_User.h)
+//                               |_____________rx pin definition(from SDM_Config_User.h)
+//
+//              _______________________________software serial reference
 //             |
 SDM sdm(swSerSDM);
 ```
@@ -79,7 +82,7 @@ SDM sdm(swSerSDM);
 //lib init when Hardware Serial is used:
 #include <SDM.h>
 
-//            _hardware serial reference
+//            _________________________________hardware serial reference
 //           |
 SDM sdm(Serial);
 ```
@@ -104,9 +107,9 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN, SWSERIAL_8N1, 13, 15);
 
 // for AVR
 SoftwareSerial swSerSDM(10, 11);
-//              __________________software serial reference
-//             |      ____________baudrate(optional, default from SDM_Config_User.h)   
-//             |     |           _dere pin for max485(optional, default from SDM_Config_User.h)
+//              ________________________________________software serial reference
+//             |      __________________________________baudrate(optional, default from SDM_Config_User.h)   
+//             |     |           _______________________dere pin for max485(optional, default from SDM_Config_User.h)
 //             |     |          |
 SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 ```
@@ -116,11 +119,11 @@ SDM sdm(swSerSDM, 9600, NOT_A_PIN);
 #include <SDM.h>
 
 // for ESP8266
-//            _____________________________________hardware serial reference
-//           |      _______________________________baudrate(optional, default from SDM_Config_User.h)
-//           |     |           ____________________dere pin for max485(optional, default from SDM_Config_User.h)
-//           |     |          |            ________hardware uart config(optional, default from SDM_Config_User.h)
-//           |     |          |           |       _swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
+//            ______________________________________hardware serial reference
+//           |      ________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           _____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _________hardware uart config(optional, default from SDM_Config_User.h)
+//           |     |          |           |       __swap hw serial pins from 3/1 to 13/15(optional, default from SDM_Config_User.h)
 //           |     |          |           |      |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 
@@ -137,10 +140,10 @@ SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, 13, 15);
 
 
 // for AVR
-//            ______________________________hardware serial reference
-//           |      ________________________baudrate(optional, default from SDM_Config_User.h)
-//           |     |           _____________dere pin for max485(optional, default from SDM_Config_User.h)
-//           |     |          |            _hardware uart config(optional, default from SDM_Config_User.h)
+//            ______________________________________hardware serial reference
+//           |      ________________________________baudrate(optional, default from SDM_Config_User.h)
+//           |     |           _____________________dere pin for max485(optional, default from SDM_Config_User.h)
+//           |     |          |            _________hardware uart config(optional, default from SDM_Config_User.h)
 //           |     |          |           |
 //           |     |          |           |
 SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1);
