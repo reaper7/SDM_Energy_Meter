@@ -39,7 +39,12 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.8.10 & ESP8266 core 2.3.0-2.5.
 
 ### Configuring: ###
 Default configuration is specified in the [SDM.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L18) file, and parameters are set to:</br>
-<i>Software Serial, baud 4800, uart config SERIAL_8N1, without DE/RE pin</i>.</br>
+<i>Software Serial mode, baud 4800, uart config SERIAL_8N1, without DE/RE pin,</br>
+uart pins for esp32 hwserial and esp32/esp8266/avr swserial as NOT_A_PIN (-1).</br></br>
+For esp32 hwserial this means using the default pins for the selected uart port,</br>
+specified in the core library (HardwareSerial.cpp).</br>
+For swserial option (esp32/esp8266/avr) is necessary</br>
+to specify the pin numbers, as described below.</i>
 
 User can set the parameters in two ways:
 - by editing the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file
