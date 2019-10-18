@@ -37,10 +37,10 @@
 
   #if defined ( ESP32 )
     #if !defined ( SDM_RX_PIN )
-      #define SDM_RX_PIN                    -1									                //default rx pin for selected port
+      #define SDM_RX_PIN                    -1                                  //use default rx pin for selected port
     #endif
     #if !defined ( SDM_TX_PIN )
-      #define SDM_TX_PIN					          -1                                  //default tx pin for selected port
+      #define SDM_TX_PIN                    -1                                  //use default tx pin for selected port
     #endif
   #endif
 
@@ -52,8 +52,15 @@
     #endif
   #endif
 
-  #if !defined ( SDM_RX_PIN ) || !defined ( SDM_TX_PIN )
-    #error "SDM_RX_PIN and SDM_TX_PIN must be defined in SDM_Config_User.h for Software Serial option)"
+//  #if !defined ( SDM_RX_PIN ) || !defined ( SDM_TX_PIN )
+//    #error "SDM_RX_PIN and SDM_TX_PIN must be defined in SDM_Config_User.h for Software Serial option)"
+//  #endif
+
+  #if !defined ( SDM_RX_PIN )
+    #define SDM_RX_PIN                      -1
+  #endif
+  #if !defined ( SDM_TX_PIN )
+    #define SDM_TX_PIN                      -1
   #endif
 
 #endif
@@ -233,15 +240,15 @@ class SDM {
   #if defined ( ESP8266 )
     bool _swapuart = SWAPHWSERIAL;
   #elif defined ( ESP32 )
-    int8_t _rx_pin = SDM_RX_PIN;
-    int8_t _tx_pin = SDM_TX_PIN;
+    int8_t _rx_pin = -1;
+    int8_t _tx_pin = -1;
   #endif
 #else
   #if defined ( ESP8266 ) || defined ( ESP32 )
     int _config = SDM_UART_CONFIG;
   #endif
-    int8_t _rx_pin = SDM_RX_PIN;
-    int8_t _tx_pin = SDM_TX_PIN; 
+    int8_t _rx_pin = -1;
+    int8_t _tx_pin = -1; 
 #endif
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;
