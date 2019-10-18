@@ -130,10 +130,10 @@ SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);
 //           |      ______________________________________baudrate(optional, default from SDM_Config_User.h)
 //           |     |           ___________________________dere pin for max485(optional, default from SDM_Config_User.h)
 //           |     |          |            _______________hardware uart config(optional, default from SDM_Config_User.h)
-//           |     |          |           |       ________rx pin number(optional, default from SDM_Config_User.h)
-//           |     |          |           |      |       _tx pin number(optional, default from SDM_Config_User.h)
-//           |     |          |           |      |      | 
-SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, rxpin, txpin);
+//           |     |          |           |    ___________rx pin number(optional, default from SDM_Config_User.h)
+//           |     |          |           |   |    _______tx pin number(optional, default from SDM_Config_User.h)
+//           |     |          |           |   |   | 
+SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, 13, 15);
 
 
 // for AVR
