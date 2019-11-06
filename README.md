@@ -228,7 +228,7 @@ uint16_t lasterror = sdm.getErrCode(true);
 sdm.clearErrCode();
 ```
 Errors list returned by <b>getErrCode</b>:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L177</br>
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L197</br>
 
 You can also check total number of errors using function:
 ```cpp
