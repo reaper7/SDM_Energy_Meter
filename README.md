@@ -17,9 +17,9 @@ This library allows you reading SDM module(s) using:
 - [x] Software Serial, attached as core libraries for esp8266 and avr</br>
      (<i>the new version of esp Software Serial library</br>
       has a different initialization compared to avr!</br>
-      <b>This version of SDM library (2.0.4 - 2.0.6) works only with esp Software Serial 5.2.0 - 5.4.0!!!</b></br>
+      <b>This version of SDM library (2.0.7) works only with esp Software Serial 6.0.0 or higher!!!</b></br>
       If you have an older esp Software Serial version</br>
-      then use SDM library 2.0.3, details below the Credits section</i>)</br>
+      then use other SDM library, details below the Credits section</i>)</br>
 
 you also need rs232<->rs485 converter:
 - [x] with automatic flow direction control (<i>look at images below</i>) <b><i>or</i></b>
@@ -274,6 +274,7 @@ other projects based on or using this library</br>
 
 ---
 
+<i>library version for old esp software serial (5.2.0 - 5.4.0) is available at [old_esp_swserial_520_540 branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_520_540)</i><br>
 <i>library version for old esp software serial (< 5.2.0) is available at [old_esp_swserial_lib branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_lib)</i><br>
 <i>old template library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 

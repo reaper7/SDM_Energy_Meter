@@ -60,7 +60,7 @@ void SDM::begin(void) {
 #endif
 #else
 #if defined ( ESP8266 ) || defined ( ESP32 )
-  sdmSer.begin(_baud, _rx_pin, _tx_pin, (SoftwareSerialConfig)_config);
+  sdmSer.begin(_baud, (SoftwareSerialConfig)_config, _rx_pin, _tx_pin);
 #else
   sdmSer.begin(_baud);
 #endif
