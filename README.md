@@ -17,7 +17,7 @@ This library allows you reading SDM module(s) using:
 - [x] Software Serial, attached as core libraries for esp8266 and avr</br>
      (<i>the new version of esp Software Serial library</br>
       has a different initialization compared to avr!</br>
-      <b>This version of SDM library (>=2.0.4) works only with esp Software Serial 5.2.0 or higher!!!</b></br>
+      <b>This version of SDM library (2.0.4 - 2.0.6) works only with esp Software Serial 5.2.0 - 5.4.0!!!</b></br>
       If you have an older esp Software Serial version</br>
       then use SDM library 2.0.3, details below the Credits section</i>)</br>
 
