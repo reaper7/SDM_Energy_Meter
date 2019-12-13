@@ -85,7 +85,8 @@
 #define SDM72_SETABLE_EXPORT_ENERGY         0x0186                              //kWh
 #define SDM72_IMPORT_POWER                  0x0500                              //W
 #define SDM72_EXPORT_POWER                  0x0502                              //W
-//SDM 120 registers
+//SDM 120C registers
+// https://bg-etech.de/download/manual/SDM120C-Modbus-DE.pdf
 #define SDM120C_VOLTAGE                     0x0000                              //V
 #define SDM120C_CURRENT                     0x0006                              //A
 #define SDM120C_POWER                       0x000C                              //W
@@ -96,15 +97,17 @@
 #define SDM120C_IMPORT_ACTIVE_ENERGY        0x0048                              //Wh
 #define SDM120C_EXPORT_ACTIVE_ENERGY        0x004A                              //Wh
 #define SDM120C_TOTAL_ACTIVE_ENERGY         0x0156                              //Wh
-//SDM 120CT registers
+//SDM 120 & SDM 120CT registers
+// http://www.eastroneurope.com/media/_system/tech_specs/3914/SDM120%20PROTOCOL.pdf
+// http://www.eastroneurope.com/media/_system/tech_specs/3915/SDM120CT%20PROTOCOL.pdf
 #define SDM120CT_VOLTAGE                    0x0000                              //V
 #define SDM120CT_CURRENT                    0x0006                              //A
 #define SDM120CT_POWER                      0x000C                              //W
 #define SDM120CT_APPARENT_POWER             0x0012                              //VA
 #define SDM120CT_REACTIVE_POWER             0x0018                              //VAr
 #define SDM120CT_POWER_FACTOR               0x001E                              //None
-#define SDM120CT_FREQUENCY                  0x0046                              //Hz
 #define SDM120CT_PHASE_ANGLE                0x0024                              //Degrees
+#define SDM120CT_FREQUENCY                  0x0046                              //Hz
 #define SDM120CT_IMPORT_ACTIVE_ENERGY       0x0048                              //kWh
 #define SDM120CT_EXPORT_ACTIVE_ENERGY       0x004A                              //kWh
 #define SDM120CT_IMPORT_REACTIVE_ENERGY     0x004C                              //kVArh
