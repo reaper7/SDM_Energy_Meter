@@ -75,6 +75,17 @@
 #define SDM_B_01                            0x01                                //BYTE 1 -> slave address (default value 1 read from node 1)
 #define SDM_B_02                            0x04                                //BYTE 2 -> function code (default value 0x04 read from 3X input registers)
                                                                                 //BYTES 3 & 4 (BELOW)
+//DDM18SD registers
+// https://nl.aliexpress.com/item/4000537363853.html?spm=a2g0o.productlist.0.0.18ae4342w134hF
+// https://ae01.alicdn.com/kf/HTB1uzRvRQzoK1RjSZFlq6yi4VXaQ.jpg
+#define DDM18SD_VOLTAGE                     0x0000                              //V
+#define DDM18SD_CURRENT                     0x0008                              //A
+#define DDM18SD_POWER                       0x0012                              //W
+#define DDM18SD_REACTIVE_POWER              0x001A                              //VAR
+#define DDM18SD_POWER_FACTOR                0x002A                              //
+#define DDM18SD_FREQUENCY                   0x0036                              //Hz
+#define DDM18SD_IMPORT_ACTIVE_ENERGY        0x0100                              //kWh
+#define DDM18SD_IMPORT_REACTIVE_ENERGY      0x0400                              //kVARh
 //SDM 72 registers
 #define SDM72_TOTAL_POWER                   0x0034                              //W
 #define SDM72_IMPORT_ENERGY                 0x0048                              //kWh
