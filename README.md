@@ -228,7 +228,7 @@ uint16_t lasterror = sdm.getErrCode(true);
 sdm.clearErrCode();
 ```
 Errors list returned by <b>getErrCode</b>:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L197</br>
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L220</br>
 
 You can also check total number of errors using function:
 ```cpp
@@ -263,8 +263,10 @@ sdm.clearSuccCount();
 contribution to this project:</br>
 :+1: ESP SoftwareSerial library by Peter Lerup (https://github.com/plerup/espsoftwareserial)</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
-:+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/beireken/SDM220t)</br>
-:+1: new registers for SDM72 by jegaha (https://github.com/jegaha/SDM_Energy_Meter)</br>
+:+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/reaper7/SDM_Energy_Meter/pull/3)</br>
+:+1: new registers for SDM72 by jegaha (https://github.com/reaper7/SDM_Energy_Meter/pull/34)</br>
+:+1: new registers for SDM120CT by jeroenst (https://github.com/reaper7/SDM_Energy_Meter/pull/41)</br>
+:+1: additional SDM630 registers and influxdb example by AndersV209 (https://github.com/reaper7/SDM_Energy_Meter/pull/45)</br>
 
 other projects based on or using this library</br>
 :point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
