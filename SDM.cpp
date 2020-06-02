@@ -169,15 +169,15 @@ uint16_t SDM::getErrCode(bool _clear) {
   return (_tmp);
 }
 
-uint16_t SDM::getErrCount(bool _clear) {
-  uint16_t _tmp = readingerrcount;
+uint32_t SDM::getErrCount(bool _clear) {
+  uint32_t _tmp = readingerrcount;
   if (_clear == true)
     clearErrCount();
   return (_tmp);
 }
 
-uint16_t SDM::getSuccCount(bool _clear) {
-  uint16_t _tmp = readingsuccesscount;
+uint32_t SDM::getSuccCount(bool _clear) {
+  uint32_t _tmp = readingsuccesscount;
   if (_clear == true)
     clearSuccCount();
   return (_tmp);

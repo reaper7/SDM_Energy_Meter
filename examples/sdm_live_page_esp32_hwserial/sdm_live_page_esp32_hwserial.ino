@@ -5,21 +5,21 @@
 //#define USE_STATIC_IP
 
 /*  mh et esp32 minikit
-                     ______________________________
-                    /   L T L T L T L T L T L T    \
-                    |                              |
-                 RST|                              |TX HSer
-                 SVP|                              |RX HSer
-                IO26|                              |IO22
-                IO18|                              |IO21
-                IO19|                              |IO17
-                IO23|                              |IO16
-                IO05|                              |GND
-                 3V3|                              |VCC
-                 TCK|                              |TDO
-                 SD3|__                            |SD0
-                       |                           |
-                       |___________________________|
+                     ______________________
+                    /   L T L T L T L T    \
+                    |                      |
+                    |O O RST      TX HW O O|
+                    |O O SVP      RX HW O O|
+                    |O O IO26      IO22 O O|
+                    |O O IO18      IO21 O O|
+                    |O O IO19      IO17 O O|
+                    |O O IO23      IO16 O O|
+                    |O O IO05       GND O O|
+                    |O O 3V3        VCC O O|
+                    |O O TCK        TDO O O|
+                    |O O SD3        SD0 O O|
+                     --|                   |
+                       |___________________|
 */
 
 #include <WiFi.h>
@@ -125,11 +125,11 @@ void indexrequest(AsyncWebServerRequest *request) {
 }
 //------------------------------------------------------------------------------
 void ledOn() {
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 //------------------------------------------------------------------------------
 void ledOff() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 //------------------------------------------------------------------------------
 void ledSwap() {
