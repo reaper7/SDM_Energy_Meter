@@ -62,11 +62,11 @@ typedef volatile struct {
 } sdm_struct;
 
 volatile sdm_struct sdmarr[NBREG] = {
-  {0.00, SDM220T_VOLTAGE},                                                      //V
-  {0.00, SDM220T_CURRENT},                                                      //A
-  {0.00, SDM220T_POWER},                                                        //W
-  {0.00, SDM220T_POWER_FACTOR},                                                 //PF
-  {0.00, SDM220T_FREQUENCY},                                                    //Hz
+  {0.00, SDM_PHASE_1_VOLTAGE},                                                  //V
+  {0.00, SDM_PHASE_1_CURRENT},                                                  //A
+  {0.00, SDM_PHASE_1_POWER},                                                    //W
+  {0.00, SDM_PHASE_1_POWER_FACTOR},                                             //PF
+  {0.00, SDM_FREQUENCY}                                                         //Hz
 };
 //------------------------------------------------------------------------------
 void xmlrequest(AsyncWebServerRequest *request) {

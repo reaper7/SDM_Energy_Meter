@@ -103,44 +103,30 @@ typedef struct {
   const String regtext;
 } sdm_struct;
 
-//uncomment and change NBREG to get more parameters
 sdm_struct sdmarr[NBREG] = {
-  {0.00, SDM630_VOLTAGE1,"VoltageL1"},                                                      //V
-  {0.00, SDM630_VOLTAGE2,"VoltageL2"},                                                      //V
-  {0.00, SDM630_VOLTAGE3,"VoltageL3"},                                                      //V
-//  {0.00, SDM630_VOLTAGE_AVERAGE,"VoltageAVG"},                                              //V       
-  {0.00, SDM630_CURRENT1,"CurrentL1"},                                                      //A
-  {0.00, SDM630_CURRENT2,"CurrentL2"},                                                      //A
-  {0.00, SDM630_CURRENT3,"CurrentL3"},                                                      //A
-  {0.00, SDM630_CURRENTSUM,"CurrentSUM"},                                                   //A
-//  {0.00, SDM630_CURRENT_AVERAGE,"CurrentAVG"},                                              //A       
-  {0.00, SDM630_POWER1,"PowerL1"},                                                          //W
-  {0.00, SDM630_POWER2,"PowerL2"},                                                          //W
-  {0.00, SDM630_POWER3,"PowerL3"},                                                          //W
-  {0.00, SDM630_POWERTOTAL,"PowerSUM"},                                                     //W
-//  {0.00, SDM630_POWER_FACTOR1,"PFL1"},                                                      //PF      
-//  {0.00, SDM630_POWER_FACTOR2,"PFL2"},                                                      //PF      
-//  {0.00, SDM630_POWER_FACTOR3,"PFL3"},                                                      //PF      
-  {0.00, SDM630_POWER_FACTOR_TOTAL,"PFTOTAL"},                                              //PF
-//  {0.00, SDM630_PHASE_ANGLE1,"PAL1"},                                                       //Degrees 
-//  {0.00, SDM630_PHASE_ANGLE2,"PAL2"},                                                       //Degrees 
-//  {0.00, SDM630_PHASE_ANGLE3,"PAL3"},                                                       //Degrees 
-//  {0.00, SDM630_PHASE_ANGLE_TOTAL,"PATOTAL"},                                               //Degrees 
-  {0.00, SDM630_FREQUENCY,"FREQUENCY"},                                                     //Hz
-  {0.00, SDM630_IMPORT_ACTIVE_ENERGY,"ImportEnergi"},                                       //Wh
-//  {0.00, SDM630_EXPORT_ACTIVE_ENERGY,"ExportEnergi"},                                       //Wh      
-//  {0.00, SDM630_TOTAL_SYSTEM_POWER_DEMAND,"TotalSystemPower"},                              //W       
-//  {0.00, SDM630_MAXIMUM_TOTAL_SYSTEM_POWER,"TotalMaxSystemPower"},                          //W       
-  {0.00, SDM630_TOTAL_ACTIVE_ENERGY,"TotalEnergi"},                                         //Wh
-  {0.00, SDM630_PHASE_12_VOLTAGE,"VoltageL1L2"},                                            //V
-  {0.00, SDM630_PHASE_23_VOLTAGE,"VoltageL2L3"},                                            //V
-  {0.00, SDM630_PHASE_31_VOLTAGE,"VoltageL3L1"},                                            //V
-//  {0.00, SDM630_PHASE_VOLTAGE_AVERAGE,"VoltagePhaseAVG"},                                   //V       
-  {0.00, SDM630_VOLT_AMPS_REACTIVE_TOTAL,"ReactivePowerSUM"},                               //VAr       
-  {0.00, SDM630_VOLT_AMPS_TOTAL,"ApparentPowerSUM"},                                        //VA      
-  {0.00, SDM630_IMPORT1,"ImportL1"},                                                        //kWh  
-  {0.00, SDM630_IMPORT2,"ImportL2"},                                                        //kWh 
-  {0.00, SDM630_IMPORT3,"ImportL3"},                                                        //kWh 
+  {0.00, SDM_PHASE_1_VOLTAGE,"VoltageL1"},                                      //V
+  {0.00, SDM_PHASE_2_VOLTAGE,"VoltageL2"},                                      //V
+  {0.00, SDM_PHASE_3_VOLTAGE,"VoltageL3"},                                      //V
+  {0.00, SDM_PHASE_1_CURRENT,"CurrentL1"},                                      //A
+  {0.00, SDM_PHASE_2_CURRENT,"CurrentL2"},                                      //A
+  {0.00, SDM_PHASE_3_CURRENT,"CurrentL3"},                                      //A
+  {0.00, SDM_SUM_LINE_CURRENT,"CurrentSUM"},                                    //A
+  {0.00, SDM_PHASE_1_POWER,"PowerL1"},                                          //W
+  {0.00, SDM_PHASE_2_POWER,"PowerL2"},                                          //W
+  {0.00, SDM_PHASE_3_POWER,"PowerL3"},                                          //W
+  {0.00, SDM_TOTAL_SYSTEM_POWER,"PowerSUM"},                                    //W
+  {0.00, SDM_TOTAL_SYSTEM_POWER_FACTOR,"PFTOTAL"},                              //PF
+  {0.00, SDM_FREQUENCY,"FREQUENCY"},                                            //Hz
+  {0.00, SDM_IMPORT_ACTIVE_ENERGY,"ImportEnergi"},                              //kWh
+  {0.00, SDM_TOTAL_ACTIVE_ENERGY,"TotalEnergi"},                                //kWh
+  {0.00, SDM_LINE_1_TO_LINE_2_VOLTS,"VoltageL1L2"},                             //V
+  {0.00, SDM_LINE_2_TO_LINE_3_VOLTS,"VoltageL2L3"},                             //V
+  {0.00, SDM_LINE_3_TO_LINE_1_VOLTS,"VoltageL3L1"},                             //V
+  {0.00, SDM_TOTAL_SYSTEM_REACTIVE_POWER,"ReactivePowerSUM"},                   //VAr
+  {0.00, SDM_TOTAL_SYSTEM_APPARENT_POWER,"ApparentPowerSUM"},                   //VA
+  {0.00, SDM_L1_IMPORT_ACTIVE_ENERGY,"ImportL1"},                               //kWh
+  {0.00, SDM_L2_IMPORT_ACTIVE_ENERGY,"ImportL2"},                               //kWh
+  {0.00, SDM_L3_IMPORT_ACTIVE_ENERGY,"ImportL3"}                                //kWh
 };
 
 unsigned long readtime;

@@ -171,16 +171,16 @@ https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L78
 //reading voltage from SDM with slave address 0x01 (default)
 //                                         ____register name
 //                                        |
-float voltage = sdm.readVal(SDM220T_VOLTAGE);
+float voltage = sdm.readVal(SDM_PHASE_1_VOLTAGE);
 
 //reading power from 1st SDM with slave address ID = 0x01
 //reading power from 2nd SDM with slave address ID = 0x02
 //useful with several meters on RS485 line
 //                                      _______register name
-//                                     |      _SDM device ID  
-//                                     |     |
-float power1 = sdm.readVal(SDM220T_POWER, 0x01);
-float power2 = sdm.readVal(SDM220T_POWER, 0x02);
+//                                     |       SDM device ID  
+//                                     |      |
+float power1 = sdm.readVal(SDM_PHASE_1_POWER, 0x01);
+float power2 = sdm.readVal(SDM_PHASE_1_POWER, 0x02);
 ```
 NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
@@ -282,6 +282,6 @@ other projects based on or using this library</br>
 
 ---
 
-**2016-2019 Reaper7**
+**2016-2020 Reaper7**
 
 [paypal.me/reaper7md](https://www.paypal.me/reaper7md)
