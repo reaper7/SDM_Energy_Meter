@@ -137,7 +137,7 @@
 #define SDM_PHASE_3_CURRENT_THD                       0x00F4                    //  %           |    1    |         |         |         |         |         |
 #define SDM_AVERAGE_LINE_TO_NEUTRAL_VOLTS_THD         0x00F8                    //  %           |    1    |         |         |         |         |         |
 #define SDM_AVERAGE_LINE_CURRENT_THD                  0x00FA                    //  %           |    1    |         |         |         |         |         |
-#define SDM_TOTAL_SYSTEM_POWER_FACTOR                 0x00FE                    //  Degrees     |    1    |         |         |         |         |         |
+#define SDM_TOTAL_SYSTEM_POWER_FACTOR_INV             0x00FE                    //  Degrees     |    1    |         |         |         |         |         |
 #define SDM_PHASE_1_CURRENT_DEMAND                    0x0102                    //  A           |    1    |    1    |         |         |         |         |
 #define SDM_PHASE_2_CURRENT_DEMAND                    0x0104                    //  A           |    1    |         |         |         |         |         |
 #define SDM_PHASE_3_CURRENT_DEMAND                    0x0106                    //  A           |    1    |         |         |         |         |         |
