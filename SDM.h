@@ -68,13 +68,28 @@
 #if !defined ( MAX_MILLIS_TO_WAIT )
   #define MAX_MILLIS_TO_WAIT                          500                       //  default max time to wait for response from SDM
 #endif
+
 //------------------------------------------------------------------------------
+
+#define SDM_ERR_NO_ERROR                              0                         //  no error
+#define SDM_ERR_CRC_ERROR                             1                         //  crc error
+#define SDM_ERR_WRONG_BYTES                           2                         //  bytes b0,b1 or b2 wrong
+#define SDM_ERR_NOT_ENOUGHT_BYTES                     3                         //  not enough bytes from sdm
+#define SDM_ERR_TIMEOUT                               4                         //  timeout
+
+//------------------------------------------------------------------------------
+
 #define FRAMESIZE                                     9                         //  size of out/in array
 #define SDM_REPLY_BYTE_COUNT                          0x04                      //  number of bytes with data
 
 #define SDM_B_01                                      0x01                      //  BYTE 1 -> slave address (default value 1 read from node 1)
 #define SDM_B_02                                      0x04                      //  BYTE 2 -> function code (default value 0x04 read from 3X input registers)
+#define SDM_B_05                                      0x00                      //  BYTE 5
+#define SDM_B_06                                      0x02                      //  BYTE 6
                                                                                 //  BYTES 3 & 4 (BELOW)
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+//      REGISTERS LIST FOR SDM DEVICES                                                                                                                      |
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 //      REGISTER NAME                                 REGISTER ADDRESS              UNIT        | SDM630  | SDM230  | SDM220  | SDM120CT| SDM120  | SDM72D  |
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,15 +190,19 @@
 #define SDM_IMPORT_POWER                              0x0500                    //  W           |         |         |         |         |         |    1    |
 #define SDM_EXPORT_POWER                              0x0502                    //  W           |         |         |         |         |         |    1    |
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
-#define SDM_B_05                                      0x00                      //  BYTE 5
-#define SDM_B_06                                      0x02                      //  BYTE 6
-//------------------------------------------------------------------------------
-#define SDM_ERR_NO_ERROR                              0                         //  no error
-#define SDM_ERR_CRC_ERROR                             1                         //  crc error
-#define SDM_ERR_WRONG_BYTES                           2                         //  bytes b0,b1 or b2 wrong
-#define SDM_ERR_NOT_ENOUGHT_BYTES                     3                         //  not enough bytes from sdm
-#define SDM_ERR_TIMEOUT                               4                         //  timeout
-//------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------------
+//      REGISTERS LIST FOR DEVNAME DEVICE                                                                 |
+//---------------------------------------------------------------------------------------------------------
+//      REGISTER NAME                                 REGISTER ADDRESS              UNIT        | DEVNAME |
+//---------------------------------------------------------------------------------------------------------
+#define DEVNAME_VOLTAGE                               0x0000                    //  V           |    1    |
+#define DEVNAME_CURRENT                               0x0002                    //  A           |    1    |
+#define DEVNAME_POWER                                 0x0004                    //  W           |    1    |
+//---------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 class SDM {
   public:
 #if defined ( USE_HARDWARESERIAL )                                              //  hardware serial
