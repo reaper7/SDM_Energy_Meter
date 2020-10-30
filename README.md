@@ -166,7 +166,7 @@ to ensure low level on GPIO15 by built-in in most ESP8266 modules pulldown resis
 
 ### Reading: ###
 List of available registers for SDM72/120/220/230/630:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L78
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L90
 ```cpp
 //reading voltage from SDM with slave address 0x01 (default)
 //                                         ____register name
@@ -228,7 +228,7 @@ uint16_t lasterror = sdm.getErrCode(true);
 sdm.clearErrCode();
 ```
 Errors list returned by <b>getErrCode</b>:</br>
-https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L220</br>
+https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM.h#L73</br>
 
 You can also check total number of errors using function:
 ```cpp
