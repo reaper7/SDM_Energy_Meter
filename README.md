@@ -1,4 +1,4 @@
-## Library for reading SDM72 SDM120 SDM220 SDM230 SDM630 Modbus Energy meters. ##
+## Library for reading SDM72 SDM120 SDM220 SDM230 SDM630 DDM18SD Modbus Energy meters. ##
 
 ### SECTIONS: ###
 #### 1. [INTRODUCTION](#introduction) ####
@@ -17,7 +17,7 @@ This library allows you reading SDM module(s) using:
 - [x] Software Serial, attached as core libraries for esp8266 and avr</br>
      (<i>the new version of esp Software Serial library</br>
       has a different initialization compared to avr!</br>
-      <b>This version of SDM library (2.0.8) works only with esp Software Serial 6.0.0 or higher!!!</b></br>
+      <b>This version of SDM library (>=2.0.8) works only with esp Software Serial 6.0.0 or higher!!!</b></br>
       If you have an older esp Software Serial version</br>
       then use other SDM library, details below the Credits section</i>)</br>
 
@@ -265,8 +265,9 @@ contribution to this project:</br>
 :+1: crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino)</br>
 :+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/reaper7/SDM_Energy_Meter/pull/3)</br>
 :+1: new registers for SDM72 by jegaha (https://github.com/reaper7/SDM_Energy_Meter/pull/34)</br>
-:+1: new registers for SDM120CT by jeroenst (https://github.com/reaper7/SDM_Energy_Meter/pull/41)</br>
+:+1: new registers for SDM120CT by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/41)</br>
 :+1: additional SDM630 registers and influxdb example by AndersV209 (https://github.com/reaper7/SDM_Energy_Meter/pull/45)</br>
+:+1: additional DDM18SD registers by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/44)</br>
 
 other projects based on or using this library</br>
 :point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
