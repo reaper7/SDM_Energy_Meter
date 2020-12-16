@@ -107,7 +107,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   dereSet(LOW);                                                                 //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
-  resptime = millis() + MAX_MILLIS_TO_WAIT;
+  resptime = millis() + WAITING_TURNAROUND_DELAY;
 
   while (sdmSer.available() < FRAMESIZE) {
     if (resptime < millis()) {
@@ -153,7 +153,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     ++readingsuccesscount;
   }
 
-  flush();                                                                      //read serial if any old data is available
+  flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
 
 #if !defined ( USE_HARDWARESERIAL )
   sdmSer.stopListening();                                                       //disable softserial rx interrupt
@@ -210,10 +210,11 @@ uint16_t SDM::calculateCRC(uint8_t *array, uint8_t num) {
   return _crc;
 }
 
-void SDM::flush() {
-  uint8_t _i = 0;
-  while (sdmSer.available() && _i++ < 10)  {                                    //read serial if any old data is available
-    sdmSer.read();
+void SDM::flush(unsigned long _flushtime) {
+  unsigned long flushtime = millis() + _flushtime;
+  while (sdmSer.available() || flushtime <= millis()) {
+    if (sdmSer.available())                                                     //read serial if any old data is available
+      sdmSer.read();
     delay(1);
   }
 }

@@ -79,8 +79,15 @@
 //------------------------------------------------------------------------------
 
 /*
-*  define user MAX_MILLIS_TO_WAIT to wait for response from SDM
+*  define user WAITING_TURNAROUND_DELAY time in ms to wait for process current request
 */
-//#define MAX_MILLIS_TO_WAIT                  500
+//#define WAITING_TURNAROUND_DELAY            200
+
+//------------------------------------------------------------------------------
+
+/*
+*  define user RESPONSE_TIMEOUT time in ms to wait for return response from all devices before next request
+*/
+//#define RESPONSE_TIMEOUT                    500
 
 //------------------------------------------------------------------------------

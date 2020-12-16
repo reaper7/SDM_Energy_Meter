@@ -65,8 +65,12 @@
 
 #endif
 
-#if !defined ( MAX_MILLIS_TO_WAIT )
-  #define MAX_MILLIS_TO_WAIT                          500                       //  default max time to wait for response from SDM
+#if !defined ( WAITING_TURNAROUND_DELAY )
+  #define WAITING_TURNAROUND_DELAY                    200                       //  time in ms to wait for process current request
+#endif
+
+#if !defined ( RESPONSE_TIMEOUT )
+  #define RESPONSE_TIMEOUT                            500                       //  time in ms to wait for return response from all devices before next request
 #endif
 
 //------------------------------------------------------------------------------
@@ -274,7 +278,7 @@ class SDM {
     uint32_t readingerrcount = 0;                                               //  total errors counter
     uint32_t readingsuccesscount = 0;                                           //  total success counter
     uint16_t calculateCRC(uint8_t *array, uint8_t num);
-    void flush();                                                               //  read serial if any old data is available
+    void flush(unsigned long _flushtime = 0);                                   //  read serial if any old data is available or for a given time in ms
     void dereSet(bool _state = LOW);                                            //  for control MAX485 DE/RE pins, LOW receive from SDM, HIGH transmit to SDM
 };
 #endif // SDM_h
