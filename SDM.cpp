@@ -212,7 +212,7 @@ uint16_t SDM::calculateCRC(uint8_t *array, uint8_t num) {
 
 void SDM::flush(unsigned long _flushtime) {
   unsigned long flushtime = millis() + _flushtime;
-  while (sdmSer.available() || flushtime <= millis()) {
+  while (sdmSer.available() || flushtime >= millis()) {
     if (sdmSer.available())                                                     //read serial if any old data is available
       sdmSer.read();
     delay(1);
