@@ -119,7 +119,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   if (readErr == SDM_ERR_NO_ERROR) {                                            //if no timeout...
 
-    if(sdmSer.available() >= FRAMESIZE) {
+    if (sdmSer.available() >= FRAMESIZE) {
 
       for(int n=0; n<FRAMESIZE; n++) {
         sdmarr[n] = sdmSer.read();
@@ -146,14 +146,17 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   }
 
+  flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
+  
+  if (sdmSer.available())                                                       //if serial rx buffer (after RESPONSE_TIMEOUT) still contains data then something spam rs485, check node(s) or increase RESPONSE_TIMEOUT
+    readErr = SDM_ERR_TIMEOUT;                                                  //err debug (4)
+
   if (readErr != SDM_ERR_NO_ERROR) {                                            //if error then copy temp error value to global val and increment global error counter
     readingerrcode = readErr;
     readingerrcount++; 
   } else {
     ++readingsuccesscount;
   }
-
-  flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
 
 #if !defined ( USE_HARDWARESERIAL )
   sdmSer.stopListening();                                                       //disable softserial rx interrupt
