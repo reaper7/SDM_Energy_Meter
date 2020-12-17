@@ -56,19 +56,13 @@ void loop() {
   Serial.print(sdm.readVal(SDM_PHASE_1_VOLTAGE), 2);                            //display voltage
   Serial.println("V");
 
-  delay(50);
-
   Serial.print("Current:   ");
   Serial.print(sdm.readVal(SDM_PHASE_1_CURRENT), 2);                            //display current  
   Serial.println("A");
 
-  delay(50);
-
   Serial.print("Power:     ");
   Serial.print(sdm.readVal(SDM_PHASE_1_POWER), 2);                              //display power
   Serial.println("W");
-
-  delay(50);
 
   Serial.print("Frequency: ");
   Serial.print(sdm.readVal(SDM_FREQUENCY), 2);                                  //display frequency
