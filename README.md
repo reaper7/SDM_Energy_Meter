@@ -54,6 +54,11 @@ User can set the parameters in two ways:
 - by editing the [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file
 - by passing values during initialization (section below)
 
+[SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h) file includes also two parameters that can be adjusted depending on your needs:
+- WAITING_TURNAROUND_DELAY (default set to 200ms) defines the time (after sending the query) for the response from the slave device.
+  If the slave device does not send the required number of bytes (FRAMESIZE) within this time, an SDM_ERR_TIMEOUT error will be returned.
+- RESPONSE_TIMEOUT (default set to 500ms) defines the time (after sending the request and receiving the reply) to a possible response from other slave devices on the bus, during this time it will not be possible to execute another query. It is a protection time for devices that are not able to quickly respond to inquiries.
+
 NOTE for Hardware Serial mode: <i>to force the Hardware Serial mode,</br>
 user must edit the corresponding entry in [SDM_Config_User.h](https://github.com/reaper7/SDM_Energy_Meter/blob/master/SDM_Config_User.h#L17) file.</br>
 adding #define USE_HARDWARESERIAL to the main ino file is not enough.</i>
