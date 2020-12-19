@@ -32,8 +32,9 @@ _Tested on Wemos D1 Mini with Arduino IDE 1.8.3-1.8.10 & ESP8266 core 2.3.0-2.5.
 ---
 
 ### Screenshots: ###
-<img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_1.jpg" height="330"><img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330"></br>
 <p align="center">
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_1.jpg" height="330"></br>
+  <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/hardware_sdm220_2.jpg" height="330"></br>
   <img src="https://github.com/reaper7/SDM_Energy_Meter/blob/master/img/livepage.gif"></br>
   <i>live page example (extended) screenshot</i>
 </p>
@@ -266,8 +267,8 @@ contribution to this project:</br>
 :+1: new registers for SDM120 and SDM630 by bart.e (https://github.com/reaper7/SDM_Energy_Meter/pull/3)</br>
 :+1: new registers for SDM72 by jegaha (https://github.com/reaper7/SDM_Energy_Meter/pull/34)</br>
 :+1: new registers for SDM120CT by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/41)</br>
+:+1: new registers for DDM18SD  by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/44)</br>
 :+1: additional SDM630 registers and influxdb example by AndersV209 (https://github.com/reaper7/SDM_Energy_Meter/pull/45)</br>
-:+1: additional DDM18SD registers by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/44)</br>
 
 other projects based on or using this library</br>
 :point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
