@@ -214,6 +214,8 @@ The most common problems are:
 - compilation error for hardware serial mode</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/23</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/24</br>
+- SDM630 Modbus V2 serial stopbit problem</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/49</br>
 
 You can get last error code using function:
 ```cpp
