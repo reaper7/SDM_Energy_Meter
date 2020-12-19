@@ -223,6 +223,8 @@ The most common problems are:
   https://github.com/reaper7/SDM_Energy_Meter/issues/24</br>
 - SDM630 Modbus V2 serial stopbit problem</br>
   https://github.com/reaper7/SDM_Energy_Meter/issues/49</br>
+- Subsequent inquiries for slow slaves</br>
+  https://github.com/reaper7/SDM_Energy_Meter/issues/50</br>
 
 You can get last error code using function:
 ```cpp
