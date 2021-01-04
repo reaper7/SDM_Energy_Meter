@@ -149,7 +149,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
   
   if (sdmSer.available())                                                       //if serial rx buffer (after RESPONSE_TIMEOUT) still contains data then something spam rs485, check node(s) or increase RESPONSE_TIMEOUT
-    readErr = SDM_ERR_TIMEOUT;                                                  //err debug (4) but returned value maybe valid
+    readErr = SDM_ERR_TIMEOUT;                                                  //err debug (4) but returned value may be correct
 
   if (readErr != SDM_ERR_NO_ERROR) {                                            //if error then copy temp error value to global val and increment global error counter
     readingerrcode = readErr;
@@ -198,11 +198,11 @@ void SDM::clearSuccCount() {
   readingsuccesscount = 0;
 }
 
-uint16_t SDM::calculateCRC(uint8_t *array, uint8_t num) {
+uint16_t SDM::calculateCRC(uint8_t *array, uint8_t len) {
   uint16_t _crc, _flag;
   _crc = 0xFFFF;
-  for (uint8_t i = 0; i < num; i++) {
-    _crc = _crc ^ array[i];
+  for (uint8_t i = 0; i < len; i++) {
+    _crc ^= (uint16_t)array[i];
     for (uint8_t j = 8; j; j--) {
       _flag = _crc & 0x0001;
       _crc >>= 1;
