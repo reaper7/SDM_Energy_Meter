@@ -80,7 +80,8 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   uint16_t temp;
   unsigned long resptime;
   float res = NAN;
-  uint16_t readErr = SDM_ERR_NO_ERROR;
+  uint8_t readErr = SDM_ERR_NO_ERROR;
+  uint8_t readExc = SDM_EXC_NO_EXCEPTION;
 
   memset(sdmArrI, 0x00, FRAMESIZE);                                             //clear input array
   memset(sdmArrO, 0x00, FRAMESIZE);                                             //clear output array
@@ -115,7 +116,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   while (sdmSer.available() < FRAMESIZE) {
     if (resptime < millis()) {
-      readErr = SDM_ERR_TIMEOUT;                                                //err debug (4)
+      readErr = SDM_ERR_TIMEOUT;                                                //err debug (5)
       break;
     }
     yield();
@@ -129,23 +130,38 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
         sdmArrI[n] = sdmSer.read();
       }
 
-      if (sdmArrI[0] == node && sdmArrI[1] == SDM_B_02 && sdmArrI[2] == SDM_REPLY_BYTE_COUNT) {
+      if (sdmArrI[0] == node) {
 
-        if ((calculateCRC(sdmArrI, FRAMESIZE - 2)) == ((sdmArrI[8] << 8) | sdmArrI[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
-          ((uint8_t*)&res)[3]= sdmArrI[3];
-          ((uint8_t*)&res)[2]= sdmArrI[4];
-          ((uint8_t*)&res)[1]= sdmArrI[5];
-          ((uint8_t*)&res)[0]= sdmArrI[6];
+        if (sdmArrI[1] == SDM_B_02 && sdmArrI[2] == SDM_REPLY_BYTE_COUNT) {
+
+          if ((calculateCRC(sdmArrI, FRAMESIZE - 2)) == ((sdmArrI[8] << 8) | sdmArrI[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
+            ((uint8_t*)&res)[3]= sdmArrI[3];
+            ((uint8_t*)&res)[2]= sdmArrI[4];
+            ((uint8_t*)&res)[1]= sdmArrI[5];
+            ((uint8_t*)&res)[0]= sdmArrI[6];
+          } else {
+            readErr = SDM_ERR_CRC_ERROR;                                          //err debug (2)
+          }
+
+        } else if (sdmArrI[1] == (SDM_B_02 | 0x80)) {                             //exception response
+
+          if ((calculateCRC(sdmArrI, 3)) == ((sdmArrI[4] << 8) | sdmArrI[3])) {   //calculate crc from first 3 bytes and compare with received crc (bytes 3 & 4)
+            readExc = sdmArrI[2];
+            readErr = SDM_ERR_SDM_EXCEPTION;                                      //err debug (1)
+          } else {
+            readErr = SDM_ERR_CRC_ERROR;                                          //err debug (2)
+          }
+
         } else {
-          readErr = SDM_ERR_CRC_ERROR;                                          //err debug (1)
+          readErr = SDM_ERR_WRONG_BYTES;                                          //err debug (3)
         }
 
       } else {
-        readErr = SDM_ERR_WRONG_BYTES;                                          //err debug (2)
+        readErr = SDM_ERR_WRONG_SLAVE;                                            //err debug (6)
       }
 
     } else {
-      readErr = SDM_ERR_NOT_ENOUGHT_BYTES;                                      //err debug (3)
+      readErr = SDM_ERR_NOT_ENOUGHT_BYTES;                                      //err debug (4)
     }
 
   }
@@ -153,10 +169,12 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
   
   if (sdmSer.available())                                                       //if serial rx buffer (after RESPONSE_TIMEOUT) still contains data then something spam rs485, check node(s) or increase RESPONSE_TIMEOUT
-    readErr = SDM_ERR_TIMEOUT;                                                  //err debug (4) but returned value may be correct
+    readErr = SDM_ERR_TIMEOUT;                                                  //err debug (5) but returned value may be correct
 
   if (readErr != SDM_ERR_NO_ERROR) {                                            //if error then copy temp error value to global val and increment global error counter
     readingerrcode = readErr;
+    if (readExc != SDM_EXC_NO_EXCEPTION)                                        //if sdm exception then copy temp error value to global val
+      sdmexceptioncode = readExc;
     readingerrcount++; 
   } else {
     ++readingsuccesscount;
@@ -169,8 +187,15 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   return (res);
 }
 
-uint16_t SDM::getErrCode(bool _clear) {
-  uint16_t _tmp = readingerrcode;
+uint8_t SDM::getExcCode(bool _clear) {
+  uint8_t _tmp = sdmexceptioncode;
+  if (_clear == true)
+    clearExcCode();
+  return (_tmp);
+}
+
+uint8_t SDM::getErrCode(bool _clear) {
+  uint8_t _tmp = readingerrcode;
   if (_clear == true)
     clearErrCode();
   return (_tmp);
@@ -188,6 +213,10 @@ uint32_t SDM::getSuccCount(bool _clear) {
   if (_clear == true)
     clearSuccCount();
   return (_tmp);
+}
+
+void SDM::clearExcCode() {
+  sdmexceptioncode = SDM_EXC_NO_EXCEPTION;
 }
 
 void SDM::clearErrCode() {

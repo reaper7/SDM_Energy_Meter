@@ -75,11 +75,19 @@
 
 //------------------------------------------------------------------------------
 
-#define SDM_ERR_NO_ERROR                              0                         //  no error
-#define SDM_ERR_CRC_ERROR                             1                         //  crc error
-#define SDM_ERR_WRONG_BYTES                           2                         //  bytes b0,b1 or b2 wrong
-#define SDM_ERR_NOT_ENOUGHT_BYTES                     3                         //  not enough bytes from sdm
-#define SDM_ERR_TIMEOUT                               4                         //  timeout
+#define SDM_ERR_NO_ERROR                              0x00                      //  no error
+#define SDM_ERR_SDM_EXCEPTION                         0x80                      //  sdm exception
+#define SDM_ERR_CRC_ERROR                             0x90                      //  crc error
+#define SDM_ERR_WRONG_BYTES                           0xA0                      //  bytes b0,b1 or b2 wrong
+#define SDM_ERR_NOT_ENOUGHT_BYTES                     0xB0                      //  not enough bytes from sdm
+#define SDM_ERR_TIMEOUT                               0xC0                      //  timeout
+#define SDM_ERR_WRONG_SLAVE                           0xD0                      //  reply from different slave
+
+#define SDM_EXC_NO_EXCEPTION                          0x00                      //  no exception
+#define SDM_EXC_ILLEGAL_FUNCTION                      0x01                      //  illegal function
+#define SDM_EXC_ILLEGAL_DATA_ADDR                     0x02                      //  illegal data address
+#define SDM_EXC_ILLEGAL_DATA_VAL                      0x03                      //  illegal data value
+#define SDM_EXC_DEVICE_FAILURE                        0x05                      //  slave device failure
 
 //------------------------------------------------------------------------------
 
@@ -243,9 +251,11 @@ class SDM {
 
     void begin(void);
     float readVal(uint16_t reg, uint8_t node = SDM_B_01);                       //  read value from register = reg and from deviceId = node
-    uint16_t getErrCode(bool _clear = false);                                   //  return last errorcode (optional clear this value, default flase)
+    uint8_t getExcCode(bool _clear = false);                                    //  return last exceptioncode (optional clear this value, default flase)
+    uint8_t getErrCode(bool _clear = false);                                    //  return last errorcode (optional clear this value, default flase)
     uint32_t getErrCount(bool _clear = false);                                  //  return total errors count (optional clear this value, default flase)
     uint32_t getSuccCount(bool _clear = false);                                 //  return total success count (optional clear this value, default false)
+    void clearExcCode();                                                        //  clear last exceptioncode
     void clearErrCode();                                                        //  clear last errorcode
     void clearErrCount();                                                       //  clear total errors count
     void clearSuccCount();                                                      //  clear total success count
@@ -276,7 +286,8 @@ class SDM {
 #endif
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;
-    uint16_t readingerrcode = SDM_ERR_NO_ERROR;                                 //  4 = timeout; 3 = not enough bytes; 2 = number of bytes OK but bytes b0,b1 or b2 wrong, 1 = crc error
+    uint8_t sdmexceptioncode = SDM_EXC_NO_EXCEPTION;                            //  sdm exception codes SDM_EXC_*
+    uint8_t readingerrcode = SDM_ERR_NO_ERROR;                                  //  library error codes SDM_ERR_*
     uint32_t readingerrcount = 0;                                               //  total errors counter
     uint32_t readingsuccesscount = 0;                                           //  total success counter
     uint16_t calculateCRC(uint8_t *array, uint8_t len);
