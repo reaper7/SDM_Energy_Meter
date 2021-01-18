@@ -9,5 +9,5 @@ getSuccCount	KEYWORD2
 clearErrCode	KEYWORD2
 clearErrCount	KEYWORD2
 clearSuccCount	KEYWORD2
-sdmArrO KEYWORD2
-sdmArrI KEYWORD2
+sdmArrO	KEYWORD2
+sdmArrI	KEYWORD2
