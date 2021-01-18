@@ -79,17 +79,21 @@ void SDM::begin(void) {
 float SDM::readVal(uint16_t reg, uint8_t node) {
   uint16_t temp;
   unsigned long resptime;
-  uint8_t sdmarr[FRAMESIZE] = {node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0, 0};
   float res = NAN;
   uint16_t readErr = SDM_ERR_NO_ERROR;
 
-  sdmarr[2] = highByte(reg);
-  sdmarr[3] = lowByte(reg);
+  memset(sdmArrI, 0x00, FRAMESIZE);                                             //clear input array
+  memset(sdmArrO, 0x00, FRAMESIZE);                                             //clear output array
 
-  temp = calculateCRC(sdmarr, FRAMESIZE - 3);                                   //calculate out crc only from first 6 bytes
-
-  sdmarr[6] = lowByte(temp);
-  sdmarr[7] = highByte(temp);
+  sdmArrO[0] = node;
+  sdmArrO[1] = SDM_B_02;
+  sdmArrO[2] = highByte(reg);
+  sdmArrO[3] = lowByte(reg);
+  sdmArrO[4] = SDM_B_05;
+  sdmArrO[5] = SDM_B_06;
+  temp = calculateCRC(sdmArrO, FRAMESIZE - 3);                                  //calculate out crc only from first 6 bytes
+  sdmArrO[6] = lowByte(temp);
+  sdmArrO[7] = highByte(temp);
 
 #if !defined ( USE_HARDWARESERIAL )
   sdmSer.listen();                                                              //enable softserial rx interrupt
@@ -101,7 +105,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   delay(2);                                                                     //fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
 
-  sdmSer.write(sdmarr, FRAMESIZE - 1);                                          //send 8 bytes
+  sdmSer.write(sdmArrO, FRAMESIZE - 1);                                         //send 8 bytes
 
   sdmSer.flush();                                                               //clear out tx buffer
 
@@ -122,16 +126,16 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     if (sdmSer.available() >= FRAMESIZE) {
 
       for(int n=0; n<FRAMESIZE; n++) {
-        sdmarr[n] = sdmSer.read();
+        sdmArrI[n] = sdmSer.read();
       }
 
-      if (sdmarr[0] == node && sdmarr[1] == SDM_B_02 && sdmarr[2] == SDM_REPLY_BYTE_COUNT) {
+      if (sdmArrI[0] == node && sdmArrI[1] == SDM_B_02 && sdmArrI[2] == SDM_REPLY_BYTE_COUNT) {
 
-        if ((calculateCRC(sdmarr, FRAMESIZE - 2)) == ((sdmarr[8] << 8) | sdmarr[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
-          ((uint8_t*)&res)[3]= sdmarr[3];
-          ((uint8_t*)&res)[2]= sdmarr[4];
-          ((uint8_t*)&res)[1]= sdmarr[5];
-          ((uint8_t*)&res)[0]= sdmarr[6];
+        if ((calculateCRC(sdmArrI, FRAMESIZE - 2)) == ((sdmArrI[8] << 8) | sdmArrI[7])) {  //calculate crc from first 7 bytes and compare with received crc (bytes 7 & 8)
+          ((uint8_t*)&res)[3]= sdmArrI[3];
+          ((uint8_t*)&res)[2]= sdmArrI[4];
+          ((uint8_t*)&res)[1]= sdmArrI[5];
+          ((uint8_t*)&res)[0]= sdmArrI[6];
         } else {
           readErr = SDM_ERR_CRC_ERROR;                                          //err debug (1)
         }

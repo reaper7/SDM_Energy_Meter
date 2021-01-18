@@ -249,6 +249,8 @@ class SDM {
     void clearErrCode();                                                        //  clear last errorcode
     void clearErrCount();                                                       //  clear total errors count
     void clearSuccCount();                                                      //  clear total success count
+    uint8_t sdmArrO[FRAMESIZE-1] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};      //  out array uC->meter
+    uint8_t sdmArrI[FRAMESIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};  //  in array meter->uC
 
   private:
 #if defined ( USE_HARDWARESERIAL )
