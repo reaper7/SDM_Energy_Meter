@@ -140,24 +140,24 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
             ((uint8_t*)&res)[1]= sdmArrI[5];
             ((uint8_t*)&res)[0]= sdmArrI[6];
           } else {
-            readErr = SDM_ERR_CRC_ERROR;                                          //err debug (2)
+            readErr = SDM_ERR_CRC_ERROR;                                        //err debug (2)
           }
 
-        } else if (sdmArrI[1] == (SDM_B_02 | 0x80)) {                             //exception response
+        } else if (sdmArrI[1] == (SDM_B_02 | 0x80)) {                           //exception response
 
-          if ((calculateCRC(sdmArrI, 3)) == ((sdmArrI[4] << 8) | sdmArrI[3])) {   //calculate crc from first 3 bytes and compare with received crc (bytes 3 & 4)
+          if ((calculateCRC(sdmArrI, 3)) == ((sdmArrI[4] << 8) | sdmArrI[3])) { //calculate crc from first 3 bytes and compare with received crc (bytes 3 & 4)
             readExc = sdmArrI[2];
-            readErr = SDM_ERR_SDM_EXCEPTION;                                      //err debug (1)
+            readErr = SDM_ERR_SDM_EXCEPTION;                                    //err debug (1)
           } else {
-            readErr = SDM_ERR_CRC_ERROR;                                          //err debug (2)
+            readErr = SDM_ERR_CRC_ERROR;                                        //err debug (2)
           }
 
         } else {
-          readErr = SDM_ERR_WRONG_BYTES;                                          //err debug (3)
+          readErr = SDM_ERR_WRONG_BYTES;                                        //err debug (3)
         }
 
       } else {
-        readErr = SDM_ERR_WRONG_SLAVE;                                            //err debug (6)
+        readErr = SDM_ERR_WRONG_SLAVE;                                          //err debug (6)
       }
 
     } else {
@@ -249,8 +249,11 @@ uint16_t SDM::calculateCRC(uint8_t *array, uint8_t len) {
 void SDM::flush(unsigned long _flushtime) {
   unsigned long flushtime = millis() + _flushtime;
   while (sdmSer.available() || flushtime >= millis()) {
-    if (sdmSer.available())                                                     //read serial if any old data is available
+    if (sdmSer.available()) {                                                   //read serial if any old data is available
       sdmSer.read();
+      if (flushtime < millis())                                                 //break if serial data is still available
+        break;
+    }
     delay(1);
   }
 }

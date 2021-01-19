@@ -78,7 +78,7 @@
 #define SDM_ERR_NO_ERROR                              0x00                      //  no error
 #define SDM_ERR_SDM_EXCEPTION                         0x80                      //  sdm exception
 #define SDM_ERR_CRC_ERROR                             0x90                      //  crc error
-#define SDM_ERR_WRONG_BYTES                           0xA0                      //  bytes b0,b1 or b2 wrong
+#define SDM_ERR_WRONG_BYTES                           0xA0                      //  bytes b1 or b2 wrong
 #define SDM_ERR_NOT_ENOUGHT_BYTES                     0xB0                      //  not enough bytes from sdm
 #define SDM_ERR_TIMEOUT                               0xC0                      //  timeout
 #define SDM_ERR_WRONG_SLAVE                           0xD0                      //  reply from different slave
