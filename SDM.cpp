@@ -85,6 +85,8 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   memset(sdmArrI, 0x00, FRAMESIZE);                                             //clear input array
   memset(sdmArrO, 0x00, FRAMESIZE);                                             //clear output array
+  // memcpy(sdmArrO, (uint8_t*[]){node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0}, FRAMESIZE-1);
+  // memcpy(sdmArrO, ((char[]){node, SDM_B_02, 0, 0, SDM_B_05, SDM_B_06, 0, 0}), FRAMESIZE-1);
 
   sdmArrO[0] = node;
   sdmArrO[1] = SDM_B_02;
@@ -251,8 +253,8 @@ void SDM::flush(unsigned long _flushtime) {
   while (sdmSer.available() || flushtime >= millis()) {
     if (sdmSer.available()) {                                                   //read serial if any old data is available
       sdmSer.read();
-      if (flushtime < millis())                                                 //break if serial data is still available
-        break;
+//      if (flushtime < millis())                                                 //break if serial data is still available
+//        break;
     }
     delay(1);
   }
