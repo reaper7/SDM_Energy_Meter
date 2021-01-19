@@ -82,6 +82,7 @@
 #define SDM_ERR_NOT_ENOUGHT_BYTES                     0xB0                      //  not enough bytes from sdm
 #define SDM_ERR_TIMEOUT                               0xC0                      //  timeout
 #define SDM_ERR_WRONG_SLAVE                           0xD0                      //  reply from different slave
+#define SDM_ERR_RS485_BUSY                            0xE0                      //  rs485 busy, input transmission is still received
 
 #define SDM_EXC_NO_EXCEPTION                          0x00                      //  no exception
 #define SDM_EXC_ILLEGAL_FUNCTION                      0x01                      //  illegal function
