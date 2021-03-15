@@ -14,7 +14,7 @@ TX SSer/HSer swap D8|15                            |GND
                        |___________________________|
 */
 
-//REMEMBER! uncomment #define USE_HARDWARESERIAL 
+//REMEMBER! uncomment #define USE_HARDWARESERIAL
 //in SDM_Config_User.h file if you want to use hardware uart
 
 #include <SDM.h>                                                                //import SDM library
@@ -22,11 +22,11 @@ TX SSer/HSer swap D8|15                            |GND
 #if defined ( USE_HARDWARESERIAL )                                              //for HWSERIAL
 
 #if defined ( ESP8266 )                                                         //for ESP8266
-SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1);                                  //config SDM
+SDM sdm(Serial1, SDM_UART_BAUD, NOT_A_PIN, SERIAL_8N1);                                  //config SDM
 #elif defined ( ESP32 )                                                         //for ESP32
-SDM sdm(Serial1, 4800, NOT_A_PIN, SERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);          //config SDM
+SDM sdm(Serial1, SDM_UART_BAUD, NOT_A_PIN, SERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);          //config SDM
 #else                                                                           //for AVR
-SDM sdm(Serial1, 4800, NOT_A_PIN);                                              //config SDM on Serial1 (if available!)
+SDM sdm(Serial1, SDM_UART_BAUD, NOT_A_PIN);                                              //config SDM on Serial1 (if available!)
 #endif
 
 #else                                                                           //for SWSERIAL
@@ -34,10 +34,10 @@ SDM sdm(Serial1, 4800, NOT_A_PIN);                                              
 #include <SoftwareSerial.h>                                                     //import SoftwareSerial library
 #if defined ( ESP8266 ) || defined ( ESP32 )                                    //for ESP
 SoftwareSerial swSerSDM;                                                        //config SoftwareSerial
-SDM sdm(swSerSDM, 4800, NOT_A_PIN, SWSERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);       //config SDM
+SDM sdm(swSerSDM, SDM_UART_BAUD, NOT_A_PIN, SWSERIAL_8N1, SDM_RX_PIN, SDM_TX_PIN);       //config SDM
 #else                                                                           //for AVR
 SoftwareSerial swSerSDM(SDM_RX_PIN, SDM_TX_PIN);                                //config SoftwareSerial
-SDM sdm(swSerSDM, 4800, NOT_A_PIN);                                             //config SDM
+SDM sdm(swSerSDM, SDM_UART_BAUD, NOT_A_PIN);                                             //config SDM
 #endif
 
 #endif
@@ -57,7 +57,7 @@ void loop() {
   Serial.println("V");
 
   Serial.print("Current:   ");
-  Serial.print(sdm.readVal(SDM_PHASE_1_CURRENT), 2);                            //display current  
+  Serial.print(sdm.readVal(SDM_PHASE_1_CURRENT), 2);                            //display current
   Serial.println("A");
 
   Serial.print("Power:     ");
@@ -66,7 +66,7 @@ void loop() {
 
   Serial.print("Frequency: ");
   Serial.print(sdm.readVal(SDM_FREQUENCY), 2);                                  //display frequency
-  Serial.println("Hz");   
+  Serial.println("Hz");
 
   delay(1000);                                                                  //wait a while before next loop
 }

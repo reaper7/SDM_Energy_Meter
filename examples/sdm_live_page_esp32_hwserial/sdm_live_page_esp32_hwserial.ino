@@ -40,7 +40,7 @@
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 
-SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, 3, 1);                             //esp32 default pins for Serial0 => RX pin 3, TX pin 1
+SDM sdm(Serial, SDM_UART_BAUD, NOT_A_PIN, SERIAL_8N1, 3, 1);                             //esp32 default pins for Serial0 => RX pin 3, TX pin 1
 
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";
@@ -91,12 +91,12 @@ String getUptimeString() {
 
   char buffer[20];
   sprintf(buffer, "%4u days %02d:%02d:%02d", days, hours, minutes, seconds);
-  return buffer;  
+  return buffer;
 }
 //------------------------------------------------------------------------------
 void xmlrequest(AsyncWebServerRequest *request) {
   String XML = F("<?xml version='1.0'?><xml>");
-  for (int i = 0; i < NBREG; i++) { 
+  for (int i = 0; i < NBREG; i++) {
     XML += "<response" + (String)i + ">";
     XML += String(sdmarr[i].regvalarr,2);
     XML += "</response" + (String)i + ">";
@@ -121,7 +121,7 @@ void xmlrequest(AsyncWebServerRequest *request) {
 }
 //------------------------------------------------------------------------------
 void indexrequest(AsyncWebServerRequest *request) {
-  request->send_P(200, "text/html", index_page); 
+  request->send_P(200, "text/html", index_page);
 }
 //------------------------------------------------------------------------------
 void ledOn() {
