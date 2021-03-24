@@ -38,7 +38,7 @@ TX SSer/HSer swap D8|15                            |GND
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 
-SDM sdm(Serial, 9600, NOT_A_PIN, SERIAL_8N1, false);                            //HARDWARE SERIAL
+SDM sdm(Serial, SDM_UART_BAUD, NOT_A_PIN, SERIAL_8N1, false);                            //HARDWARE SERIAL
 
 //------------------------------------------------------------------------------
 String devicename = "PWRMETER";
@@ -71,7 +71,7 @@ volatile sdm_struct sdmarr[NBREG] = {
 //------------------------------------------------------------------------------
 void xmlrequest(AsyncWebServerRequest *request) {
   String XML = F("<?xml version='1.0'?><xml>");
-  for (int i = 0; i < NBREG; i++) { 
+  for (int i = 0; i < NBREG; i++) {
     XML += "<response" + (String)i + ">";
     XML += String(sdmarr[i].regvalarr,2);
     XML += "</response" + (String)i + ">";
@@ -87,7 +87,7 @@ void xmlrequest(AsyncWebServerRequest *request) {
 }
 //------------------------------------------------------------------------------
 void indexrequest(AsyncWebServerRequest *request) {
-  request->send_P(200, "text/html", index_page); 
+  request->send_P(200, "text/html", index_page);
 }
 //------------------------------------------------------------------------------
 void ledOn() {
