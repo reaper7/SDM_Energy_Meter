@@ -1,6 +1,6 @@
 /* Library for reading SDM 72/120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2020 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
+*  2016-2021 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   dereSet(LOW);                                                                 //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
-  resptime = millis() + WAITING_TURNAROUND_DELAY;
+  resptime = millis() + msturnarount;
 
   while (sdmSer.available() < FRAMESIZE) {
     if (resptime < millis()) {
@@ -146,7 +146,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   }
 
-  flush(RESPONSE_TIMEOUT);                                                      //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
+  flush(mstimeout);                                                             //read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
   
   if (sdmSer.available())                                                       //if serial rx buffer (after RESPONSE_TIMEOUT) still contains data then something spam rs485, check node(s) or increase RESPONSE_TIMEOUT
     readErr = SDM_ERR_TIMEOUT;                                                  //err debug (4) but returned value may be correct
@@ -196,6 +196,32 @@ void SDM::clearErrCount() {
 
 void SDM::clearSuccCount() {
   readingsuccesscount = 0;
+}
+
+void SDM::setMsTurnaround(uint16_t _msturnarount) {
+  if (_msturnarount < SDM_MIN_DELAY)
+    msturnarount = SDM_MIN_DELAY;
+  else if (_msturnarount > SDM_MAX_DELAY)
+    msturnarount = SDM_MAX_DELAY;
+  else
+    msturnarount = _msturnarount; 
+}
+
+void SDM::setMsTimeout(uint16_t _mstimeout) {
+  if (_mstimeout < SDM_MIN_DELAY)
+    mstimeout = SDM_MIN_DELAY;
+  else if (_mstimeout > SDM_MAX_DELAY)
+    mstimeout = SDM_MAX_DELAY;
+  else
+    mstimeout = _mstimeout; 
+}
+
+uint16_t SDM::getMsTurnaround() {
+  return (msturnarount);
+}
+
+uint16_t SDM::getMsTimeout() {
+  return (mstimeout);
 }
 
 uint16_t SDM::calculateCRC(uint8_t *array, uint8_t len) {

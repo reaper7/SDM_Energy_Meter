@@ -1,6 +1,6 @@
 /* Library for reading SDM 72/120/220/230/630 Modbus Energy meters.
 *  Reading via Hardware or Software Serial library & rs232<->rs485 converter
-*  2016-2020 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
+*  2016-2021 Reaper7 (tested on wemos d1 mini->ESP8266 with Arduino 1.8.10 & 2.5.2 esp8266 core)
 *  crc calculation by Jaime García (https://github.com/peninquen/Modbus-Energy-Monitor-Arduino/)
 */
 //------------------------------------------------------------------------------
@@ -71,6 +71,14 @@
 
 #if !defined ( RESPONSE_TIMEOUT )
   #define RESPONSE_TIMEOUT                            500                       //  time in ms to wait for return response from all devices before next request
+#endif
+
+#if !defined ( SDM_MIN_DELAY )
+  #define SDM_MIN_DELAY                               20                        //  minimum value (in ms) for WAITING_TURNAROUND_DELAY and RESPONSE_TIMEOUT
+#endif
+
+#if !defined ( SDM_MAX_DELAY )
+  #define SDM_MAX_DELAY                               5000                      //  maximum value (in ms) for WAITING_TURNAROUND_DELAY and RESPONSE_TIMEOUT
 #endif
 
 //------------------------------------------------------------------------------
@@ -249,6 +257,10 @@ class SDM {
     void clearErrCode();                                                        //  clear last errorcode
     void clearErrCount();                                                       //  clear total errors count
     void clearSuccCount();                                                      //  clear total success count
+    void setMsTurnaround(uint16_t _msturnarount = WAITING_TURNAROUND_DELAY);    //  set new value for WAITING_TURNAROUND_DELAY (ms), min=SDM_MIN_DELAY, max=SDM_MAX_DELAY
+    void setMsTimeout(uint16_t _mstimeout = RESPONSE_TIMEOUT);                  //  set new value for RESPONSE_TIMEOUT (ms), min=SDM_MIN_DELAY, max=SDM_MAX_DELAY
+    uint16_t getMsTurnaround();                                                 //  get current value of WAITING_TURNAROUND_DELAY (ms)
+    uint16_t getMsTimeout();                                                    //  get current value of RESPONSE_TIMEOUT (ms)
 
   private:
 #if defined ( USE_HARDWARESERIAL )
@@ -275,6 +287,8 @@ class SDM {
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;
     uint16_t readingerrcode = SDM_ERR_NO_ERROR;                                 //  4 = timeout; 3 = not enough bytes; 2 = number of bytes OK but bytes b0,b1 or b2 wrong, 1 = crc error
+    uint16_t msturnarount = WAITING_TURNAROUND_DELAY;
+    uint16_t mstimeout = RESPONSE_TIMEOUT;
     uint32_t readingerrcount = 0;                                               //  total errors counter
     uint32_t readingsuccesscount = 0;                                           //  total success counter
     uint16_t calculateCRC(uint8_t *array, uint8_t len);

@@ -9,3 +9,7 @@ getSuccCount	KEYWORD2
 clearErrCode	KEYWORD2
 clearErrCount	KEYWORD2
 clearSuccCount	KEYWORD2
+setMsTurnaround	KEYWORD2
+setMsTimeout	KEYWORD2
+getMsTurnaround	KEYWORD2
+getMsTimeout	KEYWORD2
