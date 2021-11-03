@@ -107,7 +107,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   dereSet(LOW);                                                                 //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
-  resptime = millis() + msturnarount;
+  resptime = millis() + msturnaround;
 
   while (sdmSer.available() < FRAMESIZE) {
     if (resptime < millis()) {
@@ -198,13 +198,13 @@ void SDM::clearSuccCount() {
   readingsuccesscount = 0;
 }
 
-void SDM::setMsTurnaround(uint16_t _msturnarount) {
-  if (_msturnarount < SDM_MIN_DELAY)
-    msturnarount = SDM_MIN_DELAY;
-  else if (_msturnarount > SDM_MAX_DELAY)
-    msturnarount = SDM_MAX_DELAY;
+void SDM::setMsTurnaround(uint16_t _msturnaround) {
+  if (_msturnaround < SDM_MIN_DELAY)
+    msturnaround = SDM_MIN_DELAY;
+  else if (_msturnaround > SDM_MAX_DELAY)
+    msturnaround = SDM_MAX_DELAY;
   else
-    msturnarount = _msturnarount; 
+    msturnaround = _msturnaround; 
 }
 
 void SDM::setMsTimeout(uint16_t _mstimeout) {
@@ -217,7 +217,7 @@ void SDM::setMsTimeout(uint16_t _mstimeout) {
 }
 
 uint16_t SDM::getMsTurnaround() {
-  return (msturnarount);
+  return (msturnaround);
 }
 
 uint16_t SDM::getMsTimeout() {
