@@ -280,6 +280,7 @@ contribution to this project:</br>
 :+1: new registers for SDM120CT by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/41)</br>
 :+1: new registers for DDM18SD  by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/44)</br>
 :+1: additional SDM630 registers and influxdb example by AndersV209 (https://github.com/reaper7/SDM_Energy_Meter/pull/45)</br>
+:+1: new registers for SDM72DM V2 by datjan (https://github.com/reaper7/SDM_Energy_Meter/pull/62)</br>
 
 other projects based on or using this library</br>
 :point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
@@ -295,6 +296,6 @@ other projects based on or using this library</br>
 
 ---
 
-**2016-2021 Reaper7**
+**2016-2022 Reaper7**
 
 [paypal.me/reaper7md](https://www.paypal.me/reaper7md)
