@@ -107,10 +107,10 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
 
   dereSet(LOW);                                                                 //receive from SDM -> DE Disable, /RE Enable (for control MAX485)
 
-  resptime = millis() + msturnaround;
+  resptime = millis();
 
   while (sdmSer.available() < FRAMESIZE) {
-    if (resptime < millis()) {
+    if (millis() - resptime > msturnaround) {
       readErr = SDM_ERR_TIMEOUT;                                                //err debug (4)
       break;
     }
@@ -240,8 +240,8 @@ uint16_t SDM::calculateCRC(uint8_t *array, uint8_t len) {
 }
 
 void SDM::flush(unsigned long _flushtime) {
-  unsigned long flushtime = millis() + _flushtime;
-  while (sdmSer.available() || flushtime >= millis()) {
+  unsigned long flushstart = millis();
+  while (sdmSer.available() || (millis() - flushstart < _flushtime)) {
     if (sdmSer.available())                                                     //read serial if any old data is available
       sdmSer.read();
     delay(1);
