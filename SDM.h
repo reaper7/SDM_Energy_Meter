@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 #include <Arduino.h>
 #include <SDM_Config_User.h>
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
   #include <HardwareSerial.h>
 #else
   #include <SoftwareSerial.h>
@@ -25,7 +25,7 @@
   #define DERE_PIN                                    NOT_A_PIN                 //  default digital pin for control MAX485 DE/RE lines (connect DE & /RE together to this pin)
 #endif
 
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
 
   #if !defined ( SDM_UART_CONFIG )
     #define SDM_UART_CONFIG                           SERIAL_8N1                //  default hardware uart config
@@ -46,7 +46,7 @@
 
 #else
 
-  #if defined ( ESP8266 ) || defined ( ESP32 )
+  #if defined ( ESP8266 )
     #if !defined ( SDM_UART_CONFIG )
       #define SDM_UART_CONFIG                         SWSERIAL_8N1              //  default softwareware uart config for esp8266/esp32
     #endif
@@ -233,7 +233,7 @@
 
 class SDM {
   public:
-#if defined ( USE_HARDWARESERIAL )                                              //  hardware serial
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )                         //  hardware serial
   #if defined ( ESP8266 )                                                       //  on esp8266
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, bool swapuart = SWAPHWSERIAL);
   #elif defined ( ESP32 )                                                       //  on esp32
@@ -242,7 +242,7 @@ class SDM {
     SDM(HardwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG);
   #endif
 #else                                                                           //  software serial
-  #if defined ( ESP8266 ) || defined ( ESP32 )                                  //  on esp8266/esp32
+  #if defined ( ESP8266 )                                                       //  on esp8266
     SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN, int config = SDM_UART_CONFIG, int8_t rx_pin = SDM_RX_PIN, int8_t tx_pin = SDM_TX_PIN);
   #else                                                                         //  on avr
     SDM(SoftwareSerial& serial, long baud = SDM_UART_BAUD, int dere_pin = DERE_PIN);
@@ -264,13 +264,13 @@ class SDM {
     uint16_t getMsTimeout();                                                    //  get current value of RESPONSE_TIMEOUT (ms)
 
   private:
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
     HardwareSerial& sdmSer;
 #else
     SoftwareSerial& sdmSer;
 #endif
 
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
     int _config = SDM_UART_CONFIG;
   #if defined ( ESP8266 )
     bool _swapuart = SWAPHWSERIAL;
@@ -279,7 +279,7 @@ class SDM {
     int8_t _tx_pin = -1;
   #endif
 #else
-  #if defined ( ESP8266 ) || defined ( ESP32 )
+  #if defined ( ESP8266 )
     int _config = SDM_UART_CONFIG;
   #endif
     int8_t _rx_pin = -1;

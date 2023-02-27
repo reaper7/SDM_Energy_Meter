@@ -6,7 +6,7 @@
 //------------------------------------------------------------------------------
 #include "SDM.h"
 //------------------------------------------------------------------------------
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
 #if defined ( ESP8266 )
 SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config, bool swapuart) : sdmSer(serial) {
   this->_baud = baud;
@@ -30,7 +30,7 @@ SDM::SDM(HardwareSerial& serial, long baud, int dere_pin, int config) : sdmSer(s
 }
 #endif
 #else
-#if defined ( ESP8266 ) || defined ( ESP32 )
+#if defined ( ESP8266 )
 SDM::SDM(SoftwareSerial& serial, long baud, int dere_pin, int config, int8_t rx_pin, int8_t tx_pin) : sdmSer(serial) {
   this->_baud = baud;
   this->_dere_pin = dere_pin;
@@ -50,7 +50,7 @@ SDM::~SDM() {
 }
 
 void SDM::begin(void) {
-#if defined ( USE_HARDWARESERIAL )
+#if defined ( USE_HARDWARESERIAL ) || defined ( ESP32 )
 #if defined ( ESP8266 )
   sdmSer.begin(_baud, (SerialConfig)_config);
 #elif defined ( ESP32 )
@@ -59,7 +59,7 @@ void SDM::begin(void) {
   sdmSer.begin(_baud, _config);
 #endif
 #else
-#if defined ( ESP8266 ) || defined ( ESP32 )
+#if defined ( ESP8266 )
   sdmSer.begin(_baud, (SoftwareSerialConfig)_config, _rx_pin, _tx_pin);
 #else
   sdmSer.begin(_baud);
@@ -91,7 +91,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
   sdmarr[6] = lowByte(temp);
   sdmarr[7] = highByte(temp);
 
-#if !defined ( USE_HARDWARESERIAL )
+#if !defined ( USE_HARDWARESERIAL ) && !defined ( ESP32 )
   sdmSer.listen();                                                              //enable softserial rx interrupt
 #endif
 
@@ -158,7 +158,7 @@ float SDM::readVal(uint16_t reg, uint8_t node) {
     ++readingsuccesscount;
   }
 
-#if !defined ( USE_HARDWARESERIAL )
+#if !defined ( USE_HARDWARESERIAL ) && !defined ( ESP32 )
   sdmSer.stopListening();                                                       //disable softserial rx interrupt
 #endif
 

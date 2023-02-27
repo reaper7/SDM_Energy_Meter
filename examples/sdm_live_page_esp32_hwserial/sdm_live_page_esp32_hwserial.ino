@@ -34,9 +34,6 @@
 
 #include "index_page.h"
 
-#if !defined ( USE_HARDWARESERIAL )
-  #error "This example works with Hardware Serial on esp32, please uncomment #define USE_HARDWARESERIAL in SDM_Config_User.h"
-#endif
 //------------------------------------------------------------------------------
 AsyncWebServer server(80);
 
