@@ -14,10 +14,10 @@
 ### Introduction: ###
 This library allows you reading SDM module(s) using:
 - [x] Hardware Serial (<i><b>recommended option</b>, smallest number of reads errors, especially for esp8266</i>) <b><i>or</i></b>
-- [x] Software Serial, attached as core libraries for esp8266 and avr</br>
+- [x] Software Serial, attached as core libraries for ESP8266 and AVR or as external lib for ESP32</br>
      (<i>the new version of esp Software Serial library</br>
       has a different initialization compared to avr!</br>
-      <b>This version of SDM library (>=2.0.8) works only with esp Software Serial 6.0.0 or higher!!!</b></br>
+      <b>This version of SDM library (>=2.2.2) works only with esp Software Serial 8.0.1 or higher!!!</b></br>
       If you have an older esp Software Serial version</br>
       then use other SDM library, details below the Credits section</i>)</br>
 
@@ -281,6 +281,7 @@ contribution to this project:</br>
 :+1: new registers for DDM18SD  by JeroenSt (https://github.com/reaper7/SDM_Energy_Meter/pull/44)</br>
 :+1: additional SDM630 registers and influxdb example by AndersV209 (https://github.com/reaper7/SDM_Energy_Meter/pull/45)</br>
 :+1: new registers for SDM72DM V2 by datjan (https://github.com/reaper7/SDM_Energy_Meter/pull/62)</br>
+:+1: compatibility with EspSoftwareSerial >= 8.0.1 by maxpautsch (https://github.com/reaper7/SDM_Energy_Meter/pull/75)</br>
 
 other projects based on or using this library</br>
 :point_right: BZ40i Energy Meter by adlerweb (https://github.com/adlerweb/BZ40i_Energy_Meter)</br>
@@ -290,12 +291,13 @@ other projects based on or using this library</br>
 
 ---
 
+<i>library version for old esp software serial (6.0.0 - 7.0.1) is available at [old_esp_swserial_600_701 branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_600_701)</i><br>
 <i>library version for old esp software serial (5.2.0 - 5.4.0) is available at [old_esp_swserial_520_540 branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_520_540)</i><br>
 <i>library version for old esp software serial (< 5.2.0) is available at [old_esp_swserial_lib branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_esp_swserial_lib)</i><br>
 <i>old template library version is available at [old_template branch](https://github.com/reaper7/SDM_Energy_Meter/tree/old_template)</i><br>
 
 ---
 
-**2016-2022 Reaper7**
+**2016-2023 Reaper7**
 
 [paypal.me/reaper7md](https://www.paypal.me/reaper7md)
