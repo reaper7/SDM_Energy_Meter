@@ -389,7 +389,7 @@ void SDM::modbusWrite(uint8_t* data, size_t messageLength) {
 
     // Need to wait for all bytes in TX buffer are sent.
     // N.B. flush() on serial port does often only clear the send buffer, not wait till all is sent.
-    const unsigned long waitForBytesSent_ms = (messageLength * 11000) / sdmSer.getBaudRate() + 1;
+    const unsigned long waitForBytesSent_ms = (messageLength * 11000) / _baud + 1;
     resptime = millis() + waitForBytesSent_ms;
   }
 
