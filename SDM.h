@@ -370,7 +370,7 @@ class SDM {
 #if defined ( USE_HARDWARESERIAL )
     HardwareSerial& sdmSer;
 #else
-    ESPeasySerial& sdmSer;
+    SoftwareSerial& sdmSer;
 #endif
 
 #if defined ( USE_HARDWARESERIAL )
