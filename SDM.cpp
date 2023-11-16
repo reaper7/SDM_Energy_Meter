@@ -183,6 +183,119 @@ uint16_t SDM::readValReady(uint8_t node, uint8_t functionCode) {
   return readErr;
 }
 
+uint8_t SDM::readValues(uint16_t start, uint16_t end, uint8_t node, void (*callback)(uint16_t reg, float result))
+{
+  uint16_t temp;
+  unsigned long resptime;
+  uint8_t registers = end-start+2;  // one float = two register = four bytes
+  uint8_t receive_size = 3 + 2 * (registers) + 2; // 3 bytes + 2*(registers) + 2 bytes crc
+  uint8_t* buffer = new uint8_t[receive_size]();
+
+  uint8_t sdmarr[FRAMESIZE] = {node, SDM_B_02, 0, 0, SDM_B_05, registers, 0, 0, 0};
+  uint16_t readErr = SDM_ERR_NO_ERROR;
+
+  sdmarr[2] = highByte(start);
+  sdmarr[3] = lowByte(start);
+  temp = calculateCRC(sdmarr, FRAMESIZE - 3); // calculate out crc only from first 6 bytes
+  sdmarr[6] = lowByte(temp);
+  sdmarr[7] = highByte(temp);
+
+#if !defined(USE_HARDWARESERIAL)
+  sdmSer.listen(); // enable softserial rx interrupt
+#endif
+
+  flush(); // read serial if any old data is available
+
+  dereSet(HIGH); // transmit to SDM  -> DE Enable, /RE Disable (for control MAX485)
+
+  delay(2); // fix for issue (nan reading) by sjfaustino: https://github.com/reaper7/SDM_Energy_Meter/issues/7#issuecomment-272111524
+
+  sdmSer.write(sdmarr, FRAMESIZE - 1); // send 8 bytes
+
+  sdmSer.flush(); // clear out tx buffer
+
+  dereSet(LOW); // receive from SDM -> DE Disable, /RE Enable (for control MAX485)
+
+  resptime = millis();
+
+  while (sdmSer.available() < receive_size)
+  {
+    if (millis() - resptime > msturnaround)
+    {
+      readErr = SDM_ERR_TIMEOUT; // err debug (4)
+      break;
+    }
+    yield();
+  }
+
+  if (readErr == SDM_ERR_NO_ERROR)
+  { // if no timeout...
+
+    if (sdmSer.available() >= receive_size)
+    {
+
+      for (int n = 0; n < receive_size; n++)
+      {
+        buffer[n] = sdmSer.read();
+      }
+
+      if (buffer[0] == node && buffer[1] == SDM_B_02 && buffer[2] == registers * 2)
+      {
+        uint16_t crc = buffer[receive_size-1] << 8 | buffer[receive_size-2];
+        if (calculateCRC(buffer, receive_size - 2) == crc)
+        {
+          for (uint8_t i = 3; i < 3+registers*2; i+=4)
+          {
+            float res;
+            ((uint8_t *)&res)[3] = buffer[i];
+            ((uint8_t *)&res)[2] = buffer[i+1];
+            ((uint8_t *)&res)[1] = buffer[i+2];
+            ((uint8_t *)&res)[0] = buffer[i+3];
+            
+            callback(start, res);
+            start += 2;
+          }
+        }
+        else
+        {
+          readErr = SDM_ERR_CRC_ERROR; // err debug (1)
+        }
+      }
+      else
+      {
+        readErr = SDM_ERR_WRONG_BYTES; // err debug (2)
+      }
+    }
+    else
+    {
+      readErr = SDM_ERR_NOT_ENOUGHT_BYTES; // err debug (3)
+    }
+  }
+
+  delete[] buffer;
+
+  flush(mstimeout); // read serial if any old data is available and wait for RESPONSE_TIMEOUT (in ms)
+
+  if (sdmSer.available())      // if serial rx buffer (after RESPONSE_TIMEOUT) still contains data then something spam rs485, check node(s) or increase RESPONSE_TIMEOUT
+    readErr = SDM_ERR_TIMEOUT; // err debug (4) but returned value may be correct
+
+  if (readErr != SDM_ERR_NO_ERROR)
+  { // if error then copy temp error value to global val and increment global error counter
+    readingerrcode = readErr;
+    readingerrcount++;
+  }
+  else
+  {
+    ++readingsuccesscount;
+  }
+
+#if !defined(USE_HARDWARESERIAL)
+  sdmSer.stopListening(); // disable softserial rx interrupt
+#endif
+
+  return (readErr);
+}
+
 float SDM::decodeFloatValue() const {
   if (validChecksum(sdmarr, FRAMESIZE)) {
     float res{};

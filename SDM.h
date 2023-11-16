@@ -342,6 +342,7 @@ class SDM {
     float readVal(uint16_t reg, uint8_t node = SDM_B_01);                       //  read value from register = reg and from deviceId = node
     void startReadVal(uint16_t reg, uint8_t node = SDM_B_01, uint8_t functionCode = SDM_B_02);                   //  Start sending out the request to read a register from a specific node (allows for async access)
     uint16_t readValReady(uint8_t node = SDM_B_01, uint8_t functionCode = SDM_B_02);                             //  Check to see if a reply is ready reading from a node (allow for async access)
+    uint8_t readValues(uint16_t start, uint16_t end, uint8_t node, void (*callback)(uint16_t reg, float result)); //  read registers from start to end and from deviceId = node
     float decodeFloatValue() const;
 
     float readHoldingRegister(uint16_t reg, uint8_t node = SDM_B_01);
