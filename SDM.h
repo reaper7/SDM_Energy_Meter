@@ -351,9 +351,9 @@ class SDM {
     void enableTransmit();
     uint8_t Transmit(uint16_t start, uint16_t end, uint8_t node, uint8_t functionCode);
     void disableTransmit();
-    bool Receive(uint8_t receive_size);
+    bool Receive();
     uint8_t available();
-    uint8_t Process(uint16_t start, uint8_t node, void (*callback)(uint16_t reg, float result), uint8_t receive_size);
+    uint8_t Process(void (*callback)(uint16_t reg, float result));
     uint8_t ReceiveError();
 
     uint8_t readValues(uint16_t start, uint16_t end, uint8_t node, void (*callback)(uint16_t reg, float result)); //  read registers from start to end and from deviceId = node
@@ -411,6 +411,12 @@ class SDM {
     uint32_t readingerrcount = 0;                                               //  total errors counter
     uint32_t readingsuccesscount = 0;                                           //  total success counter
     unsigned long resptime = 0;
+
+    uint8_t node;
+    uint8_t functionCode;
+    uint16_t startRegister;
+    uint8_t receiveSize;
+
     uint8_t sdmarr[FRAMESIZE] = {};
     uint16_t calculateCRC(const uint8_t *array, uint8_t len) const;
     void flush(unsigned long _flushtime = 0);                                   //  read serial if any old data is available or for a given time in ms
