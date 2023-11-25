@@ -222,13 +222,13 @@ uint8_t SDM::Transmit(uint16_t start, uint16_t end, uint8_t node, uint8_t functi
 {
   uint16_t temp;
   uint8_t registers = 2;
-  this->startRegister = start;
+  startRegister = start;
   this->node = node;
   this->functionCode = functionCode;
   if (end)
     registers = end - start + 2; // one float = two register = four bytes
 
-  this->receiveSize = 3 + (registers * 2) + 2; // 3 bytes + (registers * 2) + 2 bytes crc
+  receiveSize = 3 + (registers * 2) + 2; // 3 bytes + (registers * 2) + 2 bytes crc
   uint8_t sdmarr[8] = {node, functionCode, 0, 0, SDM_B_05, registers, 0, 0};
 
   sdmarr[2] = highByte(start);
@@ -241,9 +241,11 @@ uint8_t SDM::Transmit(uint16_t start, uint16_t end, uint8_t node, uint8_t functi
   sdmSer.listen(); // enable softserial rx interrupt
 #endif
 
+  flush();  // read serial if any old data is available
+
   sdmSer.write(sdmarr, 8);
 
-  return this->receiveSize;
+  return receiveSize;
 }
 
 void SDM::disableTransmit()
@@ -253,7 +255,7 @@ void SDM::disableTransmit()
 
 bool SDM::Receive()
 {
-  return (sdmSer.available() >= this->receiveSize);
+  return (sdmSer.available() >= receiveSize);
 }
 
 uint8_t SDM::available()
@@ -263,20 +265,20 @@ uint8_t SDM::available()
 
 uint8_t SDM::Process(void (*callback)(uint16_t reg, float result))
 {
-  uint8_t *buffer = new uint8_t[this->receiveSize]();
+  uint8_t *buffer = new uint8_t[receiveSize]();
   uint16_t readErr = SDM_ERR_NO_ERROR;
 
-  for (int n = 0; n < this->receiveSize; n++)
+  for (int n = 0; n < receiveSize; n++)
   {
     buffer[n] = sdmSer.read();
   }
 
-  if (buffer[0] == this->node && buffer[1] == SDM_B_02 && buffer[2] == (this->receiveSize - 5))
+  if (buffer[0] == node && buffer[1] == SDM_B_02 && buffer[2] == (receiveSize - 5))
   {
-    uint16_t crc = buffer[this->receiveSize - 1] << 8 | buffer[this->receiveSize - 2];
-    if (calculateCRC(buffer, this->receiveSize - 2) == crc)
+    uint16_t crc = buffer[receiveSize - 1] << 8 | buffer[receiveSize - 2];
+    if (calculateCRC(buffer, receiveSize - 2) == crc)
     {
-      for (uint8_t i = 3; i < (this->receiveSize - 2); i += 4)
+      for (uint8_t i = 3; i < (receiveSize - 2); i += 4)
       {
         float res;
         ((uint8_t *)&res)[3] = buffer[i];
@@ -284,8 +286,8 @@ uint8_t SDM::Process(void (*callback)(uint16_t reg, float result))
         ((uint8_t *)&res)[1] = buffer[i + 2];
         ((uint8_t *)&res)[0] = buffer[i + 3];
 
-        callback(this->startRegister, res);
-        this->startRegister += 2;
+        callback(startRegister, res);
+        startRegister += 2;
       }
     }
     else
