@@ -190,6 +190,23 @@ float voltage = sdm.readVal(SDM_PHASE_1_VOLTAGE);
 float power1 = sdm.readVal(SDM_PHASE_1_POWER, 0x01);
 float power2 = sdm.readVal(SDM_PHASE_1_POWER, 0x02);
 ```
+
+```cpp
+//reading multiple registers at once
+//                                      _______first register
+//                                     |                     last register  
+//                                     |                    |              SDM device ID
+//                                     |                    |             |         callback function
+//                                     |                    |             |        |
+uint8_t error = sdm->readValues(SDM_PHASE_1_VOLTAGE, SDM_PHASE_3_POWER, 0x01, get_result);
+
+// callback function:
+void get_result(uint16_t reg, float result)
+{
+    printf("Register: %d, value: %f\n", reg, result;
+}
+```
+
 NOTE: <i>if you reading multiple SDM devices on the same RS485 line,</br>
 remember to set the same transmission parameters on each device,</br>
 only ID must be different for each SDM device.</i>

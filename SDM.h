@@ -65,21 +65,26 @@
 
 #endif
 
-#if !defined ( WAITING_TURNAROUND_DELAY )
-  #define WAITING_TURNAROUND_DELAY                    500                       //  time in ms to wait for process current request
+#if !defined ( SDM_TRANSMIT_DELAY )
+  #define SDM_TRANSMIT_DELAY                          0                         // time to wait before transmit for DE/RE pins of MAX485
 #endif
 
-#if !defined ( RESPONSE_TIMEOUT )
-  #define RESPONSE_TIMEOUT                            10                       //  time in ms to wait for return response from all devices before next request
+#if !defined ( SDM_RESPONSE_TIMEOUT )
+  #define SDM_RESPONSE_TIMEOUT                        300                       //  time in ms to wait for return response
+#endif
+
+#if !defined ( SDM_MAX_TIMEOUT )
+  #define SDM_MAX_TIMEOUT                             2000                      //  maximum value (in ms) for SDM_RESPONSE_TIMEOUT
 #endif
 
 #if !defined ( SDM_MIN_DELAY )
-  #define SDM_MIN_DELAY                               1                        //  minimum value (in ms) for WAITING_TURNAROUND_DELAY and RESPONSE_TIMEOUT
+  #define SDM_MIN_DELAY                               0                         //  minimum value (in ms) for SDM_TRANSMIT_DELAY
 #endif
 
 #if !defined ( SDM_MAX_DELAY )
-  #define SDM_MAX_DELAY                               20                      //  maximum value (in ms) for WAITING_TURNAROUND_DELAY and RESPONSE_TIMEOUT
+  #define SDM_MAX_DELAY                               20                        //  maximum value (in ms) for SDM_TRANSMIT_DELAY
 #endif
+
 
 //------------------------------------------------------------------------------
 
@@ -342,6 +347,16 @@ class SDM {
     float readVal(uint16_t reg, uint8_t node = SDM_B_01);                       //  read value from register = reg and from deviceId = node
     void startReadVal(uint16_t reg, uint8_t node = SDM_B_01, uint8_t functionCode = SDM_B_02);                   //  Start sending out the request to read a register from a specific node (allows for async access)
     uint16_t readValReady(uint8_t node = SDM_B_01, uint8_t functionCode = SDM_B_02);                             //  Check to see if a reply is ready reading from a node (allow for async access)
+
+    void enableTransmit();
+    uint8_t Transmit(uint16_t start, uint16_t end, uint8_t node, uint8_t functionCode);
+    void disableTransmit();
+    bool Receive();
+    uint8_t available();
+    uint8_t Process(void (*callback)(uint16_t reg, float result));
+    uint8_t ReceiveError();
+
+    uint8_t readValues(uint16_t start, uint16_t end, uint8_t node, void (*callback)(uint16_t reg, float result)); //  read registers from start to end and from deviceId = node
     float decodeFloatValue() const;
 
     float readHoldingRegister(uint16_t reg, uint8_t node = SDM_B_01);
@@ -356,10 +371,10 @@ class SDM {
     void clearErrCode();                                                        //  clear last errorcode
     void clearErrCount();                                                       //  clear total errors count
     void clearSuccCount();                                                      //  clear total success count
-    void setMsTurnaround(uint16_t _msturnaround = WAITING_TURNAROUND_DELAY);    //  set new value for WAITING_TURNAROUND_DELAY (ms), min=SDM_MIN_DELAY, max=SDM_MAX_DELAY
-    void setMsTimeout(uint16_t _mstimeout = RESPONSE_TIMEOUT);                  //  set new value for RESPONSE_TIMEOUT (ms), min=SDM_MIN_DELAY, max=SDM_MAX_DELAY
-    uint16_t getMsTurnaround();                                                 //  get current value of WAITING_TURNAROUND_DELAY (ms)
-    uint16_t getMsTimeout();                                                    //  get current value of RESPONSE_TIMEOUT (ms)
+    void setMsDelay(uint16_t _msdelay = SDM_TRANSMIT_DELAY);                    //  set new value for SDM_TRANSMIT_DELAY (ms), min=0, max=SDM_MAX_DELAY
+    void setMsTimeout(uint16_t _mstimeout = SDM_RESPONSE_TIMEOUT);              //  set new value for SDM_RESPONSE_TIMEOUT (ms), min=0, max=?
+    uint16_t getMsDelay();                                                      //  get current value of SDM_TRANSMIT_DELAY (ms)
+    uint16_t getMsTimeout();                                                    //  get current value of SDM_RESPONSE_TIMEOUT (ms)
 
   private:
 
@@ -391,11 +406,17 @@ class SDM {
     long _baud = SDM_UART_BAUD;
     int _dere_pin = DERE_PIN;
     uint16_t readingerrcode = SDM_ERR_NO_ERROR;                                 //  4 = timeout; 3 = not enough bytes; 2 = number of bytes OK but bytes b0,b1 or b2 wrong, 1 = crc error
-    uint16_t msturnaround = WAITING_TURNAROUND_DELAY;
-    uint16_t mstimeout = RESPONSE_TIMEOUT;
+    uint16_t msdelay = SDM_TRANSMIT_DELAY;
+    uint16_t mstimeout = SDM_RESPONSE_TIMEOUT;
     uint32_t readingerrcount = 0;                                               //  total errors counter
     uint32_t readingsuccesscount = 0;                                           //  total success counter
     unsigned long resptime = 0;
+
+    uint8_t node;
+    uint8_t functionCode;
+    uint16_t startRegister;
+    uint8_t receiveSize;
+
     uint8_t sdmarr[FRAMESIZE] = {};
     uint16_t calculateCRC(const uint8_t *array, uint8_t len) const;
     void flush(unsigned long _flushtime = 0);                                   //  read serial if any old data is available or for a given time in ms
