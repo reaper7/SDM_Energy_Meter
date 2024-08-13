@@ -198,12 +198,12 @@ float power2 = sdm.readVal(SDM_PHASE_1_POWER, 0x02);
 //                                     |                    |              SDM device ID
 //                                     |                    |             |         callback function
 //                                     |                    |             |        |
-uint8_t error = sdm->readValues(SDM_PHASE_1_VOLTAGE, SDM_PHASE_3_POWER, 0x01, get_result);
+uint8_t error = sdm.readValues(SDM_PHASE_1_VOLTAGE, SDM_PHASE_3_POWER, 0x01, get_result);
 
 // callback function:
 void get_result(uint16_t reg, float result)
 {
-    printf("Register: %d, value: %f\n", reg, result;
+    printf("Register: %d, value: %f\n", reg, result);
 }
 ```
 
